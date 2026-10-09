@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BlocklistTable, CampaignCard } from "@/components/lists";
-import { Card, Notice, SectionTitle, StatTile } from "@/components/ui";
+import { Card, Notice, SectionTitle, StatTile, Loading } from "@/components/ui";
 import { ApiError, downloadPartnerCsv, partnerBlocklist, partnerCampaigns, partnerMe, partnerSummary } from "@/lib/api";
 import { useLang } from "@/lib/i18n";
 import type { PartnerInfo } from "@/lib/types";
@@ -115,6 +115,7 @@ function Panel({ apiKey, info, onLogout }: { apiKey: string; info: PartnerInfo; 
 
       <section aria-label={t("pt.camp.aria")} className="space-y-3">
         <SectionTitle hint={t("pt.camp.hint")}>{t("dash.camp.title")}</SectionTitle>
+        {!campaigns.data && !campaigns.error && <Loading className="!py-6" />}
         {campaigns.data?.length === 0 && <Card><p className="text-sm text-ink2">{t("pt.camp.empty")}</p></Card>}
         {campaigns.data?.map((c) => <CampaignCard key={c.id} campaign={c} now={now} />)}
       </section>

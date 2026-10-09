@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { campaignName } from "@/components/lists";
-import { Card, Chip, Notice, SectionTitle, StatTile } from "@/components/ui";
+import { Card, Chip, Notice, SectionTitle, StatTile, Loading } from "@/components/ui";
 import { getCampaigns, getStats } from "@/lib/api";
 import { timeAgo } from "@/lib/format";
 import { LOCALES, schemeLabel, tipsFor, useLang } from "@/lib/i18n";
@@ -27,6 +27,8 @@ export default function Radar() {
       {demo > 0 && <Notice>{t("radar.demo", { n: demo })}</Notice>}
       {(stats.error || campaigns.error) && <Notice tone="warn">{s ? t("radar.offline_stale") : t("radar.offline")}</Notice>}
 
+      {!s && !stats.error && <Loading />}
+
       {s && (
         <section className="grid grid-cols-3 gap-3" aria-label={t("radar.kpi.aria")}>
           <StatTile label={t("radar.kpi.checks")} value={s.total_reports.toLocaleString(LOCALES[lang])} />
@@ -46,6 +48,7 @@ export default function Radar() {
 
       <section aria-label={t("radar.spreading.aria")} className="space-y-3">
         <SectionTitle hint={t("radar.spreading.hint")}>{t("radar.spreading.title")}</SectionTitle>
+        {!campaigns.data && !campaigns.error && stats.data && <Loading className="!py-6" />}
         {campaigns.data?.length === 0 && <Card><p className="text-sm text-ink2">{t("radar.none")}</p></Card>}
         {campaigns.data?.slice(0, 8).map((c) => <RadarCard key={c.id} campaign={c} now={now} />)}
       </section>

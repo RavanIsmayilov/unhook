@@ -1,7 +1,7 @@
 "use client";
 
 import { BarList, ChartCard, Legend, type BarRow } from "@/components/charts";
-import { Card, Chip, Notice, SectionTitle, StatTile } from "@/components/ui";
+import { Card, Chip, Notice, SectionTitle, StatTile, Loading } from "@/components/ui";
 import { getResults } from "@/lib/api";
 import { pct } from "@/lib/format";
 import { useLang, type TFunction } from "@/lib/i18n";
@@ -45,7 +45,7 @@ export default function Results() {
       </div>
 
       {error && <Notice tone="warn">{t("res.error")}</Notice>}
-      {!data && !error && <p className="text-ink2">{t("common.loading")}</p>}
+      {!data && !error && <Loading />}
 
       {data && (
         <>

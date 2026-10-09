@@ -71,3 +71,14 @@ export function Notice({ children, tone = "info" }: { children: ReactNode; tone?
     </div>
   );
 }
+
+/** Spinner with a label, shown while the first response of a page is on its way (the tunnel can be slow). */
+export function Loading({ className = "" }: { className?: string }) {
+  const { t } = useLang();
+  return (
+    <div role="status" aria-live="polite" className={`flex items-center justify-center gap-3 py-10 text-ink2 ${className}`}>
+      <span className="h-5 w-5 animate-spin rounded-full border-2 border-line border-t-s1" aria-hidden />
+      {t("common.loading")}
+    </div>
+  );
+}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BarList, ChartCard, DailyChart } from "@/components/charts";
 import { BlocklistTable, CampaignCard } from "@/components/lists";
-import { Card, Chip, Notice, SectionTitle, StatTile, VerdictBadge } from "@/components/ui";
+import { Card, Chip, Notice, SectionTitle, StatTile, VerdictBadge, Loading } from "@/components/ui";
 import { downloadBlocklistCsv, getBlocklist, getCampaigns, getFeedback, getRecent, getStats } from "@/lib/api";
 import { sourceLabel, timeAgo } from "@/lib/format";
 import { LOCALES, schemeLabel, useLang } from "@/lib/i18n";
@@ -49,7 +49,7 @@ export default function Dashboard() {
 
       {offline && <Notice tone="warn">{s ? t("dash.offline_stale") : t("dash.offline_notice")}</Notice>}
 
-      {!s && !offline && <p className="text-ink2">{t("common.loading")}</p>}
+      {!s && !offline && <Loading />}
 
       {s && (
         <>
@@ -127,6 +127,7 @@ export default function Dashboard() {
           {t("dash.camp.title")}
         </SectionTitle>
         <div className={`space-y-3 transition-opacity ${campaigns.refreshing ? "opacity-80" : ""}`}>
+          {!campaigns.data && !campaigns.error && <Loading className="!py-6" />}
           {campaigns.data?.length === 0 && (
             <Card><p className="text-sm text-ink2">{brand ? t("dash.camp.empty_brand", { brand }) : t("dash.camp.empty")}</p></Card>
           )}
@@ -171,6 +172,7 @@ export default function Dashboard() {
         <SectionTitle hint={t("dash.recent.hint")}>{t("dash.recent.title")}</SectionTitle>
         <Card className="!p-0">
           <ul className="divide-y divide-grid">
+            {!recent.data && !recent.error && <li><Loading className="!py-6" /></li>}
             {recent.data?.length === 0 && <li className="p-4 text-sm text-ink2">{t("dash.recent.empty")}</li>}
             {recent.data?.map((r) => <RecentRow key={r.id} report={r} now={now} />)}
           </ul>
