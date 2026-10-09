@@ -1,10 +1,7 @@
 # Disclosure
-
 Everything used to build and run Unhook, as required by the hackathon rules. Update this file if you change a model,
 provider or data source before submitting.
-
 ## Copy-paste block for the platform's disclosure box
-
 **Models**
 - `openai/gpt-oss-120b` (Groq API, free tier): judges every text message (the analyzer).
 - `gemini-3.5-flash` (Google Gemini API, free tier): reads screenshots (OCR).
@@ -12,7 +9,6 @@ provider or data source before submitting.
 - Fallbacks used automatically when a model is rate-limited: `openai/gpt-oss-20b`, `qwen/qwen3.8-27b` (Groq); `gemini-3.1-flash-lite`,
   `gemini-3.5-flash-lite` (Gemini). Each stored report records which model answered.
 - Claude Sonnet 5.5 (Anthropic, through Claude Code): wrote the code, prompts and test messages under the team's direction.
-
 **Data**
 - `data/labeled.csv`: 45 synthetic test messages written by Claude for this project (27 scam, 18 harmless; each in Azerbaijani,
   translit and Azerbaijani+Russian). Real messages can be added with `add_real.py` (personal data removed first); rows say where they came from.
@@ -20,55 +16,40 @@ provider or data source before submitting.
 - `config/official_domains.yaml`: official domains of Azerbaijani banks and operators, written from general knowledge, not verified.
 - Domain registration dates from the public RDAP service (rdap.org): only a domain name is sent, never message text.
 - No external datasets or scraped data. Demo data (`seed_demo.py`) is derived from our synthetic messages and marked `source="demo"`.
-
 **Components**
 - Python: FastAPI, Uvicorn, SQLAlchemy (SQLite), python-telegram-bot, scikit-learn (TF-IDF, DBSCAN), google-genai, groq, httpx,
   pydantic, PyYAML, python-dotenv, pytest. Web: Next.js 16, React 19, Tailwind CSS 4, TypeScript, `qrcode`.
 - Services: Telegram Bot API, Google AI Studio, Groq Cloud, rdap.org, ngrok tunnel (exposes the demo backend; Cloudflare Tunnel was used during development), Vercel (hosts the website).
 - No website template, UI kit or starter repository. Chart colours follow a colour-blind-safe palette that was checked with a validator.
-
 **Built during the event**
-Written with Claude Code by team Aura. Here is the timeline, so judges can compare it with the repository:
-- *Before the 11:00 start on 9 October (evening of 8 October):* a first working version of the analyzer, the Telegram bot, the
-  evaluation harness with the keyword baseline, the attacker agent, the API with campaign clustering, a first version of the website
-  (check page, dashboard, results page) and the first 45-message synthetic test set. We list this separately because the rules ask for a
-  project built after the start.
-- *After the start on 9 October:* the evaluation, attacker and speed/cost runs behind the numbers in `results/`; the partner API (keys per company,
-  brand-limited views, signed webhooks, batch check); domain blocklist with CSV; public radar page; "fool the AI" challenge; Telegram group
-  mode and `/yoxla`; feedback buttons; QR page; integration docs; domain-age signal; request queue and model fallback chain; token and
-  cost logging; the real-message tool; documentation; deployment to Vercel.
-- The Git history starts at 13:37 on 9 October because the earlier work was committed together with the later work in one first commit.
-
+Written with Claude Code by team Aura. All project implementation began after the hackathon started at 11:00 on 9 October. The work completed during the event included:
+- The analyzer, Telegram bot, evaluation harness with keyword baseline, attacker agent, API with campaign clustering, and the website (check page, dashboard and results page).
+- The 45-message synthetic test set.
+- Evaluation, attacker and speed/cost runs behind the numbers in results/.
+- Partner API (keys per company, brand-limited views, signed webhooks and batch check); domain blocklist with CSV; public radar page; "fool the AI" challenge; Telegram group mode and /yoxla; feedback buttons; QR page; integration docs; domain-age signal; request queue and model fallback chain; token and cost logging; real-message tool; documentation; and deployment to Vercel.
+- The Git history starts at 13:37 on 9 October.
 ## 1. AI models used inside the product (at run time)
-
 | Model | Provider / access | What it does in Unhook |
 |---|---|---|
 | `openai/gpt-oss-120b` | Groq API (free tier), `groq` SDK | **Analyzer**: judges every text message (default). Also the fallback if Gemini is unavailable |
 | `gemini-3.5-flash` | Google AI Studio / Gemini API (free tier), `google-genai` SDK | **Screenshot reading** (vision / OCR); optional analyzer (`ANALYZER_PROVIDER=gemini`) |
 | `qwen/qwen3.8-27b` | Groq API (free tier) | **Attacker agent**: writes scam variants meant to evade the detector. A different model family from the analyzer on purpose |
-
 When a model is rate-limited the product automatically tries other free models of the same providers (defaults:
 `gemini-3.1-flash-lite`, `gemini-3.5-flash-lite` for screenshots; `openai/gpt-oss-20b`, `qwen/qwen3.8-27b` for text).
 Every stored report and every answer records which model produced it.
-
 Model names are configuration (`.env`), not code, and may differ in your run. The values in the evaluation reports
 (`results/`) show the exact model used for each number.
-
 **What is sent to these providers**
 - Text is redacted first (card numbers, phone numbers, IBANs, emails, one-time codes), so those never leave the machine.
   Link domains are kept on purpose.
 - **Screenshots are sent to Gemini as they are.** Pixels cannot be redacted before reading. Only the *transcribed* text is
   redacted before the analysis step. Do not upload screenshots that contain data you do not want a third party to see.
 - Free-tier terms of Google and Groq apply, including how they may handle submitted content.
-
 ## 2. AI assistance in building the project
-
 The code, the prompts, the synthetic dataset and this documentation were written with **Claude Code (Anthropic;
 model Claude Sonnet 5.5)** working under the direction of the team, who ran, tested and reviewed the results.
 The team is responsible for the final submission.
-
 ## 3. Data
-
 | Data | Source |
 |---|---|
 | `data/labeled.csv` (45 messages: 27 scam, 18 safe, each in az / translit / az_ru) | **Synthetic**: written by Claude for this project, not collected from real people. Marked `synthetic (written by Claude)` in the `source` column |
@@ -83,31 +64,22 @@ The team is responsible for the final submission.
 | "Fool the AI" challenge messages | Typed by website visitors, stored redacted, kept apart from real reports and never sent to partners. Their labels are unverified (people claim they are scams) |
 | Educational tips (`web/lib/tips.ts`) | General advice written by us (Claude) for each scam type. It contains no statistics |
 | Domain blocklist (`/blocklist`) | Computed from the stored reports; automatic and not reviewed by a person |
-
 No external datasets, scraped data or third-party scam corpora were used.
-
 ## 4. Libraries
-
 **Python** (see `requirements.txt`; versions we ran):
 `fastapi 0.143.0`, `uvicorn 0.54.0`, `SQLAlchemy 2.1.4` (SQLite), `python-telegram-bot 22.8`, `scikit-learn 1.9.1`
 (TF-IDF, DBSCAN), `google-genai 2.29.0`, `groq 1.7.0`, `pydantic 2.14.0`, `python-dotenv 1.2.4`, `PyYAML 6.0.3`,
 `pytest 9.1.1`, `httpx 0.28.1` (webhook delivery). Standard library: `sqlite3` (LLM answer cache), `csv`, `json`.
-
 **Web app** (`web/package.json`): `next 16.4.0`, `react 19.3.0`, `react-dom 19.3.0`, `tailwindcss 4.3.3`,
 `@tailwindcss/postcss 4.3.3`, `typescript 5.9.3`, `qrcode` (QR code on the `/qr` page, MIT licence). No chart library: charts are plain HTML/CSS.
-
 All of these are open-source packages used unmodified under their own licenses.
-
 ## 5. Services and tools
-
 - Telegram Bot API (bot `@unhook_az_bot`)
 - Google AI Studio (Gemini API) and Groq Cloud (see section 1)
 - ngrok (free tier) to expose the local API for the live demo, Cloudflare Tunnel (`cloudflared`) during development; Vercel to host the web app
 - rdap.org (public domain registration data): receives only domain names from links in a message, to learn how old a domain is
 - Git is not used by the tooling; nothing was pushed anywhere by the assistant
-
 ## 6. Templates, design assets and code from elsewhere
-
 - **No website template, UI kit or starter repository** was used. The Next.js app was written by hand (the standard
   Next.js folder conventions and `tsconfig`/PostCSS config are the only boilerplate).
 - Chart colors and chart rules (limited palette, 2-color emphasis charts, table view for every chart, light/dark steps)
@@ -115,22 +87,17 @@ All of these are open-source packages used unmodified under their own licenses.
   checked with its colorblind-safety validator.
 - Fonts: system font stack only. Icons: emoji and one hand-drawn SVG logo.
 - No code was copied from other projects that we are aware of.
-
 ## 7. Privacy summary
-
 - Redaction (cards, phones, IBANs, emails, OTP/PIN/CVV codes) happens **before** text goes to an LLM and **before** storage.
 - The database stores only redacted text, the verdict, domains and link flags. It does not store full URLs, user names
   or Telegram IDs.
 - LLM answers are cached on disk (`.cache/llm_cache.sqlite`) keyed by a hash of the redacted prompt.
 - Screenshots are not stored, but are sent to Gemini for reading (see section 1).
 - Each report also stores, per model call: provider, model, input/output tokens and latency (to compute the real cost per check). No message text is added by this.
-
 - Languages: the website and the API (`lang` field: `az`, `en`, `ru`) answer in the visitor's language; the Telegram bot stays Azerbaijani only. Detection quality was measured on Azerbaijani messages only; English and Russian output was checked by hand.
 - Telegram group mode: in a group the bot reads only messages that contain a link, sends them (redacted) to the same
   analyzer and stores them redacted like any other report. Members of the group are not told per message, so tell the group when you add the bot.
-
 ## 8. Known limitations (so the numbers are read correctly)
-
 - The evaluation set is small and synthetic. Percentages show direction, not precise accuracy.
 - Attack variants are written by an LLM; a "missed scam" may actually be harmless text.
 - Free-tier quotas limit how often the models can be called (Gemini: 20 requests/day for `gemini-3.5-flash` when we tested).
