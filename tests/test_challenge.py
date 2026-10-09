@@ -106,7 +106,6 @@ def test_usage_summary_and_cost():
 
 
 def test_old_database_gets_the_usage_column(tmp_path, monkeypatch):
-    import sqlalchemy
     from sqlalchemy import create_engine, inspect, text
     engine = create_engine(f"sqlite:///{tmp_path / 'old.db'}")
     with engine.begin() as conn:  # a reports table as the first version created it: no usage column

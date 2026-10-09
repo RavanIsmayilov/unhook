@@ -24,7 +24,7 @@ provider or data source before submitting.
 **Components**
 - Python: FastAPI, Uvicorn, SQLAlchemy (SQLite), python-telegram-bot, scikit-learn (TF-IDF, DBSCAN), google-genai, groq, httpx,
   pydantic, PyYAML, python-dotenv, pytest. Web: Next.js 16, React 19, Tailwind CSS 4, TypeScript, `qrcode`.
-- Services: Telegram Bot API, Google AI Studio, Groq Cloud, rdap.org, Cloudflare Tunnel (exposes the demo backend), Vercel (hosts the website).
+- Services: Telegram Bot API, Google AI Studio, Groq Cloud, rdap.org, ngrok tunnel (exposes the demo backend; Cloudflare Tunnel was used during development), Vercel (hosts the website).
 - No website template, UI kit or starter repository. Chart colours follow a colour-blind-safe palette that was checked with a validator.
 
 **Built during the event**
@@ -102,7 +102,7 @@ All of these are open-source packages used unmodified under their own licenses.
 
 - Telegram Bot API (bot `@unhook_az_bot`)
 - Google AI Studio (Gemini API) and Groq Cloud (see section 1)
-- Cloudflare Tunnel (`cloudflared`) to expose the local API; Vercel to host the web app
+- ngrok (free tier) to expose the local API for the live demo, Cloudflare Tunnel (`cloudflared`) during development; Vercel to host the web app
 - rdap.org (public domain registration data): receives only domain names from links in a message, to learn how old a domain is
 - Git is not used by the tooling; nothing was pushed anywhere by the assistant
 

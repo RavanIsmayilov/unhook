@@ -169,29 +169,31 @@ Review the misses by hand: an LLM-written "scam" can drift into a harmless messa
 
 ## Put the dashboard online (Vercel + your laptop)
 
-The bot and SQLite are long-running, so the **backend stays on your machine**; only the web app goes to Vercel.
+The bot and SQLite are long-running, so the **backend stays on your machine**; only the web app goes to Vercel. A tunnel gives
+the backend a public address. The live demo uses an **ngrok** tunnel with a free fixed address; a Cloudflare quick tunnel is a
+no-account alternative.
 
-1. Install the tunnel once: `brew install cloudflared`
-2. Start the API: `uvicorn api:app --port 8000` (and `python bot.py` in a second terminal)
-3. Expose it: `cloudflared tunnel --url http://localhost:8000`. It prints an address like
-   `https://random-words.trycloudflare.com`. Check `https://random-words.trycloudflare.com/health` in a browser.
-4. Deploy `web/` to Vercel. Either connect a Git repo (Vercel: **Add New → Project**, Root Directory `web`, environment
-   variable `NEXT_PUBLIC_API_URL` = the tunnel address without a trailing slash), or deploy straight from the folder with
-   the CLI, no Git needed:
-   ```bash
-   cd web
-   npx vercel login
-   npx vercel --prod --build-env NEXT_PUBLIC_API_URL=https://random-words.trycloudflare.com
-   ```
-   The first run asks a few questions (scope, project name; answer the defaults, and say **no** to "link to existing project").
-5. Open the Vercel URL. Make a QR code of it for the audience.
+1. Start the API: `uvicorn api:app --port 8000` (and `python bot.py` in a second terminal).
+2. Open the tunnel (pick one):
+   - **ngrok, fixed address (what the demo uses).** Make a free account, `brew install ngrok`,
+     `ngrok config add-authtoken <your token>`, find your free "dev domain" in the ngrok dashboard (Domains), then
+     `ngrok http --url=<your-dev-domain>.ngrok-free.dev 8000`. The address never changes, so you set it in Vercel once.
+   - **Cloudflare quick tunnel (no account, but a new address on every restart):** `brew install cloudflared`, then
+     `cloudflared tunnel --protocol http2 --url http://localhost:8000`.
+   Check `https://<tunnel address>/health` in a browser: it must show `{"status":"ok"}`.
+3. Deploy `web/` to Vercel: **Add New → Project**, import the Git repo, Root Directory `web`, environment variable
+   `NEXT_PUBLIC_API_URL` = the tunnel address (no trailing slash, as a plain "Config" variable). Or deploy from the folder
+   with `cd web && npx vercel --prod --build-env NEXT_PUBLIC_API_URL=<tunnel address>`.
+4. Open the Vercel address and make a QR code of it (`/qr` shows one).
 
 Things to know:
-- `NEXT_PUBLIC_API_URL` is baked in at build time. A quick tunnel gets a **new address every time it restarts**, so
-  after restarting it you must update the variable in Vercel and **redeploy**. Start the tunnel once, early, and leave it running.
+- `NEXT_PUBLIC_API_URL` is baked in at build time: if the tunnel address changes, update the variable in Vercel and **redeploy
+  without the build cache**. The website sends an `ngrok-skip-browser-warning` header (ngrok's free plan otherwise shows a
+  warning page to browsers); other hosts ignore it.
 - If you use your own domain for the site, add it to `CORS_ORIGINS` in `.env` and restart the API.
-- The public endpoints (`/check`, `/stats`, ...) have no login. Anyone with the address can call `/check` and use up your free API quota, so share the link only with people you trust. Only the `/partner/...` endpoints need a key.
-- Keep the laptop awake and online during the demo.
+- The public endpoints (`/check`, `/stats`, ...) have no login. Anyone with the address can call `/check` and use up your free
+  API quota, so share the link only with people you trust. Only the `/partner/...` endpoints need a key.
+- The demo backend runs on a laptop: keep it awake, on power and online. If it is off, the website shows "connection lost".
 
 ## How it works
 
@@ -211,14 +213,19 @@ Things to know:
 ## Project layout
 
 ```
-config/official_domains.yaml   official domains, brand names, suspicious words/TLDs (edit me)
-app/       analyzer.py (core) · llm.py (Gemini/Groq, retries, cache) · linkcheck.py · redact.py · clustering.py
-           db.py · service.py · stats.py · results.py · formatting.py · schemas.py · settings.py
-bot.py     Telegram bot            api.py        FastAPI backend         seed_demo.py   demo data
-eval.py    evaluation + baseline   attacker.py   attacker agent
-data/      labeled.csv · attack_misses.csv        results/      eval and attack results
-web/       Next.js app (/, /dashboard, /results)  tests/        pytest
-DISCLOSURE.md                  every model, library, data source and template we used
+config/    official_domains.yaml (official domains, brand names, suspicious words/TLDs: edit me), pricing.yaml (token prices)
+app/       analyzer.py (core: redaction -> link check -> model -> guardrails)   llm.py (Gemini/Groq, retries, cache, fallback chain, queue)
+           linkcheck.py  redact.py  domainage.py (how old a domain is)  clustering.py (campaigns)  blocklist.py  webhooks.py
+           db.py  service.py (analyze + store)  stats.py  usage.py (tokens, latency, cost)  results.py  formatting.py  schemas.py  settings.py
+api.py     FastAPI backend (website, dashboard, partner API)            bot.py          Telegram bot
+eval.py    evaluation + keyword baseline                                attacker.py     attacker agent
+performance.py  speed and cost per check                                 make_summary.py  writes results/SUMMARY.md
+partners.py     partner API keys                                         add_real.py      add real messages to the test set
+seed_demo.py    demo data for the dashboard                              challenge_misses.py  website-challenge wins -> test cases
+data/      labeled.csv (test messages), attack_misses.csv               results/        eval, attack, performance and SUMMARY.md
+web/       Next.js app (/, /dashboard, /radar, /challenge, /results, /integration, /partner, /qr)
+tests/     pytest (offline, no API keys needed)
+DISCLOSURE.md   every model, library, data source and template we used, and the build timeline
 ```
 
 ## Troubleshooting

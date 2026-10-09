@@ -5,7 +5,6 @@
 They were typed by people who claim they are scams, but nobody verified that: review them before using them as labels.
 """
 import csv
-from pathlib import Path
 
 from app import db, settings
 
