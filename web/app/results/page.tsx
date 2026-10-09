@@ -52,7 +52,6 @@ export default function Results() {
           {data.eval ? <EvalSection ev={data.eval} /> : <Notice>{t("res.no_eval")}</Notice>}
           {data.attack ? <AttackSection at={data.attack} /> : <Notice>{t("res.no_attack")}</Notice>}
           {data.performance && <PerformanceSection p={data.performance} />}
-          <Caveats />
         </>
       )}
     </div>
@@ -288,18 +287,3 @@ function PerformanceSection({ p }: { p: PerformanceResults }) {
   );
 }
 
-function Caveats() {
-  const { t } = useLang();
-  return (
-    <Card>
-      <h3 className="mb-2 font-semibold">{t("res.cav.title")}</h3>
-      <ul className="list-disc space-y-1 pl-5 text-sm text-ink2 marker:text-muted">
-        <li>{t("res.cav.1")}</li>
-        <li>{t("res.cav.2")}</li>
-        <li>{t("res.cav.3")}</li>
-        <li>{t("res.cav.4")}</li>
-        <li>{t("res.cav.5")}</li>
-      </ul>
-    </Card>
-  );
-}
