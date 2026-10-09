@@ -1,6 +1,6 @@
 # Unhook: test results at a glance
 
-Generated 2026-10-09 15:10. Built from `results/eval_results.json`, `attack_results.json` and `performance.json`; re-create with `python make_summary.py`.
+Generated 2026-10-09 17:26. Built from `results/eval_results.json`, `attack_results.json` and `performance.json`; re-create with `python make_summary.py`.
 
 Unhook checks a suspicious message (text or screenshot) and says whether it is a scam, in Azerbaijani, including translit and Azerbaijani+Russian text.
 
@@ -29,7 +29,7 @@ Every wrong answer, with the model's reasons, is in `results/failures.md`.
 
 A second AI model (`qwen/qwen3.8-27b`) was told to rewrite 9 scam messages so the detector would not notice: translit, Azerbaijani+Russian mix, synonyms, a new pretext, typos, no link, formal tone, short SMS. It wrote **71 variants**; the detector (`openai/gpt-oss-120b`) flagged **71 of 71** and missed **0**.
 
-Nothing was missed, so there was nothing to learn from on this run. This does not prove the detector cannot be fooled: the attacker is an AI too, only {len(before)} variants were tried, and nobody checked by hand that every variant is still a scam. The website has a public challenge page where people try to fool it; messages that succeed are exported with `python challenge_misses.py`.
+Nothing was missed, so there was nothing to learn from on this run. This does not prove the detector cannot be fooled: the attacker is an AI too, only 71 variants were tried, and nobody checked by hand that every variant is still a scam. The website has a public challenge page where people try to fool it; messages that succeed are exported with `python challenge_misses.py`.
 
 ## 3. How fast and how expensive is one check?
 

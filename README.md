@@ -17,7 +17,7 @@ JSON verdict. Code-level guardrails stop it from calling a fake link "safe". Rep
 domain.
 
 **Try it now.**
-- Website (no setup): <https://unhook-smoky.vercel.app>. Pages: `/` check a message, `/dashboard`, `/radar`, `/challenge`,
+- Website (no setup): <https://unhook-hack.vercel.app>. Pages: `/` check a message, `/dashboard`, `/radar`, `/challenge`,
   `/results`, `/integration`, `/partner`. The backend runs on the team's laptop for the demo, so if a page says "connection lost",
   the laptop is offline: see the results files below, or run it yourself (next section).
 - Telegram: `@unhook_az_bot` (send text or a screenshot).

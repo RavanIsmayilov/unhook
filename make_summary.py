@@ -76,7 +76,7 @@ def attack_section(at: dict | None) -> list[str]:
                   "variants that were NOT used as examples (see `results/attack_results.md`).", ""]
     else:
         lines += ["Nothing was missed, so there was nothing to learn from on this run. This does not prove the detector cannot be "
-                  "fooled: the attacker is an AI too, only {len(before)} variants were tried, and nobody checked by hand that every variant "
+                  f"fooled: the attacker is an AI too, only {len(before)} variants were tried, and nobody checked by hand that every variant "
                   "is still a scam. The website has a public challenge page where people try to fool it; messages that succeed are "
                   "exported with `python challenge_misses.py`.", ""]
     return lines
