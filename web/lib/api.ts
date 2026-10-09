@@ -8,10 +8,17 @@ export class ApiError extends Error {
   }
 }
 
+// ngrok's free plan shows a warning page to browsers unless this header is sent. Other hosts simply ignore it.
+const SKIP_TUNNEL_WARNING = { "ngrok-skip-browser-warning": "1" };
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let res: Response;
   try {
-    res = await fetch(`${API_URL}${path}`, { cache: "no-store", ...init });
+    res = await fetch(`${API_URL}${path}`, {
+      cache: "no-store",
+      ...init,
+      headers: { ...SKIP_TUNNEL_WARNING, ...(init?.headers as Record<string, string> | undefined) },
+    });
   } catch {
     throw new ApiError(0, "Serverə qoşulmaq mümkün olmadı.");
   }
@@ -40,8 +47,20 @@ export const getRecent = (limit = 20) => request<ReportRow[]>(`/reports/recent?l
 export const getResults = () => request<ResultsPayload>("/results");
 export const getBlocklist = (brand?: string) =>
   request<BlocklistRow[]>(`/blocklist?limit=200${brand ? `&brand=${encodeURIComponent(brand)}` : ""}`);
-export const blocklistCsvUrl = (brand?: string) =>
-  `${API_URL}/blocklist?format=csv${brand ? `&brand=${encodeURIComponent(brand)}` : ""}`;
+function saveBlob(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  Object.assign(document.createElement("a"), { href: url, download: filename }).click();
+  URL.revokeObjectURL(url);
+}
+
+/** Fetched and saved from the page (a plain link would open the tunnel's warning page instead of the file). */
+export async function downloadBlocklistCsv(brand?: string): Promise<void> {
+  const res = await fetch(`${API_URL}/blocklist?format=csv${brand ? `&brand=${encodeURIComponent(brand)}` : ""}`, {
+    headers: SKIP_TUNNEL_WARNING,
+  });
+  if (!res.ok) throw new ApiError(res.status, "CSV yüklənmədi");
+  saveBlob(await res.blob(), "unhook-blocklist.csv");
+}
 export const sendChallenge = (text: string) =>
   request<CheckResult>("/challenge", {
     method: "POST",
@@ -77,10 +96,7 @@ export const partnerBlocklist = (key: string) => request<BlocklistRow[]>("/partn
 
 /** The CSV needs the key header, so it is fetched and saved from the page instead of being a plain link. */
 export async function downloadPartnerCsv(key: string): Promise<void> {
-  const res = await fetch(`${API_URL}/partner/blocklist?format=csv`, withKey(key));
+  const res = await fetch(`${API_URL}/partner/blocklist?format=csv`, { headers: { ...SKIP_TUNNEL_WARNING, "X-API-Key": key } });
   if (!res.ok) throw new ApiError(res.status, "CSV yüklənmədi");
-  const url = URL.createObjectURL(await res.blob());
-  const a = Object.assign(document.createElement("a"), { href: url, download: "unhook-blocklist.csv" });
-  a.click();
-  URL.revokeObjectURL(url);
+  saveBlob(await res.blob(), "unhook-blocklist.csv");
 }

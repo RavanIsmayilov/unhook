@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BarList, ChartCard, DailyChart } from "@/components/charts";
 import { BlocklistTable, CampaignCard } from "@/components/lists";
 import { Card, Chip, Notice, SectionTitle, StatTile, VerdictBadge } from "@/components/ui";
-import { blocklistCsvUrl, getBlocklist, getCampaigns, getFeedback, getRecent, getStats } from "@/lib/api";
+import { downloadBlocklistCsv, getBlocklist, getCampaigns, getFeedback, getRecent, getStats } from "@/lib/api";
 import { SOURCE_AZ, timeAgo } from "@/lib/format";
 import type { FeedbackRow, ReportRow } from "@/lib/types";
 import { useNow, usePolling } from "@/lib/usePolling";
@@ -141,13 +141,13 @@ export default function Dashboard() {
         <SectionTitle
           hint="Fırıldaq hesabatlarında görünən saxta domenlər. Bank və telekomlar öz bloklama sisteminə əlavə edə bilər."
           right={
-            <a
-              href={blocklistCsvUrl(brand || undefined)}
+            <button
+              type="button"
+              onClick={() => downloadBlocklistCsv(brand || undefined).catch(() => {})}
               className="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm font-medium hover:bg-page"
-              download
             >
               ⬇ CSV yüklə
-            </a>
+            </button>
           }
         >
           Blok siyahısı{brand ? `: ${brand}` : ""}
