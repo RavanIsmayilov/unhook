@@ -14,6 +14,7 @@ import random
 import re
 import sqlite3
 import sys
+import threading
 import time
 from dataclasses import dataclass
 
@@ -27,12 +28,24 @@ class LLMUnavailable(Exception):
     """No provider could answer (missing key, quota exhausted, network, empty response)."""
 
 
+class LLMBusy(LLMUnavailable):
+    """Too many requests at once; waiting longer would not help the person in front of the screen."""
+
+
+_slots = threading.BoundedSemaphore(settings.MAX_CONCURRENT_LLM)
+_waited = threading.local()  # seconds this thread spent sleeping in rate-limit backoff during the current call
+
+
 @dataclass
 class LLMResult:
     text: str
     provider: str
     model: str
     cached: bool = False
+    tokens_in: int | None = None   # as reported by the provider (None for cached answers)
+    tokens_out: int | None = None  # includes reasoning tokens, which are billed as output
+    latency_ms: int | None = None  # total, including waits
+    waited_ms: int | None = None   # the part of latency spent waiting after rate-limit errors
 
 
 def model_for(provider: str) -> str:
@@ -74,6 +87,7 @@ def _with_backoff(fn, tries: int = 3, base_delay: float = 2.0):
                 raise
             delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
             print(f"[llm] {type(e).__name__}, retrying in {delay:.1f}s ({attempt + 1}/{tries - 1})", file=sys.stderr)
+            _waited.seconds = getattr(_waited, "seconds", 0.0) + delay
             time.sleep(delay)
 
 
@@ -118,7 +132,9 @@ def _call_gemini(system: str, prompt: str, image: bytes | None, schema: dict | N
         raise LLMUnavailable(f"gemini: {type(e).__name__}: {str(e)[:200]}") from e
     if not response.text:
         raise LLMUnavailable("gemini: empty response (blocked or no output)")
-    return response.text
+    u = response.usage_metadata
+    usage = {"in": getattr(u, "prompt_token_count", None), "out": (getattr(u, "candidates_token_count", 0) or 0) + (getattr(u, "thoughts_token_count", 0) or 0)} if u else {}
+    return response.text, usage
 
 
 def _call_groq(system: str, prompt: str, image: bytes | None, schema: dict | None, temperature: float,
@@ -149,7 +165,8 @@ def _call_groq(system: str, prompt: str, image: bytes | None, schema: dict | Non
     text = response.choices[0].message.content
     if not text:
         raise LLMUnavailable("groq: empty response")
-    return text
+    u = response.usage
+    return text, ({"in": u.prompt_tokens, "out": u.completion_tokens} if u else {})
 
 
 _PROVIDERS = {"gemini": _call_gemini, "groq": _call_groq}
@@ -204,13 +221,24 @@ def _call_cached(provider: str, system: str, prompt: str, image: bytes | None, s
     key = _cache_key(provider, system, prompt, image, schema, temperature, model)
     if use_cache and (hit := _cache_get(key)) is not None and _is_valid(hit, validate):
         return LLMResult(hit, provider, model, cached=True)
-    stats["api_calls"] += 1
-    text = _PROVIDERS[provider](system, prompt, image, schema, temperature, max_tokens, model=model)
+    if not _slots.acquire(timeout=settings.QUEUE_WAIT_SECONDS):
+        raise LLMBusy("too many requests at once")
+    try:
+        stats["api_calls"] += 1
+        _waited.seconds = 0.0
+        started = time.monotonic()
+        answer = _PROVIDERS[provider](system, prompt, image, schema, temperature, max_tokens, model=model)
+        latency_ms = round((time.monotonic() - started) * 1000)
+        waited_ms = round(getattr(_waited, "seconds", 0.0) * 1000)
+    finally:
+        _slots.release()
+    text, usage = answer if isinstance(answer, tuple) else (answer, {})  # test doubles may return a bare string
     if not _is_valid(text, validate):  # e.g. truncated JSON: never cache it, let the caller fall back
         raise LLMUnavailable(f"{provider}: output failed validation")
     if use_cache:
         _cache_put(key, text)
-    return LLMResult(text, provider, model)
+    return LLMResult(text, provider, model, tokens_in=usage.get("in"), tokens_out=usage.get("out"), latency_ms=latency_ms,
+                     waited_ms=waited_ms)
 
 
 def _fallback_candidates(provider: str, model: str | None, has_image: bool) -> list[tuple[str, str | None]]:
@@ -238,14 +266,21 @@ def generate(provider: str, system: str, prompt: str, image: bytes | None = None
         raise ValueError(f"unknown provider {provider!r}; use one of {list(_PROVIDERS)}")
     try:
         return _call_cached(provider, system, prompt, image, schema, temperature, max_tokens, use_cache, validate, model)
+    except LLMBusy:
+        raise  # a queue of people is waiting: more model calls would only make it worse
     except LLMUnavailable as error:
         if not fallback:
             raise
+        started = time.monotonic()
         for next_provider, next_model in _fallback_candidates(provider, model, image is not None):
+            if time.monotonic() - started > settings.CHAIN_BUDGET_SECONDS:
+                break  # the person has waited long enough; answer with what we have
             print(f"[llm] {error} -> trying {next_provider}/{next_model or model_for(next_provider)}", file=sys.stderr)
             try:
                 return _call_cached(next_provider, system, prompt, image if next_provider == "gemini" else None, schema,
                                     temperature, max_tokens, use_cache, validate, next_model)
+            except LLMBusy:
+                raise
             except LLMUnavailable as e:
                 error = e
         raise error

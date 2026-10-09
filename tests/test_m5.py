@@ -164,7 +164,7 @@ def test_results_endpoint_empty_and_with_files(client, monkeypatch, tmp_path):
     from app import results
 
     monkeypatch.setattr(results.settings, "RESULTS_DIR", tmp_path)
-    assert client.get("/results").json() == {"eval": None, "attack": None}
+    assert client.get("/results").json() == {"eval": None, "attack": None, "performance": None}
 
     eval_data = {"generated": "2026-10-08T12:00:00", "n_rows": 2, "systems": {"baseline": "baseline", "groq": "groq (m)"},
                  "metrics": {"baseline": {"recall_flagged": 1.0}, "groq": {"recall_flagged": 1.0}},

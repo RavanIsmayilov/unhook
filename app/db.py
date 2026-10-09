@@ -39,6 +39,7 @@ class Report(Base):
     provider: Mapped[str] = mapped_column(String(20), default="")
     model: Mapped[str] = mapped_column(String(60), default="")
     degraded: Mapped[bool] = mapped_column(Boolean, default=False)
+    usage: Mapped[list | None] = mapped_column(JSON, nullable=True)  # model calls: tokens, latency (cost per check)
 
     def to_dict(self) -> dict:
         d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -75,15 +76,26 @@ class Partner(Base):
 
 def init_db() -> None:
     Base.metadata.create_all(engine)
+    _add_missing_columns()
+
+
+def _add_missing_columns() -> None:
+    """create_all never alters an existing table, so databases made by an older version get the new columns here."""
+    from sqlalchemy import inspect, text
+
+    existing = {c["name"] for c in inspect(engine).get_columns("reports")}
+    with engine.begin() as conn:
+        if "usage" not in existing:
+            conn.execute(text("ALTER TABLE reports ADD COLUMN usage JSON"))
 
 
 def save_report(v: Verdict, source: str, had_image: bool = False, created_at: datetime | None = None) -> int:
-    links = [{"domain": l.domain, "status": l.status, "flags": l.flags} for l in v.links]
+    links = [{"domain": l.domain, "status": l.status, "flags": l.flags, "age_days": l.age_days} for l in v.links]
     report = Report(
         source=source, had_image=had_image, text_redacted=v.text_redacted, verdict=v.verdict, scheme=v.scheme,
         confidence=v.confidence, reasons=v.reasons, actions=v.actions, explanation_az=v.explanation_az,
         links=links, domains=list(dict.fromkeys(l["domain"] for l in links if l["domain"])),
-        provider=v.provider, model=v.model, degraded=v.degraded,
+        provider=v.provider, model=v.model, degraded=v.degraded, usage=v.usage,
     )
     if created_at:
         report.created_at = created_at

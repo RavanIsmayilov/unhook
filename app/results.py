@@ -69,6 +69,10 @@ def load_attack(results_dir: Path) -> dict | None:
     }
 
 
+def load_performance(results_dir: Path) -> dict | None:
+    return _read(results_dir / "performance.json")
+
+
 def load_results(results_dir: Path | None = None) -> dict:
     results_dir = results_dir or settings.RESULTS_DIR
-    return {"eval": load_eval(results_dir), "attack": load_attack(results_dir)}
+    return {"eval": load_eval(results_dir), "attack": load_attack(results_dir), "performance": load_performance(results_dir)}

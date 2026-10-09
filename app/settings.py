@@ -17,6 +17,11 @@ def _csv(name: str, default: str) -> list[str]:
 # Free-tier quotas are per model, so when one model is rate-limited we try the next one.
 GEMINI_FALLBACK_MODELS = _csv("GEMINI_FALLBACK_MODELS", "gemini-3.1-flash-lite,gemini-3.5-flash-lite")
 GROQ_FALLBACK_MODELS = _csv("GROQ_FALLBACK_MODELS", "openai/gpt-oss-20b,qwen/qwen3.8-27b")
+# Protect the free tiers when many people check at once: at most N model calls in flight, the rest wait in line.
+MAX_CONCURRENT_LLM = int(os.getenv("MAX_CONCURRENT_LLM", "4"))
+QUEUE_WAIT_SECONDS = float(os.getenv("QUEUE_WAIT_SECONDS", "25"))     # waiting longer than this = "busy"
+CHAIN_BUDGET_SECONDS = float(os.getenv("CHAIN_BUDGET_SECONDS", "30"))  # stop trying more models after this long
+DOMAIN_AGE_TIMEOUT = float(os.getenv("DOMAIN_AGE_TIMEOUT", "2.0"))
 ANALYZER_PROVIDER = os.getenv("ANALYZER_PROVIDER", "groq")
 ATTACKER_PROVIDER = os.getenv("ATTACKER_PROVIDER", "groq")
 ATTACKER_MODEL = os.getenv("ATTACKER_MODEL", "")  # optional: a different model than the analyzer

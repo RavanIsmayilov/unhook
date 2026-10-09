@@ -188,7 +188,7 @@ def test_garbage_llm_output_is_degraded_not_crash(monkeypatch):
 
 
 def test_image_only_uses_transcript(monkeypatch):
-    monkeypatch.setattr(analyzer, "transcribe_image", lambda b: "Bonus bit.ly/abc")
+    monkeypatch.setattr(analyzer, "transcribe_image", lambda b, usage=None, use_cache=True: "Bonus bit.ly/abc")
     monkeypatch.setattr(llm, "generate", lambda *a, **k: llm.LLMResult(VERDICT_JSON, "groq", "m"))
     v = analyzer.analyze(None, b"\x89PNG....")
     assert v.links and v.links[0].status == "shortener" and "bit.ly" in v.text_redacted

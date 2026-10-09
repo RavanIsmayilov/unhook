@@ -57,6 +57,14 @@ export function VerdictCard({ result }: { result: CheckResult }) {
           </ul>
         )}
 
+        {result.links.filter((l) => l.age_days != null && l.age_days < 90).map((l, i) => (
+          <p key={`age-${i}`} className="flex flex-wrap items-center gap-2 text-sm">
+            <span aria-hidden>🕒</span>
+            <code className="rounded bg-page px-1.5 py-0.5 font-mono text-[13px]">{l.domain}</code>
+            <span className="text-ink2">saytı {l.age_days === 0 ? "bu gün" : `${l.age_days} gün əvvəl`} yaradılıb. Yeni saytlara ehtiyatla yanaşın.</span>
+          </p>
+        ))}
+
         {result.actions.length > 0 && (
           <div>
             <h3 className="mb-1.5 text-sm font-semibold">Nə etməli?</h3>

@@ -8,7 +8,7 @@ Run from the command line:
 import json
 import sys
 
-from app import llm, settings
+from app import domainage, llm, settings
 from app.linkcheck import check_links
 from app.redact import find_phones, mask_phone, redact
 from app.schemas import SCHEME_CODES, Verdict
@@ -76,9 +76,18 @@ TRANSCRIBE_PROMPT = (
 )
 
 
-def transcribe_image(image_bytes: bytes) -> str:
+def usage_entry(result: llm.LLMResult, purpose: str) -> dict:
+    return {"purpose": purpose, "provider": result.provider, "model": result.model, "tokens_in": result.tokens_in,
+            "tokens_out": result.tokens_out, "latency_ms": result.latency_ms, "waited_ms": result.waited_ms,
+            "cached": result.cached}
+
+
+def transcribe_image(image_bytes: bytes, usage: list | None = None, use_cache: bool = True) -> str:
     """Read the text of a screenshot. Only Gemini has vision here. Raises LLMUnavailable if it can't."""
-    result = llm.generate("gemini", TRANSCRIBE_SYSTEM, TRANSCRIBE_PROMPT, image=image_bytes, max_tokens=2000)
+    result = llm.generate("gemini", TRANSCRIBE_SYSTEM, TRANSCRIBE_PROMPT, image=image_bytes, max_tokens=2000,
+                          use_cache=use_cache)
+    if usage is not None:
+        usage.append(usage_entry(result, "screenshot_ocr"))
     text = result.text.strip()
     return "" if text == "[NO TEXT]" else text
 
@@ -91,12 +100,16 @@ def _validate_verdict_json(text: str) -> None:
 
 
 def _build_user_prompt(redacted_text: str, links: list, extra_examples: list[dict] | None) -> str:
-    link_info = [{"domain": l.domain, "status": l.status, "flags": l.flags} for l in links] or "no links found"
+    link_info = [{"domain": l.domain, "status": l.status, "flags": l.flags,
+                  **({"age_days": l.age_days} if l.age_days is not None else {})} for l in links] or "no links found"
     parts = []
     if extra_examples:
         lines = [f'- label={ex["label"]}: {ex["text"]}' for ex in extra_examples]
         parts.append("Extra labeled examples (earlier versions got these wrong; learn from them):\n" + "\n".join(lines))
     parts.append(f"link_check: {json.dumps(link_info, ensure_ascii=False)}")
+    if any(l.age_days is not None for l in links):  # only then, so prompts (and cached answers) stay unchanged otherwise
+        parts.append("age_days = days since the domain was registered. A non-official domain registered in the last 30 days "
+                     "is strong evidence of phishing: banks and operators use long-established domains.")
     parts.append(f"<message>\n{redacted_text}\n</message>")
     return "\n\n".join(parts)
 
@@ -109,6 +122,9 @@ def _guardrails(v: Verdict) -> Verdict:
     if v.verdict == "safe" and any(l.status == "lookalike" for l in v.links):
         v.verdict = "suspicious"
         v.reasons = (v.reasons + ["Mesajdakı link rəsmi sayta oxşayır, amma rəsmi sayt deyil."])[:4]
+    if v.verdict == "safe" and any(f.startswith("new_domain") for l in v.links for f in l.flags):
+        v.verdict = "suspicious"
+        v.reasons = (v.reasons + ["Linkdəki sayt çox yaxınlarda yaradılıb."])[:4]
     if v.verdict == "scam" and v.confidence < 0.6:
         v.verdict = "suspicious"  # prefer "suspicious" when unsure (real bank notifications exist)
     if v.verdict == "safe":
@@ -118,7 +134,7 @@ def _guardrails(v: Verdict) -> Verdict:
     return v
 
 
-def _degraded(links: list, phones: list[str], redacted: str, why: str) -> Verdict:
+def _degraded(links: list, phones: list[str], redacted: str, why: str, busy: bool = False) -> Verdict:
     """No LLM answered: report what the link checker alone can say."""
     print(f"[analyzer] degraded: {why}", file=sys.stderr)
     bad = [l for l in links if l.status in ("lookalike", "suspicious", "shortener")]
@@ -127,6 +143,9 @@ def _degraded(links: list, phones: list[str], redacted: str, why: str) -> Verdic
         scheme = "bank_impersonation"
     elif bad:
         reasons = ["Mesajda şübhəli link var."]
+        scheme = "other"
+    elif busy:
+        reasons = ["Hazırda çoxlu sorğu var. Bir neçə saniyə sonra yenidən yoxlayın."]
         scheme = "other"
     else:
         reasons = ["Mesajı tam təhlil etmək mümkün olmadı, ona görə ehtiyatlı olun."]
@@ -146,7 +165,8 @@ def _degraded(links: list, phones: list[str], redacted: str, why: str) -> Verdic
 
 
 def analyze(text: str | None, image_bytes: bytes | None = None, provider: str | None = None,
-            fallback: bool = True, extra_examples: list[dict] | None = None) -> Verdict:
+            fallback: bool = True, extra_examples: list[dict] | None = None, use_cache: bool = True,
+            check_domain_age: bool = False) -> Verdict:
     """Analyze a message and/or a screenshot of one and return a Verdict.
 
     provider: "gemini" | "groq" (default: ANALYZER_PROVIDER from .env)
@@ -156,9 +176,10 @@ def analyze(text: str | None, image_bytes: bytes | None = None, provider: str | 
     provider = provider or settings.ANALYZER_PROVIDER
     text = (text or "").strip()
     image_error = ""
+    usage: list[dict] = []
     if image_bytes:
         try:
-            text = f"{text}\n{transcribe_image(image_bytes)}".strip()
+            text = f"{text}\n{transcribe_image(image_bytes, usage, use_cache)}".strip()
         except llm.LLMUnavailable as e:
             image_error = str(e)
 
@@ -166,6 +187,8 @@ def analyze(text: str | None, image_bytes: bytes | None = None, provider: str | 
         return _degraded([], [], "", image_error or "empty input")
 
     links = check_links(text)  # run on the raw text: only domains matter here
+    if check_domain_age:  # live checks only: eval and attacker leave it off so their numbers do not depend on the network
+        domainage.annotate(links)
     phones = find_phones(text)
     redacted = redact(text)  # everything below (LLM, storage) only sees the redacted text
 
@@ -173,12 +196,16 @@ def analyze(text: str | None, image_bytes: bytes | None = None, provider: str | 
         result = llm.generate(
             provider, SYSTEM_PROMPT, _build_user_prompt(redacted, links, extra_examples),
             schema=VERDICT_SCHEMA, max_tokens=4000, fallback=fallback, validate=_validate_verdict_json,
+            use_cache=use_cache,
         )
+        usage.append(usage_entry(result, "verdict"))
         data = json.loads(result.text)
         verdict = Verdict(
             **data, links=links, phones=[mask_phone(p) for p in phones], text_redacted=redacted,
-            provider=result.provider, model=result.model,
+            provider=result.provider, model=result.model, usage=usage,
         )
+    except llm.LLMBusy as e:
+        return _degraded(links, phones, redacted, f"busy: {e}", busy=True)
     except (llm.LLMUnavailable, ValueError, TypeError) as e:  # ValueError covers bad JSON and pydantic errors
         return _degraded(links, phones, redacted, f"{type(e).__name__}: {e}")
     return _guardrails(verdict)

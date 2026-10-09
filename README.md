@@ -2,8 +2,31 @@
 
 > **Get unhooked before you get scammed.**
 
-Unhook checks suspicious messages for scams in **Azerbaijani**, including translit (`salam, bonusunuz hazirdir`) and mixed
-Azerbaijani + Russian text, and shows banks and telecoms the scam campaigns that impersonate their brand.
+**The problem.** People in Azerbaijan get scam messages every day ("your Azercell bonus is ready, click here", "your card is
+blocked, send the code"). Scammers write in Azerbaijani with and without special letters (translit: `salam, bonusunuz hazirdir`),
+in Russian, or in a mix, so simple keyword filters miss them, and they also flag real bank notifications. Banks and mobile
+operators only learn about a campaign when customers complain.
+
+**Who it is for.** (1) Anyone who gets a suspicious message: send it (text or screenshot) and get a verdict in Azerbaijani with
+the reasons and what to do. (2) Fraud teams at banks and telecoms: see campaigns that impersonate their brand, get a blocklist of
+fake domains, and an alert (webhook) when a new one appears.
+
+**How it works.** Personal data is removed first (cards, phones, one-time codes). A link checker compares domains with the
+official ones and looks up how old a domain is. A language model (open-weight, free tier) reads the message and returns a strict
+JSON verdict. Code-level guardrails stop it from calling a fake link "safe". Reports are grouped into campaigns by text and
+domain.
+
+**Try it now.**
+- Website (no setup): <https://unhook-smoky.vercel.app>. Pages: `/` check a message, `/dashboard`, `/radar`, `/challenge`,
+  `/results`, `/integration`, `/partner`. The backend runs on the team's laptop for the demo, so if a page says "connection lost",
+  the laptop is offline: see the results files below, or run it yourself (next section).
+- Telegram: `@unhook_az_bot` (send text or a screenshot).
+- Example messages to try: `salam, bonusunuz hazirdir: bonus-azercell.top/qazan` (scam) and
+  `Kapital Bank: 4821 kodu heç kimə verməyin. Ödəniş 25.00 AZN təsdiqləndi.` (a real-looking bank notice that must NOT be called a scam).
+
+**Where the results are.** Start with `results/SUMMARY.md` (one page, plain numbers, honest limits). Details: `results/eval_results.md`,
+`results/failures.md`, `results/attack_results.md`, `results/performance.md`. Models, data and components:
+`DISCLOSURE.md`.
 
 | Part | What it is | Where |
 |---|---|---|

@@ -14,7 +14,7 @@ from app.schemas import Verdict
 
 def check(text: str | None, image_bytes: bytes | None = None, source: str = "api") -> tuple[Verdict, int | None]:
     """Analyze, then store the redacted report. A storage failure never blocks the answer."""
-    verdict = analyze(text, image_bytes)
+    verdict = analyze(text, image_bytes, check_domain_age=True)
     try:
         report_id = db.save_report(verdict, source=source, had_image=image_bytes is not None)
     except Exception as e:

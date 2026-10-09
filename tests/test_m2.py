@@ -47,13 +47,13 @@ def test_save_and_read_report():
 
 
 def test_service_check_stores_report(monkeypatch):
-    monkeypatch.setattr(service, "analyze", lambda text, image: make_verdict())
+    monkeypatch.setattr(service, "analyze", lambda text, image, **kw: make_verdict())
     v, rid = service.check("salam", None, source="telegram")
     assert rid is not None and db.recent_reports()[0]["source"] == "telegram"
 
 
 def test_service_survives_db_failure(monkeypatch):
-    monkeypatch.setattr(service, "analyze", lambda text, image: make_verdict())
+    monkeypatch.setattr(service, "analyze", lambda text, image, **kw: make_verdict())
     monkeypatch.setattr(db, "save_report", lambda *a, **k: 1 / 0)
     v, rid = service.check("salam")
     assert v.verdict == "scam" and rid is None

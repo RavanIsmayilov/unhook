@@ -35,6 +35,10 @@ NO_INPUT_TEXT = "Mətn və ya şəkil göndərin, yoxlayım."
 REPLY_TO_CHECK_TEXT = "Yoxlamaq istədiyiniz mesaja <b>cavab verib</b> /yoxla yazın."
 
 
+def age_phrase(days: int) -> str:
+    return "bu gün" if days == 0 else f"{days} gün əvvəl"
+
+
 def format_group_warning(v: Verdict) -> str:
     """Short warning for a family group: headline, scheme, one-line explanation, first action."""
     lines = [HEADLINES[v.verdict]]
@@ -65,6 +69,9 @@ def format_verdict(v: Verdict) -> str:
     bad_links = [l for l in v.links if l.status in LINK_WARNINGS]
     for l in bad_links:
         lines.append(f"🔗 <code>{escape(l.domain)}</code>: {LINK_WARNINGS[l.status]}")
+    for l in v.links:
+        if l.age_days is not None and l.age_days < 90:
+            lines.append(f"🕒 <code>{escape(l.domain)}</code> saytı {age_phrase(l.age_days)} yaradılıb. Yeni saytlara ehtiyatla yanaşın.")
 
     if v.actions:
         lines.append("\n<b>Nə etməli?</b>")

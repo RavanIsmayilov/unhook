@@ -1,0 +1,21 @@
+{
+  "generated": "2026-10-09T15:10:27",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "n_messages": 24,
+  "failed": 0,
+  "calls": 24,
+  "tokens_in_avg": 1167,
+  "tokens_out_avg": 404,
+  "latency_ms_mean": 3012,
+  "latency_ms_p50": 1645,
+  "latency_ms_p95": 10428,
+  "model_ms_p50": 1645,
+  "model_ms_p95": 10428,
+  "calls_with_rate_limit_wait": 0,
+  "cost_per_check_usd": 0.00041763749999999995,
+  "cost_per_1000_checks_usd": 0.41763749999999994,
+  "price_input_per_m": 0.15,
+  "price_output_per_m": 0.6,
+  "price_source": "Groq list price as reported by third-party price trackers (2026-10-09); verify at groq.com/pricing"
+}

@@ -3,6 +3,42 @@
 Everything used to build and run Unhook, as required by the hackathon rules. Update this file if you change a model,
 provider or data source before submitting.
 
+## Copy-paste block for the platform's disclosure box
+
+**Models**
+- `openai/gpt-oss-120b` (Groq API, free tier): judges every text message (the analyzer).
+- `gemini-3.5-flash` (Google Gemini API, free tier): reads screenshots (OCR).
+- `qwen/qwen3.8-27b` (Groq API, free tier): attacker agent that writes scam variants meant to evade the detector.
+- Fallbacks used automatically when a model is rate-limited: `openai/gpt-oss-20b`, `qwen/qwen3.8-27b` (Groq); `gemini-3.1-flash-lite`,
+  `gemini-3.5-flash-lite` (Gemini). Each stored report records which model answered.
+- Claude Sonnet 5.5 (Anthropic, through Claude Code): wrote the code, prompts and test messages under the team's direction.
+
+**Data**
+- `data/labeled.csv`: 45 synthetic test messages written by Claude for this project (27 scam, 18 harmless; each in Azerbaijani,
+  translit and Azerbaijani+Russian). Real messages can be added with `add_real.py` (personal data removed first); rows say where they came from.
+- `data/attack_misses.csv`: variants generated at run time by the attacker model (labels not human-verified).
+- `config/official_domains.yaml`: official domains of Azerbaijani banks and operators, written from general knowledge, not verified.
+- Domain registration dates from the public RDAP service (rdap.org): only a domain name is sent, never message text.
+- No external datasets or scraped data. Demo data (`seed_demo.py`) is derived from our synthetic messages and marked `source="demo"`.
+
+**Components**
+- Python: FastAPI, Uvicorn, SQLAlchemy (SQLite), python-telegram-bot, scikit-learn (TF-IDF, DBSCAN), google-genai, groq, httpx,
+  pydantic, PyYAML, python-dotenv, pytest. Web: Next.js 16, React 19, Tailwind CSS 4, TypeScript, `qrcode`.
+- Services: Telegram Bot API, Google AI Studio, Groq Cloud, rdap.org, Cloudflare Tunnel (exposes the demo backend), Vercel (hosts the website).
+- No website template, UI kit or starter repository. Chart colours follow a colour-blind-safe palette that was checked with a validator.
+
+**Built during the event**
+Written with Claude Code by team Aura. Here is the timeline, so judges can compare it with the repository:
+- *Before the 11:00 start on 9 October (evening of 8 October):* a first working version of the analyzer, the Telegram bot, the
+  evaluation harness with the keyword baseline, the attacker agent, the API with campaign clustering, a first version of the website
+  (check page, dashboard, results page) and the first 45-message synthetic test set. We list this separately because the rules ask for a
+  project built after the start.
+- *After the start on 9 October:* the evaluation, attacker and speed/cost runs behind the numbers in `results/`; the partner API (keys per company,
+  brand-limited views, signed webhooks, batch check); domain blocklist with CSV; public radar page; "fool the AI" challenge; Telegram group
+  mode and `/yoxla`; feedback buttons; QR page; integration docs; domain-age signal; request queue and model fallback chain; token and
+  cost logging; the real-message tool; documentation; deployment to Vercel.
+- The Git history starts at 13:37 on 9 October because the earlier work was committed together with the later work in one first commit.
+
 ## 1. AI models used inside the product (at run time)
 
 | Model | Provider / access | What it does in Unhook |
@@ -67,6 +103,7 @@ All of these are open-source packages used unmodified under their own licenses.
 - Telegram Bot API (bot `@unhook_az_bot`)
 - Google AI Studio (Gemini API) and Groq Cloud (see section 1)
 - Cloudflare Tunnel (`cloudflared`) to expose the local API; Vercel to host the web app
+- rdap.org (public domain registration data): receives only domain names from links in a message, to learn how old a domain is
 - Git is not used by the tooling; nothing was pushed anywhere by the assistant
 
 ## 6. Templates, design assets and code from elsewhere
@@ -86,6 +123,7 @@ All of these are open-source packages used unmodified under their own licenses.
   or Telegram IDs.
 - LLM answers are cached on disk (`.cache/llm_cache.sqlite`) keyed by a hash of the redacted prompt.
 - Screenshots are not stored, but are sent to Gemini for reading (see section 1).
+- Each report also stores, per model call: provider, model, input/output tokens and latency (to compute the real cost per check). No message text is added by this.
 
 - Telegram group mode: in a group the bot reads only messages that contain a link, sends them (redacted) to the same
   analyzer and stores them redacted like any other report. Members of the group are not told per message, so tell the group when you add the bot.

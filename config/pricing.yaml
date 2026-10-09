@@ -1,0 +1,8 @@
+# USD per 1,000,000 tokens (list prices). We ran on FREE tiers, so our real spend was 0; these numbers answer
+# "what would it cost at normal prices?". Prices change: verify before quoting them.
+# Models that are missing here are reported with tokens only (no cost).
+models:
+  openai/gpt-oss-120b:
+    input: 0.15
+    output: 0.60
+    source: "Groq list price as reported by third-party price trackers (2026-10-09); verify at groq.com/pricing"

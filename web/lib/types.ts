@@ -5,6 +5,7 @@ export interface LinkInfo {
   domain: string;
   status: "official" | "lookalike" | "suspicious" | "shortener" | "unknown";
   flags: string[];
+  age_days?: number | null;
 }
 
 export interface CheckResult {
@@ -121,7 +122,28 @@ export interface AttackResults {
   misses: { id: string; technique: string; text: string; confidence: number }[];
 }
 
-export interface ResultsPayload { eval: EvalResults | null; attack: AttackResults | null }
+export interface PerformanceResults {
+  generated: string;
+  provider: string;
+  model: string;
+  n_messages: number;
+  failed: number;
+  calls: number;
+  tokens_in_avg: number;
+  tokens_out_avg: number;
+  latency_ms_p50: number | null;
+  latency_ms_p95: number | null;
+  model_ms_p50: number | null;
+  model_ms_p95: number | null;
+  calls_with_rate_limit_wait: number;
+  cost_per_check_usd: number | null;
+  cost_per_1000_checks_usd: number | null;
+  price_input_per_m: number | null;
+  price_output_per_m: number | null;
+  price_source: string | null;
+}
+
+export interface ResultsPayload { eval: EvalResults | null; attack: AttackResults | null; performance: PerformanceResults | null }
 
 export interface BlocklistRow {
   domain: string;

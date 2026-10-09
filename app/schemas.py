@@ -22,6 +22,7 @@ class Link(BaseModel):
     domain: str
     status: Literal["official", "lookalike", "suspicious", "shortener", "unknown"]
     flags: list[str] = Field(default_factory=list)
+    age_days: int | None = None  # days since the domain was registered (live checks only; None = unknown)
 
 
 class Verdict(BaseModel):
@@ -37,6 +38,7 @@ class Verdict(BaseModel):
     degraded: bool = False  # True when no LLM answered and we fell back to link checks
     provider: str = ""  # which LLM produced the verdict ("" when degraded)
     model: str = ""
+    usage: list[dict] = Field(default_factory=list)  # one entry per model call: tokens, latency, provider, model
 
     @computed_field
     @property

@@ -1,10 +1,10 @@
 "use client";
 
 import { BarList, ChartCard, Legend, type BarRow } from "@/components/charts";
-import { Card, Chip, Notice, SectionTitle } from "@/components/ui";
+import { Card, Chip, Notice, SectionTitle, StatTile } from "@/components/ui";
 import { getResults } from "@/lib/api";
 import { pct } from "@/lib/format";
-import type { AttackResults, EvalResults, EvalSystem } from "@/lib/types";
+import type { AttackResults, EvalResults, EvalSystem, PerformanceResults } from "@/lib/types";
 import { usePolling } from "@/lib/usePolling";
 
 const WRITING_AZ: Record<string, string> = { az: "Azərbaycan", translit: "Translit", az_ru: "AZ + RU" };
@@ -46,6 +46,7 @@ export default function Results() {
         <>
           {data.eval ? <EvalSection ev={data.eval} /> : <Notice>Qiymətləndirmə hələ işlədilməyib: <code>python eval.py --providers groq</code></Notice>}
           {data.attack ? <AttackSection at={data.attack} /> : <Notice>Hücum testi hələ işlədilməyib: <code>python attacker.py</code></Notice>}
+          {data.performance && <PerformanceSection p={data.performance} />}
           <Caveats />
         </>
       )}
@@ -255,5 +256,29 @@ function Caveats() {
         <li>Açar-söz filtri: bonus, kart, kod, təcili, link və s. sözlərə baxan sadə baza xətti.</li>
       </ul>
     </Card>
+  );
+}
+
+function PerformanceSection({ p }: { p: PerformanceResults }) {
+  const sec = (ms: number | null) => (ms == null ? "—" : `${(ms / 1000).toFixed(1)} san`);
+  return (
+    <section className="space-y-3" aria-label="Sürət və xərc">
+      <SectionTitle hint={`${p.n_messages} mesaj, keş söndürülü, model ${p.model}`}>Bir yoxlama nə qədər sürətli və baha başa gəlir?</SectionTitle>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatTile label="Cavab müddəti (median)" value={sec(p.model_ms_p50)} />
+        <StatTile label="Ən yavaş 5% (p95)" value={sec(p.model_ms_p95)} hint="provayderin bəzi gecikmələri" />
+        <StatTile label="Token (giriş / çıxış)" value={`${p.tokens_in_avg} / ${p.tokens_out_avg}`} />
+        <StatTile
+          label="Xərc, bir yoxlama"
+          value={p.cost_per_check_usd == null ? "—" : `$${p.cost_per_check_usd.toFixed(5)}`}
+          hint={p.cost_per_1000_checks_usd == null ? undefined : `1000 yoxlama ≈ $${p.cost_per_1000_checks_usd.toFixed(2)}`}
+        />
+      </div>
+      <p className="text-sm text-ink2">
+        Biz pulsuz planda işlədik, real xərcimiz 0 oldu. Xərc sətri eyni tokenlərin siyahı qiyməti ilə dəyəridir
+        (giriş ${p.price_input_per_m}/1M, çıxış ${p.price_output_per_m}/1M token). Qiymət mənbəyi: {p.price_source}.
+        Ekran görüntüsü əlavə bir model çağırışı tələb edir və buraya daxil deyil.
+      </p>
+    </section>
   );
 }
