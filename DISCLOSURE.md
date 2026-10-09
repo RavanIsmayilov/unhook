@@ -42,6 +42,10 @@ The team is responsible for the final submission.
 | Keyword baseline list in `eval.py` | Written by us (bonus, kart, kod, təcili, ... plus a few Russian words) |
 | Telegram reports stored in `unhook.db` | Created by users of the bot; stored **redacted** only |
 | Website feedback ("was this answer right?") | Created by visitors; stores the report id, agree/disagree, the label they suggest, and an optional note (redacted) |
+| Partner API keys (`partners.py`) | Created by the team for partner companies. Only a SHA-256 hash of each key is stored, plus a short prefix and the partner's webhook URL and signing secret |
+| Webhook events | Sent to a partner's URL when a flagged report mentions its brand: redacted message text, verdict, scheme, domains, brand. Nothing else |
+| "Fool the AI" challenge messages | Typed by website visitors, stored redacted, kept apart from real reports and never sent to partners. Their labels are unverified (people claim they are scams) |
+| Educational tips (`web/lib/tips.ts`) | General advice written by us (Claude) for each scam type. It contains no statistics |
 | Domain blocklist (`/blocklist`) | Computed from the stored reports; automatic and not reviewed by a person |
 
 No external datasets, scraped data or third-party scam corpora were used.
@@ -51,7 +55,7 @@ No external datasets, scraped data or third-party scam corpora were used.
 **Python** (see `requirements.txt`; versions we ran):
 `fastapi 0.143.0`, `uvicorn 0.54.0`, `SQLAlchemy 2.1.4` (SQLite), `python-telegram-bot 22.8`, `scikit-learn 1.9.1`
 (TF-IDF, DBSCAN), `google-genai 2.29.0`, `groq 1.7.0`, `pydantic 2.14.0`, `python-dotenv 1.2.4`, `PyYAML 6.0.3`,
-`pytest 9.1.1`, `httpx 0.28.1` (pulled in by dependencies). Standard library: `sqlite3` (LLM answer cache), `csv`, `json`.
+`pytest 9.1.1`, `httpx 0.28.1` (webhook delivery). Standard library: `sqlite3` (LLM answer cache), `csv`, `json`.
 
 **Web app** (`web/package.json`): `next 16.4.0`, `react 19.3.0`, `react-dom 19.3.0`, `tailwindcss 4.3.3`,
 `@tailwindcss/postcss 4.3.3`, `typescript 5.9.3`, `qrcode` (QR code on the `/qr` page, MIT licence). No chart library: charts are plain HTML/CSS.
@@ -82,6 +86,9 @@ All of these are open-source packages used unmodified under their own licenses.
   or Telegram IDs.
 - LLM answers are cached on disk (`.cache/llm_cache.sqlite`) keyed by a hash of the redacted prompt.
 - Screenshots are not stored, but are sent to Gemini for reading (see section 1).
+
+- Telegram group mode: in a group the bot reads only messages that contain a link, sends them (redacted) to the same
+  analyzer and stores them redacted like any other report. Members of the group are not told per message, so tell the group when you add the bot.
 
 ## 8. Known limitations (so the numbers are read correctly)
 

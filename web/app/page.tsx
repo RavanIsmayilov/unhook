@@ -11,7 +11,11 @@ export default function Home() {
         </p>
       </div>
       <CheckForm />
-      <p className="mt-6 text-center text-sm text-ink2">
+      <a href="/challenge" className="mt-6 block rounded-2xl border border-line bg-surface p-4 text-center hover:bg-page">
+        <span className="font-semibold">🎮 Unhook-u aldada bilərsən?</span>
+        <span className="block text-sm text-ink2">Fırıldaq mesajı yaz, görək tanıyacaq?</span>
+      </a>
+      <p className="mt-4 text-center text-sm text-ink2">
         Telegram-da da yoxlaya bilərsiniz:{" "}
         <a href="https://t.me/unhook_az_bot" className="font-medium text-s1 underline underline-offset-2">@unhook_az_bot</a>
       </p>

@@ -23,4 +23,4 @@ export function shortDate(iso: string): string {
   return `${d}.${m}`;
 }
 
-export const SOURCE_AZ: Record<string, string> = { telegram: "Telegram", api: "Vebsayt", demo: "Demo", cli: "Terminal" };
+export const SOURCE_AZ: Record<string, string> = { telegram: "Telegram", api: "Vebsayt", demo: "Demo", cli: "Terminal", partner: "Tərəfdaş" };

@@ -1,0 +1,3 @@
+# EXAMPLE of the format only. Copy to data/real_messages.txt and replace these lines with REAL messages.
+# scam | <paste a real scam message on one line>
+# safe | <paste a real, legitimate message (bank notification, delivery notice, normal chat) on one line>

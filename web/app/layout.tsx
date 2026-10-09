@@ -17,7 +17,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         <main className="mx-auto max-w-5xl px-4 pb-10 pt-6 sm:pt-10">{children}</main>
         <footer className="mx-auto max-w-5xl px-4 pb-10 text-center text-sm text-ink2">
-          Unhook · <a href="/qr" className="underline underline-offset-2">QR kod</a> ·{" "}
+          Unhook · <a href="/challenge" className="underline underline-offset-2">AI-ı aldat</a> ·{" "}
+          <a href="/integration" className="underline underline-offset-2">Şirkətlər üçün</a> ·{" "}
+          <a href="/qr" className="underline underline-offset-2">QR kod</a> ·{" "}
           <a href="https://t.me/unhook_az_bot" className="underline underline-offset-2">Telegram bot</a>
         </footer>
       </body>

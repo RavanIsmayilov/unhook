@@ -56,6 +56,11 @@ text. Screenshots need Gemini (Groq has no vision here), so they stop working un
 **Telegram bot** (`python bot.py`): `/start` explains the bot. Send text, forward a message, or send a screenshot.
 Every check is stored as a redacted report in `unhook.db`.
 
+*Family-group mode:* add the bot to a group. It checks only messages that contain a link (to save the free API quota)
+and stays silent unless it finds a scam or something suspicious. `/yoxla` as a **reply** to any message checks that
+message. For the bot to *see* ordinary group messages, switch off its privacy mode once: BotFather → `/setprivacy` →
+choose the bot → **Disable**, then remove and re-add the bot to the group. Without that, only `/yoxla` replies work.
+
 **API** (`uvicorn api:app --port 8000`, interactive docs at <http://localhost:8000/docs>):
 
 | Endpoint | Purpose |
@@ -66,6 +71,9 @@ Every check is stored as a redacted report in `unhook.db`.
 | `GET /reports/recent` | latest redacted reports. Query: `limit` |
 | `GET /results` | evaluation and attacker results for the judges' page |
 | `GET /blocklist` | suspicious domains seen in scam reports (for banks). Query: `format=csv`, `brand`, `min_reports` |
+| `GET /partner/me`, `/partner/summary`, `/partner/campaigns`, `/partner/blocklist` | **Partner API** for companies: header `X-API-Key`, sees only its own brand |
+| `POST /partner/check`, `/partner/check/batch` | check one message, or up to 10 at once (for an SMS gateway or a bank app) |
+| `POST /challenge`, `GET /challenge/stats` | the "fool the AI" game; attempts are stored apart from real reports |
 | `POST /feedback` | "was this answer right?" from the website. `GET /feedback/recent` lists the disagreements |
 
 **Web app** (`web/`, Next.js + Tailwind):
@@ -78,8 +86,26 @@ npm run dev                 # http://localhost:3000
 
 Pages: `/` check a message or screenshot (mobile first; after each answer people can say whether it was right),
 `/dashboard` live fraud dashboard (refreshes every 5 s): stats, campaigns, a **domain blocklist** banks can download as CSV,
-and the people who said our answer was wrong; `/results` evaluation and attack results; `/qr` a big QR code of the site
+and the people who said our answer was wrong; `/results` evaluation and attack results; `/radar` a public "scams spreading now" page with share buttons;
+`/challenge` a game where visitors try to fool the detector (their winning messages become test cases:
+`python challenge_misses.py`); `/partner` and `/integration` for companies (below); `/qr` a big QR code of the site
 address to show on a projector (type the Vercel address into the box if the page was opened on localhost).
+
+**For companies (banks, telecoms): partner API, panel and webhooks.** Each company gets its own API key that shows only
+its own brand (an Azercell key never sees Kapital Bank's campaigns). Keys are stored as hashes and shown once:
+
+```bash
+python partners.py create "Azercell" --brand Azercell --webhook https://example.com/hook   # prints the key once
+python partners.py demo                     # two demo partners (Azercell, Kapital Bank), new keys each time
+python partners.py list                     # who has a key
+python partners.py revoke "Azercell"        # key stops working immediately
+python partners.py test-webhook "Azercell"  # sends a sample event to its webhook
+```
+
+The company pastes the key on `/partner` (brand-only panel with campaigns and a CSV blocklist) or sends it as
+`X-API-Key` to the `/partner/...` endpoints. `/integration` is the public documentation page with copy-paste `curl`
+examples. With a webhook set, every new scam or suspicious report that impersonates the partner's brand is POSTed to
+its URL as JSON, signed with HMAC-SHA256 (`X-Unhook-Signature`). Free way to try a webhook: <https://webhook.site>.
 
 **Demo data** for the dashboard (no API keys needed). Demo rows are marked `source="demo"`:
 
@@ -87,6 +113,10 @@ address to show on a projector (type the Vercel address into the box if the page
 python seed_demo.py          # add ~70 demo reports
 python seed_demo.py --clear  # remove them again
 ```
+
+**Real messages for the evaluation** (the sample data is synthetic, real messages make the numbers credible): put one
+message per line in `data/real_messages.txt` as `scam | text` or `safe | text`, then run `python add_real.py`. It removes
+cards, phones, IBANs and one-time codes **before** writing to `data/labeled.csv` (which goes to Git). Check the new rows.
 
 **Evaluation**: fill `data/labeled.csv`, then
 
@@ -137,7 +167,7 @@ Things to know:
 - `NEXT_PUBLIC_API_URL` is baked in at build time. A quick tunnel gets a **new address every time it restarts**, so
   after restarting it you must update the variable in Vercel and **redeploy**. Start the tunnel once, early, and leave it running.
 - If you use your own domain for the site, add it to `CORS_ORIGINS` in `.env` and restart the API.
-- The API has no login. Anyone with the address can call `/check` and use up your free API quota, so share the link only with people you trust.
+- The public endpoints (`/check`, `/stats`, ...) have no login. Anyone with the address can call `/check` and use up your free API quota, so share the link only with people you trust. Only the `/partner/...` endpoints need a key.
 - Keep the laptop awake and online during the demo.
 
 ## How it works

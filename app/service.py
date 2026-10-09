@@ -6,7 +6,7 @@ Try it without Telegram:
 """
 import sys
 
-from app import db
+from app import db, webhooks
 from app.analyzer import analyze
 from app.formatting import format_verdict
 from app.schemas import Verdict
@@ -20,6 +20,8 @@ def check(text: str | None, image_bytes: bytes | None = None, source: str = "api
     except Exception as e:
         print(f"[service] could not save report: {type(e).__name__}: {e}", file=sys.stderr)
         report_id = None
+    if source != "challenge":  # made-up scams must not alert partners
+        webhooks.notify_in_background(verdict, report_id)
     return verdict, report_id
 
 

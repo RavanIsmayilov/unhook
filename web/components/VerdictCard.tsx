@@ -1,5 +1,6 @@
 import type { CheckResult, LinkInfo } from "@/lib/types";
 import { pct } from "@/lib/format";
+import { tipFor } from "@/lib/tips";
 import { Chip, VERDICT_META, tint } from "./ui";
 
 const LINK_NOTE: Partial<Record<LinkInfo["status"], string>> = {
@@ -62,6 +63,15 @@ export function VerdictCard({ result }: { result: CheckResult }) {
             <ol className="list-decimal space-y-1 pl-5 text-sm marker:font-semibold marker:text-ink2">
               {result.actions.map((a, i) => <li key={i}>{a}</li>)}
             </ol>
+          </div>
+        )}
+
+        {result.verdict !== "safe" && !result.degraded && (
+          <div className="rounded-xl bg-page p-3">
+            <h3 className="mb-1.5 text-sm font-semibold">🎓 Bu üsulu necə tanımaq olar? <span className="font-normal text-ink2">({tipFor(result.scheme).title})</span></h3>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-ink2 marker:text-muted">
+              {tipFor(result.scheme).flags.map((f, i) => <li key={i}>{f}</li>)}
+            </ul>
           </div>
         )}
 

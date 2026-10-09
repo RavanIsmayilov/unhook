@@ -142,3 +142,24 @@ export interface FeedbackRow {
   text_redacted: string;
   note: string;
 }
+
+export interface PartnerInfo { name: string; brand: string | null; webhook: boolean }
+
+export interface PartnerSummary {
+  partner: { name: string; brand: string | null };
+  reports_total: number;
+  reports_last_24h: number;
+  campaigns: number;
+  campaigns_active_24h: number;
+  blocklist_domains: number;
+}
+
+export interface ChallengeStats {
+  attempts: number;
+  fooled: number;
+  unsure: number;
+  caught: number;
+  fooled_rate: number | null;
+  fooled_examples: { id: number; text: string; created_at: string; verdict: VerdictLabel }[];
+  recent: { id: number; text: string; created_at: string; verdict: VerdictLabel }[];
+}
