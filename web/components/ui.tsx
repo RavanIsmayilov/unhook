@@ -1,13 +1,14 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useLang } from "@/lib/i18n";
 import type { VerdictLabel } from "@/lib/types";
 
-export const VERDICT_META: Record<
-  VerdictLabel,
-  { emoji: string; title: string; label: string; color: string; ink: string }
-> = {
-  scam: { emoji: "🔴", title: "Bu, fırıldaqdır!", label: "Fırıldaq", color: "var(--crit)", ink: "text-crit-ink" },
-  suspicious: { emoji: "🟡", title: "Şübhəlidir, ehtiyatlı olun", label: "Şübhəli", color: "var(--warn)", ink: "text-warn-ink" },
-  safe: { emoji: "🟢", title: "Təhlükəsiz görünür", label: "Təhlükəsiz", color: "var(--good)", ink: "text-good-ink" },
+/** Colors and emoji per verdict; the words come from the dictionary (verdict.<name>.title / .label). */
+export const VERDICT_STYLE: Record<VerdictLabel, { emoji: string; color: string; ink: string }> = {
+  scam: { emoji: "🔴", color: "var(--crit)", ink: "text-crit-ink" },
+  suspicious: { emoji: "🟡", color: "var(--warn)", ink: "text-warn-ink" },
+  safe: { emoji: "🟢", color: "var(--good)", ink: "text-good-ink" },
 };
 
 export function tint(color: string, percent = 10): string {
@@ -39,14 +40,15 @@ export function Chip({ children, mono = false }: { children: ReactNode; mono?: b
 }
 
 export function VerdictBadge({ verdict }: { verdict: VerdictLabel }) {
-  const m = VERDICT_META[verdict];
+  const { t } = useLang();
+  const m = VERDICT_STYLE[verdict];
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium"
       style={{ background: tint(m.color, 14), boxShadow: `inset 0 0 0 1px ${tint(m.color, 40)}` }}
     >
       <span aria-hidden>{m.emoji}</span>
-      <span className={m.ink}>{m.label}</span>
+      <span className={m.ink}>{t(`verdict.${verdict}.label`)}</span>
     </span>
   );
 }

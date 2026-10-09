@@ -30,7 +30,7 @@ domain.
 
 | Part | What it is | Where |
 |---|---|---|
-| Citizen side | Telegram bot and a mobile web page: send a message or screenshot, get a verdict in Azerbaijani | `bot.py`, `web/` (page `/`) |
+| Citizen side | Telegram bot (Azerbaijani) and a mobile web page in Azerbaijani, English and Russian (switcher in the header; `?lang=en` also works): send a message or screenshot, get a verdict in the chosen language | `bot.py`, `web/` (page `/`) |
 | Business side | API + dashboard: reports grouped into campaigns, brands under attack, live stats | `api.py`, `web/` (page `/dashboard`) |
 | Attacker agent | A different AI model writes scam variants to fool the detector; misses become test cases | `attacker.py` |
 | Evaluation | Recall, false positives and translit consistency vs a keyword baseline | `eval.py`, `web/` (page `/results`) |

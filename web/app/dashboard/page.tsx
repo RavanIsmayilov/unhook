@@ -5,13 +5,15 @@ import { BarList, ChartCard, DailyChart } from "@/components/charts";
 import { BlocklistTable, CampaignCard } from "@/components/lists";
 import { Card, Chip, Notice, SectionTitle, StatTile, VerdictBadge } from "@/components/ui";
 import { downloadBlocklistCsv, getBlocklist, getCampaigns, getFeedback, getRecent, getStats } from "@/lib/api";
-import { SOURCE_AZ, timeAgo } from "@/lib/format";
+import { sourceLabel, timeAgo } from "@/lib/format";
+import { LOCALES, schemeLabel, useLang } from "@/lib/i18n";
 import type { FeedbackRow, ReportRow } from "@/lib/types";
 import { useNow, usePolling } from "@/lib/usePolling";
 
 const REFRESH_MS = 5000;
 
 export default function Dashboard() {
+  const { t, lang } = useLang();
   const [brand, setBrand] = useState("");
   const now = useNow();
   const stats = usePolling(getStats, REFRESH_MS);
@@ -24,157 +26,152 @@ export default function Dashboard() {
   const offline = stats.error || campaigns.error || recent.error || blocklist.error || feedback.error;
   const updatedAt = Math.max(stats.updatedAt ?? 0, campaigns.updatedAt ?? 0, recent.updatedAt ?? 0);
   const brands = s?.top_brands.map((b) => b.brand) ?? [];
+  const num = (n: number) => n.toLocaleString(LOCALES[lang]);
 
   return (
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Fırıldaq paneli</h1>
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{t("dash.title")}</h1>
           <p className="text-ink2">
-            Bank və telekomlar üçün: brendinizi təqlid edən kampaniyalar real vaxtda.{" "}
-            <a href="/partner" className="font-medium text-s1 underline underline-offset-2">Tərəfdaş girişi</a>
+            {t("dash.sub")}{" "}
+            <a href="/partner" className="font-medium text-s1 underline underline-offset-2">{t("dash.partner")}</a>
             {" · "}
-            <a href="/integration" className="font-medium text-s1 underline underline-offset-2">API sənədi</a>
+            <a href="/integration" className="font-medium text-s1 underline underline-offset-2">{t("dash.api")}</a>
           </p>
         </div>
         <div className="flex items-center gap-2 text-sm text-ink2" aria-live="off">
           <span className={`inline-block h-2.5 w-2.5 rounded-full ${offline ? "bg-warn" : "bg-good"}`} aria-hidden />
-          {offline ? "Əlaqə yoxdur" : "Canlı"}
-          {updatedAt > 0 && <span>· yeniləndi {timeAgo(new Date(updatedAt).toISOString(), now)}</span>}
+          {offline ? t("dash.offline") : t("dash.live")}
+          {updatedAt > 0 && <span>{t("dash.updated", { when: timeAgo(new Date(updatedAt).toISOString(), now, t) })}</span>}
         </div>
       </div>
 
-      {offline && (
-        <Notice tone="warn">
-          Serverlə əlaqə kəsildi{s ? ", son məlumat göstərilir" : ""}. Backend işləyirmi və NEXT_PUBLIC_API_URL düzgündürmü?
-        </Notice>
-      )}
+      {offline && <Notice tone="warn">{s ? t("dash.offline_stale") : t("dash.offline_notice")}</Notice>}
 
-      {!s && !offline && <p className="text-ink2">Yüklənir...</p>}
+      {!s && !offline && <p className="text-ink2">{t("common.loading")}</p>}
 
       {s && (
         <>
-          <section aria-label="Əsas göstəricilər" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <StatTile label="Cəmi yoxlama" value={s.total_reports.toLocaleString("az")} hint={`son 24 saat: ${s.reports_last_24h}`} />
-            <StatTile label="Fırıldaq aşkarlandı" value={s.by_verdict.scam.toLocaleString("az")} hint={`şübhəli: ${s.by_verdict.suspicious}`} />
-            <StatTile label="Kampaniyalar" value={s.campaigns_total} hint="oxşar mesajlar qrupu" />
-            <StatTile label="Aktiv kampaniya" value={s.campaigns_active_24h} hint="son 24 saatda yeni hesabat" />
+          <section aria-label={t("dash.kpi.aria")} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <StatTile label={t("dash.kpi.total")} value={num(s.total_reports)} hint={t("dash.kpi.total_hint", { n: s.reports_last_24h })} />
+            <StatTile label={t("dash.kpi.scam")} value={num(s.by_verdict.scam)} hint={t("dash.kpi.scam_hint", { n: s.by_verdict.suspicious })} />
+            <StatTile label={t("dash.kpi.campaigns")} value={s.campaigns_total} hint={t("dash.kpi.campaigns_hint")} />
+            <StatTile label={t("dash.kpi.active")} value={s.campaigns_active_24h} hint={t("dash.kpi.active_hint")} />
           </section>
 
-          {s.total_reports === 0 && (
-            <Notice>Hələ heç bir yoxlama yoxdur. Ana səhifədə mesaj yoxlayın, Telegram botuna yazın və ya demo data üçün <code>python seed_demo.py</code> işlədin.</Notice>
-          )}
+          {s.total_reports === 0 && <Notice>{t("dash.empty")}</Notice>}
 
-          <section aria-label="Statistika" className="grid gap-4 lg:grid-cols-2">
+          <section aria-label={t("dash.stats_aria")} className="grid gap-4 lg:grid-cols-2">
             <ChartCard
-              title="Son 7 gün"
-              note="Gündəlik yoxlamalar"
-              table={{ head: ["Gün", "Cəmi", "Fırıldaq"], rows: s.daily.map((d) => [d.date, d.total, d.scam]) }}
+              title={t("dash.week.title")}
+              note={t("dash.week.note")}
+              table={{ head: [t("dash.week.day"), t("dash.week.total"), t("chart.legend_scam")], rows: s.daily.map((d) => [d.date, d.total, d.scam]) }}
             >
               <DailyChart data={s.daily} />
             </ChartCard>
             <ChartCard
-              title="Fırıldaq üsulları"
-              note="Aşkarlanan mesajlar üsula görə"
-              table={{ head: ["Üsul", "Say"], rows: s.by_scheme.map((x) => [x.scheme_az, x.count]) }}
+              title={t("dash.schemes.title")}
+              note={t("dash.schemes.note")}
+              table={{ head: [t("dash.schemes.th"), t("common.count")], rows: s.by_scheme.map((x) => [schemeLabel(t, x.scheme), x.count]) }}
             >
               {s.by_scheme.length ? (
-                <BarList rows={s.by_scheme.map((x) => ({ label: x.scheme_az, value: x.count, display: String(x.count) }))} />
+                <BarList rows={s.by_scheme.map((x) => ({ label: schemeLabel(t, x.scheme), value: x.count, display: String(x.count) }))} />
               ) : (
-                <p className="text-sm text-ink2">Hələ məlumat yoxdur.</p>
+                <p className="text-sm text-ink2">{t("common.no_data")}</p>
               )}
             </ChartCard>
             <ChartCard
-              title="Hədəf alınan brendlər"
-              note="Saxta linklərdə təqlid edilən adlar"
-              table={{ head: ["Brend", "Say"], rows: s.top_brands.map((x) => [x.brand, x.count]) }}
+              title={t("dash.brands.title")}
+              note={t("dash.brands.note")}
+              table={{ head: [t("common.brand"), t("common.count")], rows: s.top_brands.map((x) => [x.brand, x.count]) }}
             >
               {s.top_brands.length ? (
                 <BarList rows={s.top_brands.map((x) => ({ label: x.brand, value: x.count, display: String(x.count) }))} />
               ) : (
-                <p className="text-sm text-ink2">Hələ brend təqlidi aşkarlanmayıb.</p>
+                <p className="text-sm text-ink2">{t("dash.brands.empty")}</p>
               )}
             </ChartCard>
             <ChartCard
-              title="Ən çox rast gəlinən saxta domenlər"
-              note="Bloklama üçün siyahı"
-              table={{ head: ["Domen", "Say"], rows: s.top_domains.map((x) => [x.domain, x.count]) }}
+              title={t("dash.domains.title")}
+              note={t("dash.domains.note")}
+              table={{ head: [t("common.domain"), t("common.count")], rows: s.top_domains.map((x) => [x.domain, x.count]) }}
             >
               {s.top_domains.length ? (
                 <BarList rows={s.top_domains.map((x) => ({ label: x.domain, value: x.count, display: String(x.count) }))} />
               ) : (
-                <p className="text-sm text-ink2">Hələ saxta domen yoxdur.</p>
+                <p className="text-sm text-ink2">{t("dash.domains.empty")}</p>
               )}
             </ChartCard>
           </section>
         </>
       )}
 
-      <section aria-label="Kampaniyalar">
+      <section aria-label={t("dash.camp.aria")}>
         <SectionTitle
-          hint="Eyni mətn və ya eyni saxta domen ətrafında birləşən hesabatlar"
+          hint={t("dash.camp.hint")}
           right={
             <label className="flex items-center gap-2 text-sm text-ink2">
-              Brend
+              {t("common.brand")}
               <select
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 className="rounded-lg border border-line bg-surface px-2.5 py-1.5 text-sm text-ink"
               >
-                <option value="">Hamısı</option>
+                <option value="">{t("common.all")}</option>
                 {brands.map((b) => <option key={b} value={b}>{b}</option>)}
               </select>
             </label>
           }
         >
-          Kampaniyalar
+          {t("dash.camp.title")}
         </SectionTitle>
         <div className={`space-y-3 transition-opacity ${campaigns.refreshing ? "opacity-80" : ""}`}>
           {campaigns.data?.length === 0 && (
-            <Card><p className="text-sm text-ink2">{brand ? `${brand} üçün kampaniya tapılmadı.` : "Hələ kampaniya yoxdur. Kampaniya üçün ən azı 2 oxşar hesabat lazımdır."}</p></Card>
+            <Card><p className="text-sm text-ink2">{brand ? t("dash.camp.empty_brand", { brand }) : t("dash.camp.empty")}</p></Card>
           )}
           {campaigns.data?.map((c) => <CampaignCard key={c.id} campaign={c} now={now} />)}
         </div>
       </section>
 
-      <section aria-label="Blok siyahısı">
+      <section aria-label={t("dash.bl.aria")}>
         <SectionTitle
-          hint="Fırıldaq hesabatlarında görünən saxta domenlər. Bank və telekomlar öz bloklama sisteminə əlavə edə bilər."
+          hint={t("dash.bl.hint")}
           right={
             <button
               type="button"
               onClick={() => downloadBlocklistCsv(brand || undefined).catch(() => {})}
               className="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm font-medium hover:bg-page"
             >
-              ⬇ CSV yüklə
+              {t("common.csv")}
             </button>
           }
         >
-          Blok siyahısı{brand ? `: ${brand}` : ""}
+          {t("dash.bl.title")}{brand ? `: ${brand}` : ""}
         </SectionTitle>
         <Card className="!p-0">
           <BlocklistTable rows={blocklist.data ?? []} now={now} />
         </Card>
-        <p className="mt-2 text-xs text-ink2">Siyahı avtomatik yaradılır və insan tərəfindən yoxlanmayıb. Bloklamazdan əvvəl yoxlayın.</p>
+        <p className="mt-2 text-xs text-ink2">{t("dash.bl.note")}</p>
       </section>
 
-      <section aria-label="Geri bildirimlər">
-        <SectionTitle hint="İnsanlar “bu cavab səhvdir” dedikdə mesaj test nümunəsi kimi saxlanılır">Geri bildirimlər</SectionTitle>
+      <section aria-label={t("dash.fb.aria")}>
+        <SectionTitle hint={t("dash.fb.hint")}>{t("dash.fb.title")}</SectionTitle>
         <div className="mb-3 grid grid-cols-3 gap-3">
-          <StatTile label="Cəmi" value={s?.feedback.total ?? 0} />
-          <StatTile label="Düzgün" value={s?.feedback.agree ?? 0} />
-          <StatTile label="Səhv" value={s?.feedback.disagree ?? 0} />
+          <StatTile label={t("dash.fb.total")} value={s?.feedback.total ?? 0} />
+          <StatTile label={t("dash.fb.agree")} value={s?.feedback.agree ?? 0} />
+          <StatTile label={t("dash.fb.disagree")} value={s?.feedback.disagree ?? 0} />
         </div>
         <Card className="!p-0">
           <FeedbackList rows={feedback.data ?? []} now={now} />
         </Card>
       </section>
 
-      <section aria-label="Son yoxlamalar">
-        <SectionTitle hint="Şəxsi məlumatlar silinmiş formada">Son yoxlamalar</SectionTitle>
+      <section aria-label={t("dash.recent.aria")}>
+        <SectionTitle hint={t("dash.recent.hint")}>{t("dash.recent.title")}</SectionTitle>
         <Card className="!p-0">
           <ul className="divide-y divide-grid">
-            {recent.data?.length === 0 && <li className="p-4 text-sm text-ink2">Hələ yoxlama yoxdur.</li>}
+            {recent.data?.length === 0 && <li className="p-4 text-sm text-ink2">{t("dash.recent.empty")}</li>}
             {recent.data?.map((r) => <RecentRow key={r.id} report={r} now={now} />)}
           </ul>
         </Card>
@@ -184,12 +181,13 @@ export default function Dashboard() {
 }
 
 function RecentRow({ report: r, now }: { report: ReportRow; now: number }) {
+  const { t } = useLang();
   return (
     <li className="px-4 py-3">
       <div className="flex flex-wrap items-center gap-2">
         <VerdictBadge verdict={r.verdict} />
-        {r.scheme !== "none" && <span className="text-sm font-medium">{r.scheme_az}</span>}
-        <span className="ml-auto text-xs text-ink2">{SOURCE_AZ[r.source] ?? r.source} · {timeAgo(r.created_at, now)}</span>
+        {r.scheme !== "none" && <span className="text-sm font-medium">{schemeLabel(t, r.scheme)}</span>}
+        <span className="ml-auto text-xs text-ink2">{sourceLabel(t, r.source)} · {timeAgo(r.created_at, now, t)}</span>
       </div>
       <p className="mt-1 line-clamp-2 text-sm text-ink2">{r.text_redacted}</p>
       {(r.brands.length > 0 || r.domains.length > 0) && (
@@ -202,20 +200,18 @@ function RecentRow({ report: r, now }: { report: ReportRow; now: number }) {
   );
 }
 
-
-const LABEL_AZ = { scam: "fırıldaq", suspicious: "şübhəli", safe: "təhlükəsiz" } as const;
-
 function FeedbackList({ rows, now }: { rows: FeedbackRow[]; now: number }) {
-  if (rows.length === 0) return <p className="p-4 text-sm text-ink2">Hələ “səhvdir” bildirimi yoxdur.</p>;
+  const { t } = useLang();
+  if (rows.length === 0) return <p className="p-4 text-sm text-ink2">{t("dash.fb.empty")}</p>;
   return (
     <ul className="divide-y divide-grid">
       {rows.map((r) => (
         <li key={r.id} className="px-4 py-3">
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span>Sistem: <b>{LABEL_AZ[r.model_verdict]}</b></span>
+            <span>{t("dash.fb.system")} <b>{t(`verdict.${r.model_verdict}.word`)}</b></span>
             <span aria-hidden>→</span>
-            <span>İnsan: <b>{r.suggested ? LABEL_AZ[r.suggested] : "?"}</b></span>
-            <span className="ml-auto text-xs text-ink2">{timeAgo(r.created_at, now)}</span>
+            <span>{t("dash.fb.human")} <b>{r.suggested ? t(`verdict.${r.suggested}.word`) : "?"}</b></span>
+            <span className="ml-auto text-xs text-ink2">{timeAgo(r.created_at, now, t)}</span>
           </div>
           <p className="mt-1 line-clamp-2 text-sm text-ink2">{r.text_redacted}</p>
         </li>

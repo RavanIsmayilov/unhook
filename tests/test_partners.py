@@ -95,7 +95,7 @@ def test_partner_sees_only_its_own_brand(client):
 # ---------------------------------------------------------------- checking
 
 def test_partner_check_and_batch(client, monkeypatch):
-    def fake_check(text, image, source):
+    def fake_check(text, image, source, lang="az"):
         return Verdict(verdict="scam" if "bonus" in text else "safe", scheme="fake_bonus", reasons=["r"], actions=["a"],
                        confidence=0.9, provider="groq", model="m"), 7
 

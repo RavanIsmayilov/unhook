@@ -55,6 +55,7 @@ app.add_middleware(CORSMiddleware, allow_origins=settings.CORS_ORIGINS, allow_or
 class CheckRequest(BaseModel):
     text: str | None = Field(None, max_length=4000, description="The suspicious message")
     image_base64: str | None = Field(None, description="Screenshot as base64 (a data: URL prefix is accepted)")
+    lang: Literal["az", "en", "ru"] = Field("az", description="Language of the explanation: az, en or ru")
 
 
 class CheckResponse(Verdict):
@@ -80,7 +81,7 @@ def check_message(req: CheckRequest) -> CheckResponse:
     image = _decode_image(req.image_base64) if req.image_base64 else None
     if not text and not image:
         raise HTTPException(422, "send text, image_base64, or both")
-    verdict, report_id = check(text, image, source="api")
+    verdict, report_id = check(text, image, source="api", lang=req.lang)
     return CheckResponse(**verdict.model_dump(), report_id=report_id)
 
 
@@ -170,6 +171,7 @@ MAX_BATCH = 10
 
 class BatchRequest(BaseModel):
     messages: list[str] = Field(min_length=1, max_length=MAX_BATCH, description=f"1 to {MAX_BATCH} messages")
+    lang: Literal["az", "en", "ru"] = "az"
 
 
 @app.get("/partner/me")
@@ -192,7 +194,7 @@ def partner_check_batch(req: BatchRequest, partner: dict = Depends(require_partn
         if not text:
             results.append({"index": index, "error": "empty message"})
             continue
-        verdict, report_id = check(text, None, source="partner")
+        verdict, report_id = check(text, None, source="partner", lang=req.lang)
         results.append({"index": index, **CheckResponse(**verdict.model_dump(), report_id=report_id).model_dump()})
     return results
 
@@ -235,6 +237,7 @@ def partner_blocklist(partner: dict = Depends(require_partner), format: Literal[
 
 class ChallengeRequest(BaseModel):
     text: str = Field(min_length=1, max_length=1000, description="A scam message written to slip past the detector")
+    lang: Literal["az", "en", "ru"] = "az"
 
 
 @app.post("/challenge", response_model=CheckResponse)
@@ -243,7 +246,7 @@ def challenge(req: ChallengeRequest) -> CheckResponse:
     text = req.text.strip()
     if not text:
         raise HTTPException(422, "write a message")
-    verdict, report_id = check(text, None, source="challenge")
+    verdict, report_id = check(text, None, source="challenge", lang=req.lang)
     return CheckResponse(**verdict.model_dump(), report_id=report_id)
 
 

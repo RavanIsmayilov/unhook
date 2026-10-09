@@ -125,6 +125,7 @@ All of these are open-source packages used unmodified under their own licenses.
 - Screenshots are not stored, but are sent to Gemini for reading (see section 1).
 - Each report also stores, per model call: provider, model, input/output tokens and latency (to compute the real cost per check). No message text is added by this.
 
+- Languages: the website and the API (`lang` field: `az`, `en`, `ru`) answer in the visitor's language; the Telegram bot stays Azerbaijani only. Detection quality was measured on Azerbaijani messages only; English and Russian output was checked by hand.
 - Telegram group mode: in a group the bot reads only messages that contain a link, sends them (redacted) to the same
   analyzer and stores them redacted like any other report. Members of the group are not told per message, so tell the group when you add the bot.
 

@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import type { DailyPoint } from "@/lib/types";
 import { shortDate } from "@/lib/format";
+import { useLang } from "@/lib/i18n";
 import { Card } from "./ui";
 
 /** A chart card with a "table view" twin, so every value is reachable without color or hover. */
@@ -17,6 +18,7 @@ export function ChartCard({
   table: { head: string[]; rows: (string | number)[][] };
   children: ReactNode;
 }) {
+  const { t } = useLang();
   const [asTable, setAsTable] = useState(false);
   return (
     <Card>
@@ -31,7 +33,7 @@ export function ChartCard({
           aria-pressed={asTable}
           className="shrink-0 rounded-lg border border-line px-2.5 py-1 text-xs text-ink2 hover:bg-page"
         >
-          {asTable ? "Qrafik" : "Cədvəl"}
+          {asTable ? t("common.chart") : t("common.table")}
         </button>
       </div>
       {asTable ? (
@@ -113,8 +115,9 @@ export function Legend({ items }: { items: { label: string; color: string }[] })
   );
 }
 
-/** Last 7 days as stacked columns: fırıldaq (accent) over the rest (gray). */
+/** Last 7 days as stacked columns: scams (accent) over the rest (gray). */
 export function DailyChart({ data }: { data: DailyPoint[] }) {
+  const { t } = useLang();
   const [active, setActive] = useState<number | null>(null);
   const top = Math.max(1, ...data.map((d) => d.total));
   const niceTop = top <= 4 ? 4 : Math.ceil(top / 4) * 4;
@@ -123,7 +126,7 @@ export function DailyChart({ data }: { data: DailyPoint[] }) {
 
   return (
     <div>
-      <Legend items={[{ label: "Fırıldaq", color: "var(--series-1)" }, { label: "Digər yoxlamalar", color: "var(--mark-gray)" }]} />
+      <Legend items={[{ label: t("chart.legend_scam"), color: "var(--series-1)" }, { label: t("chart.legend_other"), color: "var(--mark-gray)" }]} />
       <div className="flex gap-2">
         <div className="relative w-7 shrink-0 text-right text-[11px] text-muted tabular-nums" style={{ height }} aria-hidden>
           {ticks.map((t) => (
@@ -147,7 +150,7 @@ export function DailyChart({ data }: { data: DailyPoint[] }) {
                   className="relative flex h-full flex-1 cursor-default flex-col items-center justify-end"
                   tabIndex={0}
                   role="img"
-                  aria-label={`${shortDate(d.date)}: cəmi ${d.total}, fırıldaq ${d.scam}`}
+                  aria-label={t("chart.aria", { date: shortDate(d.date), total: d.total, scam: d.scam })}
                   onPointerEnter={() => setActive(i)}
                   onPointerLeave={() => setActive(null)}
                   onFocus={() => setActive(i)}
@@ -160,8 +163,8 @@ export function DailyChart({ data }: { data: DailyPoint[] }) {
                   {active === i && (
                     <div className="pointer-events-none absolute z-10 w-max -translate-x-1/2 rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-lg" style={{ left: "50%", bottom: `calc(${(d.total / niceTop) * 100}% + 4px)` }}>
                       <div className="text-ink2">{shortDate(d.date)}</div>
-                      <div className="text-sm font-semibold tabular-nums">{d.total} yoxlama</div>
-                      <div className="flex items-center gap-1.5 text-ink2"><span className="inline-block h-0.5 w-3" style={{ background: "var(--series-1)" }} />Fırıldaq: <b className="text-ink tabular-nums">{d.scam}</b></div>
+                      <div className="text-sm font-semibold tabular-nums">{t("chart.tip_checks", { n: d.total })}</div>
+                      <div className="flex items-center gap-1.5 text-ink2"><span className="inline-block h-0.5 w-3" style={{ background: "var(--series-1)" }} />{t("chart.tip_scam")} <b className="text-ink tabular-nums">{d.scam}</b></div>
                     </div>
                   )}
                 </div>

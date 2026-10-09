@@ -121,7 +121,7 @@ def test_demo_seed_makes_campaigns_through_the_api(client):
 def test_check_endpoint(client, monkeypatch):
     seen = {}
 
-    def fake_check(text, image, source):
+    def fake_check(text, image, source, lang="az"):
         seen.update(text=text, image=image, source=source)
         return Verdict(verdict="scam", scheme="fake_bonus", reasons=["r"], actions=["a"], confidence=0.9,
                        explanation_az="e", provider="groq", model="m"), 42

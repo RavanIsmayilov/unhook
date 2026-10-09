@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { sendFeedback } from "@/lib/api";
+import { useLang } from "@/lib/i18n";
 
 type Step = "ask" | "which" | "done" | "error";
 
 /** "Was this answer right?" Disagreements become candidate test cases on the dashboard. */
 export function FeedbackBox({ reportId }: { reportId: number }) {
+  const { t } = useLang();
   const [step, setStep] = useState<Step>("ask");
   const [busy, setBusy] = useState(false);
 
@@ -28,20 +30,20 @@ export function FeedbackBox({ reportId }: { reportId: number }) {
     <div className="rounded-2xl border border-line bg-surface p-4" aria-live="polite">
       {step === "ask" && (
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-sm font-medium">Bu cavab düzgündür?</span>
-          <button type="button" disabled={busy} onClick={() => send(true)} className={btn}>👍 Bəli</button>
-          <button type="button" disabled={busy} onClick={() => setStep("which")} className={btn}>👎 Xeyr</button>
+          <span className="text-sm font-medium">{t("fb.ask")}</span>
+          <button type="button" disabled={busy} onClick={() => send(true)} className={btn}>{t("fb.yes")}</button>
+          <button type="button" disabled={busy} onClick={() => setStep("which")} className={btn}>{t("fb.no")}</button>
         </div>
       )}
       {step === "which" && (
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-sm font-medium">Əslində bu mesaj:</span>
-          <button type="button" disabled={busy} onClick={() => send(false, "scam")} className={btn}>🔴 Fırıldaqdır</button>
-          <button type="button" disabled={busy} onClick={() => send(false, "safe")} className={btn}>🟢 Təhlükəsizdir</button>
+          <span className="text-sm font-medium">{t("fb.which")}</span>
+          <button type="button" disabled={busy} onClick={() => send(false, "scam")} className={btn}>{t("fb.scam")}</button>
+          <button type="button" disabled={busy} onClick={() => send(false, "safe")} className={btn}>{t("fb.safe")}</button>
         </div>
       )}
-      {step === "done" && <p className="text-sm">Təşəkkür edirik! Bu, sistemi yaxşılaşdırmaq üçün test nümunəsi kimi istifadə olunacaq.</p>}
-      {step === "error" && <p className="text-sm text-ink2">Geri bildirim göndərilə bilmədi. Bir az sonra yenidən cəhd edin.</p>}
+      {step === "done" && <p className="text-sm">{t("fb.done")}</p>}
+      {step === "error" && <p className="text-sm text-ink2">{t("fb.error")}</p>}
     </div>
   );
 }

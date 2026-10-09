@@ -2,20 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import { checkErrorMessage, checkMessage } from "@/lib/api";
+import { useLang } from "@/lib/i18n";
 import { imageToBase64 } from "@/lib/image";
+import type { MessageKey } from "@/lib/messages/az";
 import type { CheckResult } from "@/lib/types";
 import { FeedbackBox } from "./FeedbackBox";
 import { VerdictCard } from "./VerdictCard";
 import { Notice } from "./ui";
 
-const EXAMPLES = [
-  { label: "Saxta bonus", text: "salam, bonusunuz hazirdir: bonus-azercell.top/qazan" },
-  { label: "Bank bildirişi", text: "Kapital Bank: 4821 kodu heç kimə verməyin. Ödəniş 25.00 AZN təsdiqləndi." },
-  { label: "Rus + AZ qarışıq", text: "Privet, vasha karta zablokirovana, təcili perexodi: bit.ly/3xYz" },
+// The example messages stay in the language scammers actually write; only the button labels are translated.
+const EXAMPLES: { label: MessageKey; text: string }[] = [
+  { label: "form.ex.bonus", text: "salam, bonusunuz hazirdir: bonus-azercell.top/qazan" },
+  { label: "form.ex.bank", text: "Kapital Bank: 4821 kodu heç kimə verməyin. Ödəniş 25.00 AZN təsdiqləndi." },
+  { label: "form.ex.mix", text: "Privet, vasha karta zablokirovana, təcili perexodi: bit.ly/3xYz" },
 ];
 const MAX_CHARS = 4000;
 
 export function CheckForm() {
+  const { t, lang } = useLang();
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -50,13 +54,13 @@ export function CheckForm() {
         try {
           image = await imageToBase64(file);
         } catch {
-          setError("Şəkil oxuna bilmədi. Başqa şəkil yoxlayın.");
+          setError(t("err.bad_image"));
           return;
         }
       }
-      setResult(await checkMessage(text, image));
+      setResult(await checkMessage(text, image, lang));
     } catch (err) {
-      setError(checkErrorMessage(err));
+      setError(checkErrorMessage(err, t));
     } finally {
       setLoading(false);
     }
@@ -74,20 +78,20 @@ export function CheckForm() {
     <div className="space-y-6">
       <form onSubmit={submit} className="space-y-4 rounded-2xl border border-line bg-surface p-4 sm:p-5">
         <div>
-          <label htmlFor="message" className="mb-1.5 block text-sm font-semibold">Şübhəli mesaj</label>
+          <label htmlFor="message" className="mb-1.5 block text-sm font-semibold">{t("form.label")}</label>
           <textarea
             id="message"
             value={text}
             onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
             rows={5}
-            placeholder="Mesajı bura yapışdırın (məs. “salam, bonusunuz hazirdir...”)"
+            placeholder={t("form.placeholder")}
             className="w-full resize-y rounded-xl border border-line bg-page px-3 py-2.5 text-base placeholder:text-muted focus:border-s1"
           />
           <div className="mt-1 text-right text-xs text-ink2 tabular-nums">{text.length}/{MAX_CHARS}</div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2" aria-label="Nümunələr">
-          <span className="text-xs text-ink2">Nümunə:</span>
+        <div className="flex flex-wrap items-center gap-2" aria-label={t("form.examples")}>
+          <span className="text-xs text-ink2">{t("form.example")}</span>
           {EXAMPLES.map((ex) => (
             <button
               key={ex.label}
@@ -95,7 +99,7 @@ export function CheckForm() {
               onClick={() => setText(ex.text)}
               className="rounded-full border border-line px-3 py-1 text-xs text-ink2 hover:bg-page"
             >
-              {ex.label}
+              {t(ex.label)}
             </button>
           ))}
         </div>
@@ -112,14 +116,14 @@ export function CheckForm() {
           {preview ? (
             <div className="flex items-center gap-3 rounded-xl border border-line p-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={preview} alt="Seçilmiş ekran görüntüsü" className="h-16 w-16 rounded-lg object-cover" />
+              <img src={preview} alt={t("form.selected")} className="h-16 w-16 rounded-lg object-cover" />
               <span className="min-w-0 flex-1 truncate text-sm">{file?.name}</span>
               <button
                 type="button"
                 onClick={() => { setFile(null); if (fileInput.current) fileInput.current.value = ""; }}
                 className="rounded-lg border border-line px-3 py-1.5 text-sm hover:bg-page"
               >
-                Sil
+                {t("form.remove")}
               </button>
             </div>
           ) : (
@@ -127,7 +131,7 @@ export function CheckForm() {
               htmlFor="screenshot"
               className="flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-axis px-4 py-3 text-sm text-ink2 hover:bg-page focus-within:outline-2"
             >
-              <span aria-hidden>📷</span> Ekran görüntüsü əlavə et
+              <span aria-hidden>📷</span> {t("form.attach")}
             </label>
           )}
         </div>
@@ -140,10 +144,10 @@ export function CheckForm() {
           {loading ? (
             <>
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden />
-              Yoxlayıram...
+              {t("form.loading")}
             </>
           ) : (
-            "Yoxla"
+            t("form.submit")
           )}
         </button>
       </form>
@@ -155,7 +159,7 @@ export function CheckForm() {
             <VerdictCard result={result} />
             {result.report_id !== null && <FeedbackBox key={result.report_id} reportId={result.report_id} />}
             <button type="button" onClick={reset} className="w-full rounded-xl border border-line px-4 py-3 text-sm font-medium hover:bg-surface">
-              Başqa mesaj yoxla
+              {t("form.again")}
             </button>
           </>
         )}

@@ -12,9 +12,9 @@ from app.formatting import format_verdict
 from app.schemas import Verdict
 
 
-def check(text: str | None, image_bytes: bytes | None = None, source: str = "api") -> tuple[Verdict, int | None]:
+def check(text: str | None, image_bytes: bytes | None = None, source: str = "api", lang: str = "az") -> tuple[Verdict, int | None]:
     """Analyze, then store the redacted report. A storage failure never blocks the answer."""
-    verdict = analyze(text, image_bytes, check_domain_age=True)
+    verdict = analyze(text, image_bytes, check_domain_age=True, lang=lang)
     try:
         report_id = db.save_report(verdict, source=source, had_image=image_bytes is not None)
     except Exception as e:

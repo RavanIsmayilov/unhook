@@ -3,8 +3,10 @@
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { Notice } from "@/components/ui";
+import { useLang } from "@/lib/i18n";
 
 export default function QrPage() {
+  const { t } = useLang();
   const [url, setUrl] = useState("");
   const [png, setPng] = useState<string | null>(null);
 
@@ -25,13 +27,13 @@ export default function QrPage() {
   return (
     <div className="mx-auto max-w-md space-y-5 text-center">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Telefonla skan edin</h1>
-        <p className="mt-1 text-ink2">Kameranı QR koda tutun və Unhook ilə mesajınızı yoxlayın.</p>
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{t("qr.title")}</h1>
+        <p className="mt-1 text-ink2">{t("qr.lead")}</p>
       </div>
 
       {png ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={png} alt={`QR kod: ${url}`} className="mx-auto aspect-square w-full max-w-sm rounded-2xl border border-line" />
+        <img src={png} alt={t("qr.alt", { url })} className="mx-auto aspect-square w-full max-w-sm rounded-2xl border border-line" />
       ) : (
         <div className="mx-auto aspect-square w-full max-w-sm animate-pulse rounded-2xl bg-surface" />
       )}
@@ -40,12 +42,12 @@ export default function QrPage() {
 
       {isLocal && (
         <Notice tone="warn">
-          Bu ünvan yalnız bu komputerdə açılır, telefon onu aça bilməz. Saytı Vercel-ə yüklədikdən sonra həmin ünvanı aşağıya yazın.
+          {t("qr.local")}
         </Notice>
       )}
 
       <label className="block text-left text-sm">
-        <span className="mb-1 block text-ink2">QR kodun ünvanı</span>
+        <span className="mb-1 block text-ink2">{t("qr.url_label")}</span>
         <input
           type="url"
           value={url}
