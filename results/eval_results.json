@@ -1,0 +1,1633 @@
+{
+  "generated": "2026-10-09T12:20:02",
+  "n_rows": 45,
+  "systems": {
+    "baseline": "baseline",
+    "groq": "groq (openai/gpt-oss-120b)"
+  },
+  "metrics": {
+    "baseline": {
+      "n": 45,
+      "n_scam": 27,
+      "n_safe": 18,
+      "n_degraded": 0,
+      "recall_flagged": 0.8888888888888888,
+      "recall_strict": 0.8888888888888888,
+      "fpr_flagged": 0.5,
+      "fpr_strict": 0.5,
+      "recall_flagged_by_variant": {
+        "az": 0.8888888888888888,
+        "translit": 0.8888888888888888,
+        "az_ru": 0.8888888888888888
+      },
+      "consistency_verdict": 1.0,
+      "consistency_flagged": 1.0,
+      "consistency_groups": 15
+    },
+    "groq": {
+      "n": 45,
+      "n_scam": 27,
+      "n_safe": 18,
+      "n_degraded": 0,
+      "recall_flagged": 1.0,
+      "recall_strict": 1.0,
+      "fpr_flagged": 0.0,
+      "fpr_strict": 0.0,
+      "recall_flagged_by_variant": {
+        "az": 1.0,
+        "translit": 1.0,
+        "az_ru": 1.0
+      },
+      "consistency_verdict": 1.0,
+      "consistency_flagged": 1.0,
+      "consistency_groups": 15
+    }
+  },
+  "predictions": {
+    "baseline": [
+      {
+        "id": "S001-az",
+        "text": "Hörmətli müştəri, Azercell tərəfindən 50 AZN bonus qazandınız! Almaq üçün linkə keçin: azercell-bonus.top/qazan",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S001-translit",
+        "text": "Hormetli musteri, Azercell terefinden 50 AZN bonus qazandiniz! Almaq ucun linke kecin: azercell-bonus.top/qazan",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S001-az_ru",
+        "text": "Hörmətli müştəri, Azercell дарит вам 50 AZN бонус! Для получения keçin linkə: azercell-bonus.top/qazan",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B001-az",
+        "text": "Kapital Bank: 4821 kodu heç kimə verməyin. Ödəniş 25.00 AZN təsdiqləndi.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B002-translit",
+        "text": "Salam, sabah seher iclasa gec qalmayin, saat 9-da ofisde gorusek",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B001-translit",
+        "text": "Kapital Bank: 4821 kodu hec kime vermeyin. Odenis 25.00 AZN tesdiqlendi.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B001-az_ru",
+        "text": "Kapital Bank: Kod 4821 никому не сообщайте. Ödəniş 25.00 AZN təsdiqləndi.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B002-az",
+        "text": "Salam, sabah səhər iclasa gec qalmayın, saat 9-da ofisdə görüşək",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B002-az_ru",
+        "text": "Salam, sabah в 9 утра ofisdə görüşək, не опаздывай",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S002-az",
+        "text": "Kapital Bank: Kartınız təhlükəsizlik səbəbindən bloklanıb. Təcili təsdiq edin: kapitalbank-secure.xyz/verify və kart nömrənizi, CVV kodunu göndərin.",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S002-translit",
+        "text": "Kapital Bank: Kartiniz tehlukesizlik sebebinden bloklanib. Tecili tesdiq edin: kapitalbank-secure.xyz/verify ve kart nomrenizi, CVV kodunu gonderin.",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S002-az_ru",
+        "text": "Kapital Bank: Ваша karta bloklanıb. Срочно подтвердите: kapitalbank-secure.xyz/verify и отправьте nömrəni, CVV kodu.",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S003-az",
+        "text": "Salam, mən bankın təhlükəsizlik şöbəsindənəm. Hesabınıza icazəsiz giriş cəhdi olub. Telefonunuza gələn SMS kodunu mənə deyin ki, hesabı bloklayaq.",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S003-translit",
+        "text": "Salam, men bankin tehlukesizlik shobesindenem. Hesabiniza icazesiz giris cehdi olub. Telefonunuza gelen SMS kodunu mene deyin ki, hesabi bloklayaq.",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S003-az_ru",
+        "text": "Salam, я из службы безопасности banka. На vaş hesab попытка входа. Скажите kodu из SMS, чтобы мы bloklayaq hesabı.",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S004-az",
+        "text": "Evdən işləyin! Gündə 150 AZN qazanc, təcrübə tələb olunmur. Qeydiyyat haqqı cəmi 20 AZN, kartıma köçürün və WhatsApp-da yazın: +994 55 123 45 67",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S004-translit",
+        "text": "Evden isleyin! Gunde 150 AZN qazanc, tecrube teleb olunmur. Qeydiyyat haqqi cemi 20 AZN, kartima kocurun ve WhatsApp-da yazin: +994 55 123 45 67",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S004-az_ru",
+        "text": "Работа на дому! Gündə 150 AZN заработок, опыт не нужен. Qeydiyyat haqqı всего 20 AZN, переведите na kartı и пишите в WhatsApp: +994 55 123 45 67",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S005-az",
+        "text": "AzerPost: Bağlamanız gömrükdə saxlanılıb. Çatdırılma üçün 3.50 AZN ödəyin: azerpost-delivery.top/pay",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S005-translit",
+        "text": "AzerPost: Baglamaniz gomrukde saxlanilib. Catdirilma ucun 3.50 AZN odeyin: azerpost-delivery.top/pay",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S005-az_ru",
+        "text": "AzerPost: Ваша посылка задержана на gömrük. Для çatdırılma оплатите 3.50 AZN: azerpost-delivery.top/pay",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S006-az",
+        "text": "Kriptoda 3 gündə 300% qazanc! Cəmi 100 AZN qoyun, zəmanət veririk. Telegram qrupumuza qoşulun: t.me/crypto_gain_az",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S006-translit",
+        "text": "Kriptoda 3 gunde 300% qazanc! Cemi 100 AZN qoyun, zemanet veririk. Telegram qrupumuza qosulun: t.me/crypto_gain_az",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S006-az_ru",
+        "text": "Kripto: 300% прибыль за 3 gün! Cəmi 100 AZN вложите, garantiya 100%. Вступайте в Telegram qrupumuza: t.me/crypto_gain_az",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S007-az",
+        "text": "Salam, bu mənəm, nömrəmi dəyişmişəm. Təcili 200 AZN lazımdır, bu karta köçür, sabah qaytararam. Kart: 4169 7388 1234 5678",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S007-translit",
+        "text": "Salam, bu menem, nomremi deyismisem. Tecili 200 AZN lazimdir, bu karta kocur, sabah qaytararam. Kart: 4169 7388 1234 5678",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S007-az_ru",
+        "text": "Salam, это я, nömrəmi dəyişmişəm. Срочно нужно 200 AZN, переведи na kartı, sabah верну. Kart: 4169 7388 1234 5678",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S008-az",
+        "text": "Nar: Təbriklər! Yeni il lotereyasında iPhone 15 udmusunuz. Hədiyyəni almaq üçün nar-udus.click saytında kart məlumatlarınızı daxil edin.",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S008-translit",
+        "text": "Nar: Tebrikler! Yeni il lotereyasinda iPhone 15 udmusunuz. Hediyyeni almaq ucun nar-udus.click saytinda kart melumatlarinizi daxil edin.",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S008-az_ru",
+        "text": "Nar: Поздравляем! Вы выиграли iPhone 15 в лотерее. Hədiyyəni almaq üçün зайдите на nar-udus.click и введите kart məlumatları.",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S009-az",
+        "text": "ASAN xidmət: Vergi borcunuz 87 AZN təşkil edir. Cərimədən yayınmaq üçün 24 saat ərzində ödəyin: asan-gov-odenis.com",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S009-translit",
+        "text": "ASAN xidmet: Vergi borcunuz 87 AZN teskil edir. Cerimeden yayinmaq ucun 24 saat erzinde odeyin: asan-gov-odenis.com",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "S009-az_ru",
+        "text": "ASAN xidmət: Налоговый долг 87 AZN. Чтобы избежать штрафа, odəyin в течение 24 saat: asan-gov-odenis.com",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B003-az",
+        "text": "ABB: Kartınızdan (**1234) 12.50 AZN çıxarıldı. Yer: Bravo Supermarket. Qalıq: 245.30 AZN.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B003-translit",
+        "text": "ABB: Kartinizdan (**1234) 12.50 AZN cixarildi. Yer: Bravo Supermarket. Qaliq: 245.30 AZN.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B003-az_ru",
+        "text": "ABB: С вашей карты (**1234) снято 12.50 AZN. Yer: Bravo Supermarket. Qalıq: 245.30 AZN.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B004-az",
+        "text": "Azercell: İnternet paketinizin müddəti sabah bitir. Paketi yeniləmək üçün Azercell mobil tətbiqinə və ya azercell.com saytına daxil ola bilərsiniz.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B004-translit",
+        "text": "Azercell: Internet paketinizin muddeti sabah bitir. Paketi yenilemek ucun Azercell mobil tetbiqine ve ya azercell.com saytina daxil ola bilersiniz.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B004-az_ru",
+        "text": "Azercell: Срок вашего интернет-пакета истекает завтра. Paketi yeniləmək üçün зайдите в mobil tətbiq или на azercell.com.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B005-az",
+        "text": "Ana, işdən çıxdım, 6-da evdə olaram. Çörək alım?",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B005-translit",
+        "text": "Ana, isden cixdim, 6-da evde olaram. Corek alim?",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B005-az_ru",
+        "text": "Ana, işdən çıxdım, в 6 буду дома. Çörək alım?",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B006-az",
+        "text": "Hörmətli Rəşad bəy, müraciətiniz üçün təşəkkür edirik. Müsahibə cümə günü saat 15:00-da ofisimizdə olacaq. Ünvan: Nizami küç. 10.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B006-translit",
+        "text": "Hormetli Resad bey, muracietiniz ucun tesekkur edirik. Musahibe cume gunu saat 15:00-da ofisimizde olacaq. Unvan: Nizami kuc. 10.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      },
+      {
+        "id": "B006-az_ru",
+        "text": "Hörmətli Rəşad bəy, спасибо за заявку. Müsahibə cümə günü saat 15:00-da в нашем ofisdə. Ünvan: Nizami küç. 10.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": null,
+        "reasons": [],
+        "scheme": "",
+        "degraded": false,
+        "provider": "baseline",
+        "model": "keyword filter",
+        "link_flags": []
+      }
+    ],
+    "groq": [
+      {
+        "id": "S001-az",
+        "text": "Hörmətli müştəri, Azercell tərəfindən 50 AZN bonus qazandınız! Almaq üçün linkə keçin: azercell-bonus.top/qazan",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Link domeni azercell-bonus.top rəsmi Azercell domeni deyil və .top uzantısı şübhəlidir",
+          "Mesaj bonus qazanmağı və linkə klikləməyi tələb edir, bu tip phishing taktikasıdır",
+          "Göndərici şəxsi məlumat və ya ödəniş istəməsə də, link vasitəsilə zərərli sayt yönləndirə bilər"
+        ],
+        "scheme": "fake_bonus",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.top",
+          "suspicious_word:bonus",
+          "brand_in_domain:Azercell"
+        ]
+      },
+      {
+        "id": "S001-translit",
+        "text": "Hormetli musteri, Azercell terefinden 50 AZN bonus qazandiniz! Almaq ucun linke kecin: azercell-bonus.top/qazan",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda Azercell-ə bənzər lookalike domen (azercell-bonus.top) istifadə olunur",
+          "Linkə klikləyib bonus almaq istəyi istifadəçini şəxsi məlumat və ya pul itirməyə məcbur edə bilər",
+          "Gözlənilməz 50 AZN bonus təklifi real operatorların bildirişlərinə uyğun deyil"
+        ],
+        "scheme": "fake_bonus",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.top",
+          "suspicious_word:bonus",
+          "brand_in_domain:Azercell"
+        ]
+      },
+      {
+        "id": "S001-az_ru",
+        "text": "Hörmətli müştəri, Azercell дарит вам 50 AZN бонус! Для получения keçin linkə: azercell-bonus.top/qazan",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda Azercell-dən bonus almaq üçün şübhəli linkə klikləmək tələb olunur.",
+          "İstifadə olunan domen (azercell-bonus.top) rəsmi Azercell domeni deyil və .top uzantısı şübhəlidir.",
+          "Pulsuz pul vəd edərək şəxsi məlumat və ya pul almağa çalışır."
+        ],
+        "scheme": "fake_bonus",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.top",
+          "suspicious_word:bonus",
+          "brand_in_domain:Azercell"
+        ]
+      },
+      {
+        "id": "B001-az",
+        "text": "Kapital Bank: 4821 kodu heç kimə verməyin. Ödəniş 25.00 AZN təsdiqləndi.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesajda pul və ya kart məlumatı istənilmir",
+          "Heç bir link və ya əlavə addım tələb edilmir",
+          "Mətn bankın rəsmi xəbərdarlığına bənzəyir"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B002-translit",
+        "text": "Salam, sabah seher iclasa gec qalmayin, saat 9-da ofisde gorusek",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda pul, kart məlumatı və ya şifrə istənilmir",
+          "Heç bir şübhəli link və ya əlavə fayl yoxdur",
+          "Məzmun sadəcə iş iclası dəvətidir"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B001-translit",
+        "text": "Kapital Bank: 4821 kodu hec kime vermeyin. Odenis 25.00 AZN tesdiqlendi.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesajda OTP kodu verilir, lakin kodu paylaşmaq istəyi yoxdur",
+          "Heç bir link, telefon nömrəsi və ya kart məlumatı soruşulmur",
+          "Ödəniş təsdiqi yalnız məlumat məqsədilə verilib"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B001-az_ru",
+        "text": "Kapital Bank: Kod 4821 никому не сообщайте. Ödəniş 25.00 AZN təsdiqləndi.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.92,
+        "reasons": [
+          "Mesajda OTP kodu verilir, lakin kodu paylaşmaq və ya başqa bir əməliyyat etmək istəmir",
+          "Heç bir link, telefon nömrəsi və ya şəxsi məlumat sorğusu yoxdur",
+          "Mətn bankın rəsmi bildiriş formatına uyğundur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B002-az",
+        "text": "Salam, sabah səhər iclasa gec qalmayın, saat 9-da ofisdə görüşək",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda pul, kart məlumatı və ya şifrə istənilmir",
+          "Heç bir link və ya əlavə fayl yoxdur",
+          "Məzmun sadə iş görüşü dəvətidir"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B002-az_ru",
+        "text": "Salam, sabah в 9 утра ofisdə görüşək, не опаздывай",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.99,
+        "reasons": [
+          "Mesaj sadəcə görüş təyin edir, heç bir pul və ya məlumat tələb etmir",
+          "Heç bir link, telefon nömrəsi və ya OTP kodu yoxdur",
+          "Mətn heç bir təcili və ya təhdid ifadəsi daşımır"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S002-az",
+        "text": "Kapital Bank: Kartınız təhlükəsizlik səbəbindən bloklanıb. Təcili təsdiq edin: kapitalbank-secure.xyz/verify və kart nömrənizi, CVV kodunu göndərin.",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Domain kapitalbank-secure.xyz görünüşcə Kapital Bank-a bənzəyir, lakin lookalikedır",
+          "Mesaj kart nömrəsi və CVV kodu kimi həssas məlumatların göndərilməsini tələb edir",
+          "Təcili təsdiq etmə təzyiqi ilə istifadəçini sürətlə hərəkətə məcbur edir"
+        ],
+        "scheme": "bank_impersonation",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.xyz",
+          "suspicious_word:secure",
+          "brand_in_domain:Kapital Bank"
+        ]
+      },
+      {
+        "id": "S002-translit",
+        "text": "Kapital Bank: Kartiniz tehlukesizlik sebebinden bloklanib. Tecili tesdiq edin: kapitalbank-secure.xyz/verify ve kart nomrenizi, CVV kodunu gonderin.",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.99,
+        "reasons": [
+          "Mesajda kapitalbank-secure.xyz kimi görünüşdə, rəsmi olmayan .xyz domeninə link var",
+          "Kart nömrəsi və CVV kodu kimi gizli maliyyə məlumatları göndərməyiniz tələb olunur",
+          "Təcili təsdiq tələb edilərək istifadəçiyə təzyiq göstərilir"
+        ],
+        "scheme": "bank_impersonation",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.xyz",
+          "suspicious_word:secure",
+          "brand_in_domain:Kapital Bank"
+        ]
+      },
+      {
+        "id": "S002-az_ru",
+        "text": "Kapital Bank: Ваша karta bloklanıb. Срочно подтвердите: kapitalbank-secure.xyz/verify и отправьте nömrəni, CVV kodu.",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda kartın bloklandığı iddia edilərək linkə klikləmək tələb olunur",
+          "Link kapitaalbank-secure.xyz lookalike domeni ilə fırıldaqçılıq göstəricisidir",
+          "Göndərməyiniz istənən CVV kodu və kart nömrəsi şəxsi maliyyə məlumatıdır",
+          "Təcili təsdiq tələb edilməsi təzyiq yaratmaq üçün istifadə olunur"
+        ],
+        "scheme": "bank_impersonation",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.xyz",
+          "suspicious_word:secure",
+          "brand_in_domain:Kapital Bank"
+        ]
+      },
+      {
+        "id": "S003-az",
+        "text": "Salam, mən bankın təhlükəsizlik şöbəsindənəm. Hesabınıza icazəsiz giriş cəhdi olub. Telefonunuza gələn SMS kodunu mənə deyin ki, hesabı bloklayaq.",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "SMS kodunu istəyi hesabı bloklamaq üçün məlumat oğurlamağa yönəldilib",
+          "Göndərən özünü bankın təhlükəsizlik şöbəsi kimi təqdim edərək təcili hərəkət tələb edir"
+        ],
+        "scheme": "bank_impersonation",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S003-translit",
+        "text": "Salam, men bankin tehlukesizlik shobesindenem. Hesabiniza icazesiz giris cehdi olub. Telefonunuza gelen SMS kodunu mene deyin ki, hesabi bloklayaq.",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Hesabınıza icazəsiz giriş iddiası ilə SMS kodu istənilir",
+          "Kodunuzu paylaşmaq üçün təcili bir tələb var",
+          "Göndərən özünü bankın təhlükəsizlik şöbəsi kimi təqdim edir"
+        ],
+        "scheme": "bank_impersonation",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S003-az_ru",
+        "text": "Salam, я из службы безопасности banka. На vaş hesab попытка входа. Скажите kodu из SMS, чтобы мы bloklayaq hesabı.",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesaj hesabınıza giriş cəhdini iddia edərək SMS kodunu istəyi",
+          "Kodunuzu paylaşmaq hesabınızı itirməyə səbəb ola bilər",
+          "Göndərici özünü bankın təhlükəsizlik şöbəsi kimi təqdim edir, bu isə saxta bir taktikadır"
+        ],
+        "scheme": "bank_impersonation",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S004-az",
+        "text": "Evdən işləyin! Gündə 150 AZN qazanc, təcrübə tələb olunmur. Qeydiyyat haqqı cəmi 20 AZN, kartıma köçürün və WhatsApp-da yazın: +994 55 123 45 67",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesajda gündə 150 AZN qazanmaq və təcrübə tələb olunmadığı vəd edilir, bu reallıqdan uzaqdır.",
+          "Qeydiyyat üçün 20 AZN ödəniş tələb edilir və pulun kartınıza köçürülməsi istənilir, bu tip ödənişlər fırıldaqdır.",
+          "Ödənişi WhatsApp vasitəsilə şəxsi nömrəyə göndərmək tələb olunur, rəsmi şirkət bu cür üsulu istifadə etmir."
+        ],
+        "scheme": "fake_job",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S004-translit",
+        "text": "Evden isleyin! Gunde 150 AZN qazanc, tecrube teleb olunmur. Qeydiyyat haqqi cemi 20 AZN, kartima kocurun ve WhatsApp-da yazin: +994 55 123 45 67",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Pul göndərməyi və qeydiyyat haqqını tələb edir",
+          "İş təklifi real deyil, yüksək qazanc və təcrübə tələb olunmadığı vəd edilir",
+          "Şəxsi telefon nömrəsi vasitəsilə əlaqə qurulması məlumat toplama məqsədli ola bilər"
+        ],
+        "scheme": "fake_job",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S004-az_ru",
+        "text": "Работа на дому! Gündə 150 AZN заработок, опыт не нужен. Qeydiyyat haqqı всего 20 AZN, переведите na kartı и пишите в WhatsApp: +994 55 123 45 67",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "İş təklifi üçün 20 AZN qeydiyyat haqqı tələb edir",
+          "İşin asan və pul qazandıracağına dair reallaşması mümkün olmayan vədlər verir",
+          "Ödənişi və əlaqəni şəxsi WhatsApp nömrəsi vasitəsilə istəyi var"
+        ],
+        "scheme": "fake_job",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S005-az",
+        "text": "AzerPost: Bağlamanız gömrükdə saxlanılıb. Çatdırılma üçün 3.50 AZN ödəyin: azerpost-delivery.top/pay",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda istifadə olunan domen azerpost-delivery.top rəsmi AzerPost domeninə bənzəyir, lakin lookalikedır.",
+          "Gömrükdə saxlanıldığı və paketinizin açılması üçün 3.50 AZN ödəmək tələb olunur, bu pul istəyi fırıldaqdır.",
+          "Təcili ödəmə tələb edilməsi və linkə klikləmək üçün təzyiq göstərilir."
+        ],
+        "scheme": "delivery_scam",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.top",
+          "brand_in_domain:AzerPost"
+        ]
+      },
+      {
+        "id": "S005-translit",
+        "text": "AzerPost: Baglamaniz gomrukde saxlanilib. Catdirilma ucun 3.50 AZN odeyin: azerpost-delivery.top/pay",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda paketinizin gömrükdə saxlandığı və 3.50 AZN ödəməniz lazım olduğu iddia edilir",
+          "Rəsmi olmayan azerpost-delivery.top domeni istifadə olunur, bu domen AzerPost-un rəsmi domeni deyil",
+          "Linkə klikləmək və pul göndərmək üçün təcili təzyiq göstərilir"
+        ],
+        "scheme": "delivery_scam",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.top",
+          "brand_in_domain:AzerPost"
+        ]
+      },
+      {
+        "id": "S005-az_ru",
+        "text": "AzerPost: Ваша посылка задержана на gömrük. Для çatdırılma оплатите 3.50 AZN: azerpost-delivery.top/pay",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda \"azerpost-delivery.top\" domeni istifadə olunub, bu domen rəsmi AzerPost domeni deyil",
+          "Gömrükdə saxlanıldığı və 3.50 AZN ödəmək tələb olunduğu bildirilir, bu pul tələb edən fırıldaqdır",
+          "Rəsmi AzerPost heç vaxt belə link vasitəsilə ödəniş tələb etmir"
+        ],
+        "scheme": "delivery_scam",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.top",
+          "brand_in_domain:AzerPost"
+        ]
+      },
+      {
+        "id": "S006-az",
+        "text": "Kriptoda 3 gündə 300% qazanc! Cəmi 100 AZN qoyun, zəmanət veririk. Telegram qrupumuza qoşulun: t.me/crypto_gain_az",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "300% qazancla 3 gündə pulunuzu ikiqatdan çox artırmaq qeyri-mümkündür",
+          "Mesaj pul yatırmağı və Telegram qrupuna qoşulmağı tələb edir",
+          "İstifadə olunan link qısaldıcıdır və orijinal saytla əlaqəsi yoxdur"
+        ],
+        "scheme": "investment_scam",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "url_shortener"
+        ]
+      },
+      {
+        "id": "S006-translit",
+        "text": "Kriptoda 3 gunde 300% qazanc! Cemi 100 AZN qoyun, zemanet veririk. Telegram qrupumuza qosulun: t.me/crypto_gain_az",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "300% qazanc kimi reallıqdan kənar vəd verilir",
+          "Cemi 100 AZN yatırmaq tələb olunur",
+          "Telegram qrupuna qoşulmaq üçün qısaldılmış link (t.me) istifadə edilir"
+        ],
+        "scheme": "investment_scam",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "url_shortener"
+        ]
+      },
+      {
+        "id": "S006-az_ru",
+        "text": "Kripto: 300% прибыль за 3 gün! Cəmi 100 AZN вложите, garantiya 100%. Вступайте в Telegram qrupumuza: t.me/crypto_gain_az",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesaj 300% gəlir və qarantili 100% qazanc vəd edir, bu reallıqdan uzaqdır.",
+          "100 AZN yatırmaq və Telegram qrupuna qoşulmaq üçün link göndərilir, bu investisiya təklifi fırıldaqdır.",
+          "Göndərilən link qısa URL (t.me) vasitəsilə yönləndirilir, bu phishing və ya scam üçün tipik üsuldur."
+        ],
+        "scheme": "investment_scam",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "url_shortener"
+        ]
+      },
+      {
+        "id": "S007-az",
+        "text": "Salam, bu mənəm, nömrəmi dəyişmişəm. Təcili 200 AZN lazımdır, bu karta köçür, sabah qaytararam. Kart: 4169 7388 1234 5678",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Təcili 200 AZN göndərmək istəyi pul oğurluğu cəhdidir",
+          "Göndəriləcək kart nömrəsi verilib, lakin göndərən kimliyi təsdiqlənmir",
+          "Mətn dostluq adı ilə təcili pul tələb edir, bu tip fırıldaqdır"
+        ],
+        "scheme": "other",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S007-translit",
+        "text": "Salam, bu menem, nomremi deyismisem. Tecili 200 AZN lazimdir, bu karta kocur, sabah qaytararam. Kart: 4169 7388 1234 5678",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Pul göndərmək üçün təcili məbləğ tələb edir",
+          "Göndəriləcək kart nömrəsi verilir və geri qaytarılacağı vəd edilir",
+          "Göndərici kimliyi təsdiqlənmir, tanımadığınız şəxsdən pul istənilir"
+        ],
+        "scheme": "other",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S007-az_ru",
+        "text": "Salam, это я, nömrəmi dəyişmişəm. Срочно нужно 200 AZN, переведи na kartı, sabah верну. Kart: 4169 7388 1234 5678",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Təcili şəkildə 200 AZN göndərməyinizi tələb edir",
+          "Kart nömrəsi verilib və pul göndərmək üçün link və ya əlavə məlumat yoxdur",
+          "Göndərən özünü tanıdığınız şəxs kimi göstərir, lakin kimliyi təsdiqlənmir"
+        ],
+        "scheme": "other",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "S008-az",
+        "text": "Nar: Təbriklər! Yeni il lotereyasında iPhone 15 udmusunuz. Hədiyyəni almaq üçün nar-udus.click saytında kart məlumatlarınızı daxil edin.",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "mesajda Nar brendi ilə əlaqəli olduğu iddia edilir, lakin domain nar-udus.click rəsmi deyil",
+          "görünüşü eyni olan .click domeni lookalike olaraq işarələnib",
+          "kart məlumatları daxil etmək tələb olunur, bu isə şəxsi maliyyə məlumatlarını ələ keçirməyə yönəlikdir"
+        ],
+        "scheme": "fake_bonus",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.click",
+          "brand_in_domain:Nar"
+        ]
+      },
+      {
+        "id": "S008-translit",
+        "text": "Nar: Tebrikler! Yeni il lotereyasinda iPhone 15 udmusunuz. Hediyyeni almaq ucun nar-udus.click saytinda kart melumatlarinizi daxil edin.",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesaj kart məlumatlarınızı xarici sayta daxil etməyinizi tələb edir",
+          "Domain nar-udus.click Nar brendini taklit edən lookalike domen kimi qeyd olunub",
+          "İphone 15 kimi qeyri-realist mükafat vəd edərək təcili hərəkətə çağırır"
+        ],
+        "scheme": "fake_bonus",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.click",
+          "brand_in_domain:Nar"
+        ]
+      },
+      {
+        "id": "S008-az_ru",
+        "text": "Nar: Поздравляем! Вы выиграли iPhone 15 в лотерее. Hədiyyəni almaq üçün зайдите на nar-udus.click и введите kart məlumatları.",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "nar-udus.click domeni Nar brendinin adını taklit edir",
+          "mesajda kart məlumatları və ya PIN istənilir",
+          "qazanılmış iPhone 15 kimi gözlənilməz mükafat təklif edilir"
+        ],
+        "scheme": "fake_bonus",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_tld:.click",
+          "brand_in_domain:Nar"
+        ]
+      },
+      {
+        "id": "S009-az",
+        "text": "ASAN xidmət: Vergi borcunuz 87 AZN təşkil edir. Cərimədən yayınmaq üçün 24 saat ərzində ödəyin: asan-gov-odenis.com",
+        "label": "scam",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Domain asan-gov-odenis.com görünüşcə ASAN xidmətini taklit edir",
+          "Mesajda 24 saat ərzində ödəmək təzyiqi var",
+          "Rəsmi ASAN portalı linki deyil, ödəniş üçün şübhəli veb‑sayt istənilir"
+        ],
+        "scheme": "other",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_word:odenis",
+          "brand_in_domain:ASAN"
+        ]
+      },
+      {
+        "id": "S009-translit",
+        "text": "ASAN xidmet: Vergi borcunuz 87 AZN teskil edir. Cerimeden yayinmaq ucun 24 saat erzinde odeyin: asan-gov-odenis.com",
+        "label": "scam",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda ASAN-ın rəsmi domeni olmayan lookalike link verilib.",
+          "Vergi borcunu 24 saat ərzində ödəmək təzyiqi var və bu cür tələblər rəsmi bildirişdə yer almır.",
+          "Linkə klikləmək və məlumat vermək şəxsi və maliyyə təhlükəsizliyinizə zərər verə bilər."
+        ],
+        "scheme": "other",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_word:odenis",
+          "brand_in_domain:ASAN"
+        ]
+      },
+      {
+        "id": "S009-az_ru",
+        "text": "ASAN xidmət: Налоговый долг 87 AZN. Чтобы избежать штрафа, odəyin в течение 24 saat: asan-gov-odenis.com",
+        "label": "scam",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "scam",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesajda rəsmi ASAN xidmətinin adı istifadə olunub, lakin domen adı lookalike (asan-gov-odenis.com)dir",
+          "Mətn pul ödənişi (87 AZN) və 24 saat ərzində ödəmək təzyiqi tələb edir",
+          "Linkə klikləmək və ya məlumat vermək istifadəçini maliyyə itkisinin qarşısını ala bilər"
+        ],
+        "scheme": "other",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": [
+          "suspicious_word:odenis",
+          "brand_in_domain:ASAN"
+        ]
+      },
+      {
+        "id": "B003-az",
+        "text": "ABB: Kartınızdan (**1234) 12.50 AZN çıxarıldı. Yer: Bravo Supermarket. Qalıq: 245.30 AZN.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesaj yalnız kartdan çıxarılmış məbləği bildirir",
+          "Heç bir link, telefon nömrəsi və ya məlumat sorğusu yoxdur",
+          "Heç bir təcili hərəkət və ya pul göndərmə tələbi yoxdur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B003-translit",
+        "text": "ABB: Kartinizdan (**1234) 12.50 AZN cixarildi. Yer: Bravo Supermarket. Qaliq: 245.30 AZN.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda yalnız kartdan çıxan məbləğ və qalıq göstərilib",
+          "Heç bir link, telefon nömrəsi və ya məlumat sorğusu yoxdur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B003-az_ru",
+        "text": "ABB: С вашей карты (**1234) снято 12.50 AZN. Yer: Bravo Supermarket. Qalıq: 245.30 AZN.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesaj yalnız kartdan çıxan məbləği və qalıq məbləğini bildirir.",
+          "Heç bir link, telefon nömrəsi və ya şəxsi məlumat sorğusu yoxdur."
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B004-az",
+        "text": "Azercell: İnternet paketinizin müddəti sabah bitir. Paketi yeniləmək üçün Azercell mobil tətbiqinə və ya azercell.com saytına daxil ola bilərsiniz.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.97,
+        "reasons": [
+          "Mesaj yalnız internet paketinin bitəcəyini bildirir",
+          "Heç bir şəxsi məlumat, PIN, CVV və ya ödəniş tələb etmir",
+          "Azercell.com rəsmi domeni göstərilib"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B004-translit",
+        "text": "Azercell: Internet paketinizin muddeti sabah bitir. Paketi yenilemek ucun Azercell mobil tetbiqine ve ya azercell.com saytina daxil ola bilersiniz.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.93,
+        "reasons": [
+          "Mesajda rəsmi azercell.com domeni qeyd olunub",
+          "Heç bir kart, PIN, OTP və ya şəxsi məlumat soruşulmur",
+          "Heç bir şübhəli link və ya sürətli hərəkət tələbi yoxdur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B004-az_ru",
+        "text": "Azercell: Срок вашего интернет-пакета истекает завтра. Paketi yeniləmək üçün зайдите в mobil tətbiq или на azercell.com.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.93,
+        "reasons": [
+          "Mesajda rəsmi azercell.com domeni qeyd olunub",
+          "Heç bir şəxsi məlumat, PIN, CVV və ya OTP kodu istənilmir",
+          "Mesaj yalnız paket yenilənməsi barədə xatırlatmadır"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B005-az",
+        "text": "Ana, işdən çıxdım, 6-da evdə olaram. Çörək alım?",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.99,
+        "reasons": [
+          "Heç bir maliyyə və ya şəxsi məlumat tələb edilmir",
+          "Heç bir link və ya əlavə təlimat yoxdur",
+          "Mesaj sadəcə ailəvi söhbətdir"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B005-translit",
+        "text": "Ana, isden cixdim, 6-da evde olaram. Corek alim?",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.99,
+        "reasons": [
+          "Şəxsi söhbət, tanış şəxslə gündəlik plan mübadiləsi",
+          "Heç bir link, telefon nömrəsi, kod və ya maliyyə məlumatı tələb edilmir"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B005-az_ru",
+        "text": "Ana, işdən çıxdım, в 6 буду дома. Çörək alım?",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.99,
+        "reasons": [
+          "Mesaj şəxsi söhbətdir və heç bir pul, məlumat və ya link tələb etmir",
+          "Mətn sadəcə evdə çörək almaq barədə soruşur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B006-az",
+        "text": "Hörmətli Rəşad bəy, müraciətiniz üçün təşəkkür edirik. Müsahibə cümə günü saat 15:00-da ofisimizdə olacaq. Ünvan: Nizami küç. 10.",
+        "label": "safe",
+        "variant": "az",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Müsahibə dəvəti real iş təklifi kimi görünür",
+          "Heç bir link, ödəniş və ya şəxsi məlumat sorğusu yoxdur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B006-translit",
+        "text": "Hormetli Resad bey, muracietiniz ucun tesekkur edirik. Musahibe cume gunu saat 15:00-da ofisimizde olacaq. Unvan: Nizami kuc. 10.",
+        "label": "safe",
+        "variant": "translit",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda pul, kart, PIN ve ya OTP kodu istənilmir",
+          "Heç bir link və ya əlavə fayl yoxdur",
+          "Mətn sadəcə iş görüşməsi dəvətidir"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      },
+      {
+        "id": "B006-az_ru",
+        "text": "Hörmətli Rəşad bəy, спасибо за заявку. Müsahibə cümə günü saat 15:00-da в нашем ofisdə. Ünvan: Nizami küç. 10.",
+        "label": "safe",
+        "variant": "az_ru",
+        "source": "synthetic (written by Claude)",
+        "verdict": "safe",
+        "confidence": 0.98,
+        "reasons": [
+          "Mesajda pul, kart məlumatı və ya OTP kodu istənmir",
+          "Heç bir şübhəli link və ya əlavə fayl yoxdur"
+        ],
+        "scheme": "none",
+        "degraded": false,
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "link_flags": []
+      }
+    ]
+  }
+}

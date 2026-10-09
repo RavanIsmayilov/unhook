@@ -1,0 +1,234 @@
+# Official domains per brand + signals used by the link checker. EDIT THIS FILE.
+# NOTE: starter list written from general knowledge; verify every domain before relying on it.
+# brands[].domains   : domains that really belong to the brand (subdomains are accepted too)
+# brands[].keywords  : brand names that must NOT appear in other domains (impersonation)
+
+official_suffixes:
+- gov.az
+brands:
+- name: Azercell
+  keywords:
+  - azercell
+  domains:
+  - azercell.com
+- name: Bakcell
+  keywords:
+  - bakcell
+  domains:
+  - bakcell.com
+- name: Nar
+  keywords:
+  - nar
+  - narmobile
+  domains:
+  - nar.az
+- name: Naxtel
+  keywords:
+  - naxtel
+  domains:
+  - naxtel.az
+- name: Kapital Bank
+  keywords:
+  - kapitalbank
+  - kapital
+  domains:
+  - kapitalbank.az
+- name: Birbank
+  keywords:
+  - birbank
+  domains:
+  - birbank.az
+- name: ABB
+  keywords:
+  - abbbank
+  - ibar
+  - mobilebank
+  domains:
+  - abb-bank.az
+  - ibar.az
+- name: PASHA Bank
+  keywords:
+  - pashabank
+  - pasha
+  domains:
+  - pashabank.az
+- name: Unibank
+  keywords:
+  - unibank
+  domains:
+  - unibank.az
+- name: Rabitabank
+  keywords:
+  - rabitabank
+  domains:
+  - rabitabank.com
+  - rabitabank.az
+- name: Access Bank
+  keywords:
+  - accessbank
+  domains:
+  - accessbank.az
+- name: Bank of Baku
+  keywords:
+  - bankofbaku
+  domains:
+  - bankofbaku.com
+- name: Yelo Bank
+  keywords:
+  - yelobank
+  domains:
+  - yelobank.az
+- name: Xalq Bank
+  keywords:
+  - xalqbank
+  domains:
+  - xalqbank.az
+- name: Bank Respublika
+  keywords:
+  - bankrespublika
+  domains:
+  - bankrespublika.az
+- name: Leobank
+  keywords:
+  - leobank
+  domains:
+  - leobank.az
+- name: Express Bank
+  keywords:
+  - expressbank
+  domains:
+  - expressbank.az
+- name: Millikart
+  keywords:
+  - millikart
+  domains:
+  - millikart.az
+- name: ASAN
+  keywords:
+  - asan
+  - egov
+  domains:
+  - asan.gov.az
+  - e-gov.az
+- name: AzerPost
+  keywords:
+  - azerpost
+  domains:
+  - azerpost.az
+- name: Azerishiq
+  keywords:
+  - azerishiq
+  domains:
+  - azerishiq.az
+- name: AZAL
+  keywords:
+  - azal
+  domains:
+  - azal.az
+- name: Tap.az
+  keywords:
+  - tapaz
+  domains:
+  - tap.az
+- name: Turbo.az
+  keywords:
+  - turboaz
+  domains:
+  - turbo.az
+suspicious_words:
+- bonus
+- hediyye
+- hediye
+- gift
+- promo
+- kampaniya
+- aksiya
+- qazan
+- win
+- lottery
+- loto
+- verify
+- login
+- secure
+- odenis
+- payment
+- kart
+- card
+- claim
+- reward
+- kredit
+- credit
+- update
+- confirm
+- tesdiq
+- account
+- kabinet
+- support
+suspicious_tlds:
+- top
+- xyz
+- icu
+- click
+- tk
+- ml
+- ga
+- cf
+- gq
+- buzz
+- live
+- site
+- online
+- club
+- vip
+- shop
+- rest
+- cyou
+- monster
+- link
+- work
+- fun
+- cam
+- bid
+- win
+- ws
+known_tlds:
+- az
+- com
+- net
+- org
+- info
+- ru
+- io
+- co
+- me
+- app
+- store
+- tv
+- cc
+- in
+- ly
+- gl
+- to
+- be
+- gd
+- gg
+- at
+- so
+- su
+- ua
+- tr
+- uk
+- us
+- eu
+- de
+shorteners:
+- bit.ly
+- tinyurl.com
+- cutt.ly
+- t.ly
+- is.gd
+- rb.gy
+- shorturl.at
+- goo.gl
+- ow.ly
+- t.me

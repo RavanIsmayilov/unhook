@@ -1,0 +1,1296 @@
+{
+  "config": {
+    "attacker_provider": "groq",
+    "attacker_model": "qwen/qwen3.8-27b",
+    "analyzer_provider": "groq",
+    "analyzer_model": "openai/gpt-oss-120b",
+    "n_seeds": 9
+  },
+  "before": [
+    {
+      "id": "AS001-01",
+      "seed_id": "S001-az",
+      "technique": "translit",
+      "text": "Hormetli muster, Azercell tarafindan 50 AZN bonus qazandiniz! Almaq ucun linke kec: azercell-bonus.top/qazan",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Link domeni azercell-bonus.top lookalike domenidir və .top uzantısı şübhəlidir",
+        "Mesaj gözlənilməz 50 AZN bonus vəd edir və linkə klikləmək tələb edir",
+        "Mətn istifadəçini təcili hərəkətə məcbur etmək üçün təzyiq göstərir"
+      ]
+    },
+    {
+      "id": "AS001-02",
+      "seed_id": "S001-az",
+      "technique": "az_ru",
+      "text": "Azercell yoxlamasi: siz 50 AZN qazandiniz. Pulani almaq ucun bu sayt-a baxin: az-mobile-brd.top/kod",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Azercell adından 50 AZN qazanma iddiası reallıqdan uzaqdır",
+        "Mesajda tanımadığınız az-mobile-brd.top domeninə keçid tələb olunur",
+        "Link .top uzantısı şübhəli və saxta sayt göstəricisidir"
+      ]
+    },
+    {
+      "id": "AS001-03",
+      "seed_id": "S001-az",
+      "technique": "synonyms",
+      "text": "Cehizetiniz ucun mükafat qeydiyyatdan keçib. Əldə etmək üçün təsdiq kodunu yoxlayın: az-reward-claim.xyz/verify",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda mükafat alacağınız və kodu yoxlamaq üçün linkə klikləməyiniz tələb olunur",
+        "Verilən link az-reward-claim.xyz şübhəli .xyz domeni və “reward-claim” sözləri ilə təhlükəli kimi işarələnib",
+        "Mətn pul və ya mükafat vəd edərək istifadəçini təcili hərəkətə məcbur edir"
+      ]
+    },
+    {
+      "id": "AS001-04",
+      "seed_id": "S001-az",
+      "technique": "new_pretext",
+      "text": "Merkezi Bank nəzarəti: sizin hesabınızda tutulan 50 AZN geri qaytarılır. Aktivasiya üçün: bank-refund-az.top/approval",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda hesabınıza 50 AZN geri qaytarılacağı və aktivasiya üçün linkə klikləmək tələb olunur",
+        "Rəsmi bank domeni deyil, .top uzantılı və \"bank-refund-az.top\" şübhəli domen kimi işarələnib",
+        "Mesajda “Merkezi Bank nəzarəti” deyərək istifadəçini təcili hərəkətə məcbur etməyə çalışır"
+      ]
+    },
+    {
+      "id": "AS001-05",
+      "seed_id": "S001-az",
+      "technique": "typos",
+      "text": "Az3rc3ll: 50 AZN b0nus var. Almaq ucun: a-z-bonus.top/c0de",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.99,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda Azercell adı səhv yazılıb və istifadəçini bonus almaq üçün şübhəli .top domeninə yönləndirir",
+        "Link a-z-bonus.top şübhəli TLD və bonus sözü ilə işarələnib, bu phishing göstəricisidir",
+        "İstifadəçidən heç bir məlumat soruşulmasa da, linkə klikləmək və kod daxil etmək tələb olunur, bu isə məlumat oğurluğu riskidir"
+      ]
+    },
+    {
+      "id": "AS001-06",
+      "seed_id": "S001-az",
+      "technique": "no_link",
+      "text": "Azercell bonusunuz hazırdır. 50 AZN üçün zəng edin: +994 55 000 00 01 və təsdiq kodunu ötürün.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Bonusun mövcud olduğu iddiası reallıqdan uzaqdır",
+        "Təsdiq kodunu göndərmək üçün telefon nömrəsinə zəng etmək tələb olunur",
+        "Pul (50 AZN) üçün sürətli hərəkət təzyiqi var"
+      ]
+    },
+    {
+      "id": "AS001-07",
+      "seed_id": "S001-az",
+      "technique": "formal_tone",
+      "text": "Sayın abonent, 50 AZN məbləğində güzəştiniz hesabınıza köçürülməyi gözləyir. Aktivasiya üçün zəng edin: +994 55 000 00 02.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Hesabınıza 50 AZN köçürüləcək deyə pul vəd edir, ancaq aktivasiya üçün telefon nömrəsinə zəng etməyi tələb edir",
+        "Rəsmi bank/operator bildirişlərində belə telefon zəngi və ya pul köçürülməsi üçün sorğu olmaz",
+        "Mesaj təcili və cazibədar bir təklif kimi təqdim olunur, istifadəçini sürətlə hərəkətə gətirir"
+      ]
+    },
+    {
+      "id": "AS001-08",
+      "seed_id": "S001-az",
+      "technique": "short_sms",
+      "text": "Azercell: 50 AZN bonus. Al: az-bns.top/x",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Azercell adından bonus vəd edilərək şübhəli linkə klikləmək istənilir",
+        "az-bns.top domeni .top uzantısı ilə şübhəli olaraq işarələnib",
+        "Bu cür mesajlar şəxsi məlumat və ya pul almaq üçün istifadə olunur"
+      ]
+    },
+    {
+      "id": "AS002-01",
+      "seed_id": "S002-az",
+      "technique": "translit",
+      "text": "Kapital Bank: Kartiniz texlikeysizlik sebebiyle bloklanib. Tecili tasdik edin: kapbank-tc.xyz/void va kart nomrani, CVV kodunu gonderin.",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.99,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda kapbank-tc.xyz kimi şübhəli domenə keçid verilir",
+        "Kart nömrəsi və CVV kodu kimi maliyyə məlumatları istənilir",
+        "Təcili təsdiq tələb edilərək istifadəçi təzyiqə məruz qalır"
+      ]
+    },
+    {
+      "id": "AS002-02",
+      "seed_id": "S002-az",
+      "technique": "az_ru",
+      "text": "Kapital Bank bildirişidir. Ваш карту заблокировали из-за безопасности. Подтвердите доступ по ссылке kapbank-auth.top/confirm i ödəniş məlumatlarını göndərin.",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Link kapbank-auth.top .top domeni etibarsızdır",
+        "Mesaj kartın bloklandığını iddia edərək təcili hərəkət tələb edir",
+        "Ödəniş məlumatları və kart detalları göndərmək istənilir"
+      ]
+    },
+    {
+      "id": "AS002-03",
+      "seed_id": "S002-az",
+      "technique": "synonyms",
+      "text": "Bank xidməti: Hesabınızın icarəsi mümkün deyil. Statusunu buraxmaq üçün: kb-status.net/unlock keçidində məlumatlarınızı yoxlayın.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda hesabınızın bloklandığı və \"unlock\" linkinə klikləmək tələb olunur.",
+        "İstifadə olunan domen (kb-status.net) bankın rəsmi domeni deyil və \"unknown\" statusa malikdir.",
+        "Heç bir rəsmi telefon nömrəsi və ya bankın adı verilməyib, yalnız link vasitəsilə məlumat istənilir."
+      ]
+    },
+    {
+      "id": "AS002-04",
+      "seed_id": "S002-az",
+      "technique": "new_pretext",
+      "text": "Sahibqardış Xidmətləri: Sizə məxsus 500 AZN kommunal ödəniş qaytarılması gözləyir. Müraciət üçün: komrefunds.az/claim doldurun və kart nömrənizə göndərin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda 500 AZN geri qaytarılması və kart nömrəsi göndərmək tələb edilir",
+        "Link komrefunds.az/claim domeni tanınmış deyil və phishing əlamətir",
+        "Təcili ödəniş və pul vədişi istifadəciyi təcili hərəkətə sürətlədirir"
+      ]
+    },
+    {
+      "id": "AS002-05",
+      "seed_id": "S002-az",
+      "technique": "typos",
+      "text": "K4pital B4nk: K4rtiniz bl0kl4ndi. T4cili 4dım: k4pb4nk-vrfy.xyz/go ve 4dım verilerinizi g0nd4rin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda kartınızın bloklandığı və linkə klikləmək tələb olunur",
+        "Verilən link .xyz domeni şübhəlidir və phishing üçün istifadə olunur",
+        "Şəxsi məlumatların göndərilməsi istənilir, bu bankların rəsmi proseduru deyil"
+      ]
+    },
+    {
+      "id": "AS002-06",
+      "seed_id": "S002-az",
+      "technique": "no_link",
+      "text": "Kapital Bank: Kartınız bloklanıb. Təsdiq üçün +994 55 000 00 00 nömrəsinə zəng edin və operatora kart nömrənizi verin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Kartın bloklandığını iddia edərək telefonla kart nömrəsi vermək tələb olunur",
+        "Rəsmi bankın telefon nömrəsi deyil, şəxsi nömrə verilir",
+        "Təcili və təhdid tonunda məlumat paylaşmağa məcbur etmə cəhdidir"
+      ]
+    },
+    {
+      "id": "AS002-07",
+      "seed_id": "S002-az",
+      "technique": "formal_tone",
+      "text": "Banka müraciət: Hesabınızın aktivlik statusu yoxlanmaqdadır. Təsdiq prosesi üçün: kb-secure.info/auth ünvanına daxil olun və təhlükəsizlik kodunuzu təqdim edin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda bank adı ilə əlaqəli olduğuna dair iddia var, lakin rəsmi banklar link vasitəsilə şifrə və ya kod istəməz",
+        "Verilən link (kb-secure.info) şübhəli olaraq işarələnib və orijinal bank domeni deyil",
+        "Təcili təsdiq tələb edərək istifadəçini linkə yönləndirir və təhlükəsizlik kodunu verməyə məcbur edir"
+      ]
+    },
+    {
+      "id": "AS002-08",
+      "seed_id": "S002-az",
+      "technique": "short_sms",
+      "text": "Kapital: Kart blok. Tasdik: kb-ok.xyz/v, CVV yoxla.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda kart bloklandığı və CVV-nun yoxlanması üçün şübhəli linkə (kb-ok.xyz) daxil olmağı tələb edir.",
+        "kb-ok.xyz domeni .xyz uzantısı ilə şübhəli olaraq işarələnib, bu da saxta sayt göstəricisidir.",
+        "Heç bir rəsmi bank mesajı kart məlumatı, CVV və ya şifrəni paylaşmağı tələb etmir."
+      ]
+    },
+    {
+      "id": "AS003-01",
+      "seed_id": "S003-az",
+      "technique": "az_ru",
+      "text": "Salam, bu bankın təhlükəsizlik xidmətidir. Hesabda qeyri-icazəli giriş oldu. Zəngə cavab verin və SMS-də gələn 6 rəqəmlilik təsdiq kodunu bizə şifrə saxlamaq üçün göndərin.",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Hesabda qeyri-icazəli giriş olduğunu iddia edərək təcili cavab tələb edir",
+        "SMS-də gələn 6 rəqəmlik təsdiq kodunu göndərməyinizi istəyir",
+        "Göndərilən telefon nömrəsi və ya link olmadan birbaşa zəng etməyi təklif edir"
+      ]
+    },
+    {
+      "id": "AS003-02",
+      "seed_id": "S003-az",
+      "technique": "synonyms",
+      "text": "Heyrət, mən maliyyə təhlükəsizlik müaviniyəm. Sizim hesabınıza qeyri-adi çıxın cəhdi qeydə alınıb. Cihazınıza düşən 6 rəqəmli təsdiq nömrəsini mənə bildirin ki, hesabınızı qoruyaq.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj sizdən 6 rəqəmli təsdiq kodunu istəir, bu bankların rəsmi proseduru deyil.",
+        "\"Maliyyə təhlükəsizlik müavini\" kimi özünü təqdim edərək təcili cavab tələb edir, bu təzyiq taktikasıdır.",
+        "Heç bir link və ya rəsmi telefon nömrəsi göstərilməyib, yalnız şəxsi məlumat göndərməyə çağırır."
+      ]
+    },
+    {
+      "id": "AS003-03",
+      "seed_id": "S003-az",
+      "technique": "new_pretext",
+      "text": "Poçt xidməti məlumatı: Sizin üçün qalan pakətin ödənişi tamamlanmır. Tarif təsdiqləmək üçün telefonunuza düşən SMS kodunu +994 55 000 00 00 nömrəsinə göndərin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "SMS kodunu başqa nömrəyə göndərməyiniz tələb olunur",
+        "Ödənişin tamamlanmadığını iddia edərək təcili hərəkət tələb edir",
+        "Rəsmi poçt xidməti heç vaxt belə kodu paylaşmağı istəmir"
+      ]
+    },
+    {
+      "id": "AS003-04",
+      "seed_id": "S003-az",
+      "technique": "typos",
+      "text": "Salam, bankın tehlukesizlik so-besindenem. Hesabiniza icazesiz giri5 cehdi olup. Telefonunuzu gelen SMS k0duunu mene deyin ki, hesabi bloklayaq.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj bank təhlükəsizlik şöbəsindən olduğunu iddia edir, lakin SMS kodunu istəyi phishing-dir.",
+        "Hesabın bloklanması üçün OTP kodunu vermək tələb olunur, bu isə məlumat oğurluğuna yol açır.",
+        "Təcili şəkildə kodu vermək təzyiqi ilə istifadəçini manipulyasiya edir."
+      ]
+    },
+    {
+      "id": "AS003-05",
+      "seed_id": "S003-az",
+      "technique": "no_link",
+      "text": "Diqqət! Hesabınızda şübhəli aktivlik var. Təsdiq kodunu +994 55 000 00 00 nömrəsinə WhatsApp-da yazın və gözləyin. Link açmayın.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj hesabda şübhəli aktivlik olduğunu iddia edərək kodunuzu WhatsApp vasitəsilə naməlum nömrəyə göndərməyinizi tələb edir",
+        "Heç bir bank və ya mobil operator rəsmi olaraq belə bir təsdiq kodunu üçüncü tərəfə göndərməyi istəmir",
+        "Təcili və təhdid tonunda \"Link açmayın\" deyərək istifadəçini yanılmağa məcbur edir"
+      ]
+    },
+    {
+      "id": "AS003-06",
+      "seed_id": "S003-az",
+      "technique": "formal_tone",
+      "text": "Mətləb: Hesab aktivliyi haqqında məlumat. Rəqəmlərlə müştəri hesabınızda qeyri-adi giriş cəhdi qeydə alınmışdır. Hesabın bloklanmaması üçün cihazınıza düşən təsdiq kodunu dəqiq olduğuna əmin olmaqla bizə bildirməyiniz xahiş olunur.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.96,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Hesabın bloklanmaması üçün sizdən cihazınıza gələn təsdiq kodunu göndərməyiniz tələb olunur",
+        "Kodun göndərilməsi üçün təcili və təhdid edici dil istifadə edilir",
+        "Rəsmi bank bildirişlərində belə kodu paylaşmaq istənilmir"
+      ]
+    },
+    {
+      "id": "AS003-07",
+      "seed_id": "S003-az",
+      "technique": "short_sms",
+      "text": "Bank: Hesaba icazesiz giris var. SMS kodunu +994 55 000 00 00-e yubara bilasiniz.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj bankdan gəlmiş kimi göstərilir, lakin SMS kodunu başqa nömrəyə göndərməyinizi tələb edir.",
+        "\"Hesaba icazəsiz giriş var\" ifadəsi təcili hərəkətə məcbur etmək üçün təzyiq yaradır.",
+        "Banklar heç vaxt OTP kodunu üçüncü tərəfə göndərməyinizi istəmir."
+      ]
+    },
+    {
+      "id": "AS004-01",
+      "seed_id": "S004-az",
+      "technique": "translit",
+      "text": "Evden isleyin! Gundə 150 AZN qazan, hec bir tecrube gerekmez. Qeydiyyat ucin 20 AZN oden. Kartina gecirin ve WhatsApp-da yaz: +994 55 123 45 67",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Qeydiyyat üçün 20 AZN ödəniş tələb edilir, bu pulun geri qaytarılması gözlənilmir.",
+        "İşin heç bir təcrübə tələb etməməsi və yüksək qazanc vədi reallıqdan uzaqdır.",
+        "Pul göndərmək və WhatsApp vasitəsilə əlaqə qurmaq istənilir, bu şəxsi məlumat və pul itkisinin göstəricisidir."
+      ]
+    },
+    {
+      "id": "AS004-02",
+      "seed_id": "S004-az",
+      "technique": "az_ru",
+      "text": "Evdən iş var! Gündə 150 manual, experience gerekmez. Start paket 20 AZN. Kartina yudun ve WhatsApp +994 55 123 45 67 yaz.",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Pul göndərməyi və kartınıza pul yükləməyinizi tələb edir",
+        "Heç bir təcrübə tələb etmədiyi halda gündə 150 AZN qazanma vədi verilir",
+        "İşə başlamaq üçün WhatsApp nömrəsinə yazmaq istənilir"
+      ]
+    },
+    {
+      "id": "AS004-03",
+      "seed_id": "S004-az",
+      "technique": "synonyms",
+      "text": "Ev şəraitində task işləri. Günlük gelirl 150 AZN. Heç bir background gerekmez. Ucushaq odene 20 AZN. Banka hesaba yudun ve Telegram-da mesaji yazin: +994 55 123 45 67",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda iş üçün 20 AZN ödəniş tələb edilir, bu tip ödənişlər real iş təkliflərində yoxdur.",
+        "Gündəlik 150 AZN qazanmaq kimi qeyri-realist və çox cazibədar vəd var.",
+        "Bank hesabına pul göndərib Telegramda mesaj yazmaq istəyi şəxsi məlumat və pul itirməyə məcbur edir."
+      ]
+    },
+    {
+      "id": "AS004-04",
+      "seed_id": "S004-az",
+      "technique": "new_pretext",
+      "text": "Dəmirçidən köhnə qəbülçü sistemindən qalan təslim, cəmi 20 AZN. Bu təfəkkürü köçürün, siyahıya düşmək üçün WhatsApp +994 55 123 45 67 nömrəsinə yazın.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Pul göndərmək və WhatsApp nömrəsinə yazmaq tələb olunur",
+        "Mesajda konkret məhsul və ya xidmət haqqında məlumat yoxdur",
+        "Rəsmi şirkət və ya platforma adı göstərilməyib"
+      ]
+    },
+    {
+      "id": "AS004-05",
+      "seed_id": "S004-az",
+      "technique": "typos",
+      "text": "Evden ishe... gunde 150 AZN kazanc. Tecrube lazm1 d1r. Qeyd1yet ucln 20 AZN oden. Kartna yudun vje WatsApp-da yaz: +994 55 123 45 67",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Qeydiyyat üçün 20 AZN ödəniş tələb edir",
+        "Kart məlumatlarını WhatsApp vasitəsilə göndərməyə çağırır",
+        "Gündə 150 AZN qazanmaq vəd edilir, amma real iş şərtləri göstərilmir"
+      ]
+    },
+    {
+      "id": "AS004-06",
+      "seed_id": "S004-az",
+      "technique": "no_link",
+      "text": "Ev üzərində ofis tətbiqi. Gündə 150 AZN. Təcrübə lazım deyil. Başlayışıq pulu 20 AZN. Bu məbləği köçürün və zəng üçün nömrəni qeyd edin: +994 55 123 45 67",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda iş üçün əvvəlcədən 20 AZN göndərmək tələb olunur.",
+        "Gündə 150 AZN qazanmaq kimi reallıqdan uzaq vəd edilir.",
+        "Telefon nömrəsi verərək zəng almaq istənilir, bu şəxsi məlumat toplama cəhdidir."
+      ]
+    },
+    {
+      "id": "AS004-07",
+      "seed_id": "S004-az",
+      "technique": "formal_tone",
+      "text": "İxtisaslaşdırılmış məşğulluq proqramı haqqında məlumat. Şəyət təcrübə mövcud deyilsə belə, gündəlik gəlir müəyyən edilmişdir. Başlanğıc ödəniş məbləği 20 AZN təşkil edir. Bank köçürməsini tamamlayınca lütfən, WhatsApp +994 55 123 45 67 nömrəsinə müraciət edin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "İlk ödəniş tələb edir və gündəlik gəlir vəd edir",
+        "Mətn konkret şirkət və ya rəsmi mənbə göstərmir",
+        "WhatsApp nömrəsinə müraciət etməyi tələb edir, bu da məlumat toplama məqsədli ola bilər"
+      ]
+    },
+    {
+      "id": "AS004-08",
+      "seed_id": "S004-az",
+      "technique": "short_sms",
+      "text": "Gündə 150 AZN. Təcrübə lazım deyil. 20 AZN ödə və WhatsApp +994 55 123 45 67 yaz. Ətraflı məlumat üçün zəng et.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "İlk addım olaraq 20 AZN ödəniş tələb edir",
+        "Heç bir təcrübə tələb etmədən gündə 150 AZN qazanmağı vəd edir",
+        "WhatsApp nömrəsinə yazmaq və zəng etmək istəyi şəxsi məlumat toplamağa yönəldilib"
+      ]
+    },
+    {
+      "id": "AS005-01",
+      "seed_id": "S005-az",
+      "technique": "translit",
+      "text": "AzerPost: Baglaminiz gorumukde saxlanilib. Cotdirtyla ucun 3.50 AZN odeyin: azerpst-parcel.xyz/track",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Paketinizin azad olunması üçün 3.50 AZN ödənişi tələb edilir",
+        "Link azerpst-parcel.xyz .xyz uzantısı şübhəlidir və rəsmi AzerPost domeni deyil",
+        "Mesaj rəsmi AzerPost stilini taklit edir, lakin ödəniş və link istəyi ilə fırıldaqçılıq məqsədi daşıyır"
+      ]
+    },
+    {
+      "id": "AS005-02",
+      "seed_id": "S005-az",
+      "technique": "az_ru",
+      "text": "AzerPost: Paket gömrükdə saxlanılıb. Çatdırılmaq üçün 3.50 AZN ödəniş lazımdır. Linq: azpost-invoice.click",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Rəsmi AzerPost mesajı kimi təqdim edilib, lakin ödəniş tələb edir",
+        "Ödəniş üçün göndərilən link .click domeni ilə şübhəlidir",
+        "Gömrükdə saxlanılıb deyərək təcili ödəmə təzyiqi yaradır"
+      ]
+    },
+    {
+      "id": "AS005-03",
+      "seed_id": "S005-az",
+      "technique": "synonyms",
+      "text": "AzerPost: Göndərişiniz rüxnsiz saxlanılıb. Daşıma xidmətini aktivləşdirmək üçün 3.50 AZN köçürün: azpost-qitar.top",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Rəsmi AzerPost mesajları ödəniş üçün link göndərmir",
+        "Mesajda 3.50 AZN ödəniş tələb olunur və şübhəli .top domeninə yönləndirir",
+        "Göndərişin rüxsətsiz saxlanıldığı barədə təcili təhdid var"
+      ]
+    },
+    {
+      "id": "AS005-04",
+      "seed_id": "S005-az",
+      "technique": "new_pretext",
+      "text": "Sahibqəbildə alış-veriş təs디rləndi. Satıcı tərəfindən təsdiq üçün 3.50 AZN təminat ödənişi lazımdır: sahibpay-refund.top",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda alış-veriş təsdiqlənib, lakin 3.50 AZN təminat ödənişi tələb olunur",
+        "Verilən link sahibpay-refund.top .top domeni şübhəlidir",
+        "Heç bir rəsmi bank və ya ödəniş platformasının belə ödəniş tələb etməsi adi deyil"
+      ]
+    },
+    {
+      "id": "AS005-05",
+      "seed_id": "S005-az",
+      "technique": "typos",
+      "text": "AzerP0st: b4gl4min1z g0rmukd3 s4xlan1l1b. c4td1r1lma ucun 3.50 AZN od3y1n: azp0st-tr4ck.xyz",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda rəsmi olmayan azp0st-tr4ck.xyz linki verilib",
+        "Link .xyz domeni şübhəlidir və təhlükəli kimi işarələnib",
+        "Göndərici 3.50 AZN ödəməyinizi tələb edir, bu cür ödənişlər rəsmi xidmətlərdə soruşulmur"
+      ]
+    },
+    {
+      "id": "AS005-06",
+      "seed_id": "S005-az",
+      "technique": "no_link",
+      "text": "AzerPost: Paketiniz gömrükdədir. Çatdırılma üçün 3.50 AZN ödəmək üçün +994 55 000 00 00 nömrəsinə zəng edin və ya bu mesajı cavablaşdırın.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Rəsmi təşkilat adı (AzerPost) istifadə edilərək paketinizin gömrükdə olduğu iddia edilir",
+        "Pul (3.50 AZN) ödəmək üçün telefon nömrəsinə zəng etməyi tələb edir",
+        "Mesajda təcili cavab və ya zəng tələb edilərək təzyiq yaradılır"
+      ]
+    },
+    {
+      "id": "AS005-07",
+      "seed_id": "S005-az",
+      "technique": "formal_tone",
+      "text": "Sayin müştəri, AzerPost tərəfindən bildirilir ki, bağlamanız gömrük nəzarətində saxlanılır. Çatdırılma prosedurunun başa çatdırılması üçün 3.50 AZN məbləğində ödəniş tələb olunur. Zərf hesabını buradan açın: azpost-bb.top",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Gömrük ödənişi tələb edilərək paketinizin azad ediləcəyi vəd edilir",
+        "Şəxsiyyəti AzerPost kimi göstərsə də link .top domeni rəsmi deyil",
+        "Pul və ya linkə klikləmək üçün təcili təzyiq tətbiq edilir"
+      ]
+    },
+    {
+      "id": "AS005-08",
+      "seed_id": "S005-az",
+      "technique": "short_sms",
+      "text": "AzerPost: Paket gömrükdə. 3.50 AZN ödəyin: azpost-go.top",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Rəsmi AzerPost domeni deyil, .top uzantısı şübhəlidir",
+        "Mesajda 3.50 AZN ödəmək tələb olunur və linkə klikləmək istənilir",
+        "Gömrük ödənişi üçün təcili ödəmə təzyiqi var"
+      ]
+    },
+    {
+      "id": "AS006-01",
+      "seed_id": "S006-az",
+      "technique": "translit",
+      "text": "Kriptoda 3 gunde 300% qazanc! Cemi 100 AZN qoyun, zemanet veririk. Telegram grupumuzа qoshulun: t.me/crypto_gain_az",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj 3 gündə 300% qazanc və zəmanət vəd edir, bu reallıqdan uzaq bir investisiya təklifidir.",
+        "100 AZN yatırmağı tələb edir və Telegram qrupuna qoşulmaq üçün link verir, bu pul almağa yönəlik bir cəhd kimi görünür.",
+        "Link qısaldıcı (t.me) vasitəsilə yönləndirilir, bu da phishing və ya saxta qrup riski yaradır."
+      ]
+    },
+    {
+      "id": "AS006-02",
+      "seed_id": "S006-az",
+      "technique": "az_ru",
+      "text": "Kriptovalyutada 3 gündə 300% qazanc! Cəmi 100 AZN investisiya edin, bonusunuz bank kartına keçirilir. Qoşulun: https://invest-trade.xyz",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "300% qazancla 3 gündə yüksək gəlir vədi edilir, bu reallıqdan uzaqdır",
+        "100 AZN investisiya tələb olunur və kartınıza bonus göndəriləcək deyilir, pul istənir",
+        "https://invest-trade.xyz ünvanı .xyz TLD‑si ilə şübhəli domenə yönləndirir"
+      ]
+    },
+    {
+      "id": "AS006-03",
+      "seed_id": "S006-az",
+      "technique": "synonyms",
+      "text": "Maliyyə böhranından çıxış yolu: 3 gündə geliri 3 qat artırma imkanı. Başlanğıc sərmayə cəmi 100 AZN-dir, nəticəni sənədləşdirmişik. Detallar üçün: https://fin-horizon.top",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "3 gündə gəliri 3 qat artırma və 100 AZN başlanğac sərmayə kimi qeyri-realist vəd",
+        "Detallar üçün göndərilən https://fin-horizon.top linki .top domeni ilə şuəbəhli şübhəlidir",
+        "Sürətli pul qazanma təklifi və ilkin ödəniş tələb etməsi investisiya fırdılğıdır"
+      ]
+    },
+    {
+      "id": "AS006-04",
+      "seed_id": "S006-az",
+      "technique": "new_pretext",
+      "text": "Debit kartınızın həcm limiti artıq! Maksimal limitiniz 500 AZN-ə yüksəldilir, lakin müəyyən rüsum tələb olunur. Təsdiqləmək üçün: https://bank-limit-check.click",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj kart limitinin artırılması üçün rüsum ödəməyinizi tələb edir və linkə klikləmənizi istəyir.",
+        "İstifadə olunan domen bank-limit-check.click .click uzantısı və şübhəli TLD ilə rəsmi bank saytına aid deyil.",
+        "Mesaj təcili təsdiq tələb edərək istifadəçini sürətlə hərəkətə gətirməyə çalışır."
+      ]
+    },
+    {
+      "id": "AS006-05",
+      "seed_id": "S006-az",
+      "technique": "typos",
+      "text": "Krypto d0da 3 gunde 300% q9zanc! Cemi 100 AZN qoyun, zemanet veririk. Telegram: t.me/crypto_gain_az",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Qısa müddətdə 300% gəlir vəd edilir, bu reallıqdan uzaqdır",
+        "İstifadəçidən pul (100 AZN) göndərməsi tələb olunur",
+        "Telegram linki t.me qısaltması ilə verilib, bu cür qısaltmalar phishing üçün tez-tez istifadə olunur"
+      ]
+    },
+    {
+      "id": "AS006-06",
+      "seed_id": "S006-az",
+      "technique": "no_link",
+      "text": "Cəmi 100 AZN ilə kriptoda 300% qazanmaq istəyirsiniz? Ətraflı məlumat üçün bizə WhatsApp-da yazın və ya Telegram-da @crypto_gain_bot-u əlavə edin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.96,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj 100 AZN ilə 300% qazanc vəd edir, bu real investisiya şərtləri deyil.",
+        "Qazanc üçün WhatsApp və ya Telegram botu ilə əlaqə qurmaq tələb olunur, bu rəsmi bank və ya tənzimləyici qurumların üsulu deyil.",
+        "Heç bir lisenziya, qeydiyyat və ya rəsmi veb sayt məlumatı verilməyib, bu da fırıldaqçılıq göstəricisidir."
+      ]
+    },
+    {
+      "id": "AS006-07",
+      "seed_id": "S006-az",
+      "technique": "formal_tone",
+      "text": "İnvestisiya proqramımızın iştirakı üçün müraciətiniz nəzərdən keçirildi. minimum səviyyəli hesabda 100 AZN üzrə hesab açmaq üçün zərfə baxın: https://invest-service.site",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda investisiya proqramına qatılmaq üçün linkə tıklamağa çağırılır",
+        "Link .site uzantılıdır və şübhəli domen kimi işarələnib",
+        "Hesab açmaq üçün 100 AZN yatırmaq tələb edilir, bu pul istəyi fırıldaqdır"
+      ]
+    },
+    {
+      "id": "AS006-08",
+      "seed_id": "S006-az",
+      "technique": "short_sms",
+      "text": "100 AZN ilə 300% qazan! Vaxt məhdud. Ətraflı: t.me/crypto_gain_az",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj 100 AZN yatıraraq 300% qazanc vəd edir, bu reallıqdan uzaq investisiya təklifi.",
+        "\"Vaxt məhdud\" ifadəsi təcili hərəkətə məcbur etmək üçün təzyiq yaradır.",
+        "Mesajda t.me qısaldıcısı vasitəsilə link verilir, bu cür qısaldıcılar tez-tez fırıldaq saytlarına yönləndirir."
+      ]
+    },
+    {
+      "id": "AS007-01",
+      "seed_id": "S007-az",
+      "technique": "translit",
+      "text": "Salam, bu menem, nomremi degismissam. Acele 200 AZN lazimdir, bu karta kocur, sabah qaytararam. Kart: 4169 7388 1234 5678",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Acil pul göndərməyi tələb edir və məbləği geri qaytaracağına söz verir",
+        "Göndəriləcək kart nömrəsi verilir, lakin göndərən kimliyi təsdiqlənmir",
+        "Məktub şəxsi əlaqə kimi təqdim olunur, lakin pul istəmək üçün heç bir rəsmi sübut yoxdur"
+      ]
+    },
+    {
+      "id": "AS007-02",
+      "seed_id": "S007-az",
+      "technique": "az_ru",
+      "text": "Salom, bu men. Ech shet kakaya-to nomer. Very nadzhno 200 AZN, perevedi na kartu, zavtra verechu. Kart: 4169 7388 1234 5678",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Pul göndərməyi və kart məlumatını paylaşmağı tələb edir",
+        "Mətn təcili və məcburiyyət yaradan tonda yazılıb",
+        "Göndərici tanınmır və rəsmi bir qurumdan gəlmir"
+      ]
+    },
+    {
+      "id": "AS007-03",
+      "seed_id": "S007-az",
+      "technique": "synonyms",
+      "text": "Salam, bu mənəm, əlaqəm kəsilib. Bəyəndi 200 AZN ehtiyacım var, bu vaxta pul ötürməsi et, sabah geri qaytaracağam. Hesab: 4169 7388 1234 5678",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Pul göndərməyiniz və hesab məlumatını paylaşmağınız tələb olunur",
+        "Təcili pul tələb edərək geri qaytarılacağına söz verir, bu tip təkliflər fırıldaqdır"
+      ]
+    },
+    {
+      "id": "AS007-04",
+      "seed_id": "S007-az",
+      "technique": "new_pretext",
+      "text": "Paketin qabağına ödəniş lazımdır. Temirdə qalan paketiniz üçün 200 AZN ödənin: 4169 7388 1234 5678. Tezliklə çatılacaq.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Paketinizi almaq üçün 200 AZN ödəmək və kart məlumatı vermək tələb olunur",
+        "Mətn təcili ödəmə və çatdırılma vədi ilə təzyiq yaradır",
+        "Heç bir rəsmi əlaqə və ya izləmə linki təqdim edilmir"
+      ]
+    },
+    {
+      "id": "AS007-05",
+      "seed_id": "S007-az",
+      "technique": "typos",
+      "text": "Sal0m, bu m3n3m, n0mr3m1 d3gismiss3m. T3cili 200 AZN l4zimdir, bu k4rta kocuk, s4bah q4ytraram. K4rt: 4169 7388 1234 5678",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Pul və kart məlumatı tələb edir",
+        "Təcili 200 AZN göndərmə təhdidi var",
+        "Mesajda şəxsi kart nömrəsi istənilir"
+      ]
+    },
+    {
+      "id": "AS007-06",
+      "seed_id": "S007-az",
+      "technique": "no_link",
+      "text": "Salam, problem yaranıb. 200 AZN lazım edir. Mənə WhatsApp-da +994 55 000 00 00 nömrəsinə yazın və köçürmə et.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Məktubda sizdən 200 AZN köçürməyi tələb edir",
+        "Pul göndərmək üçün WhatsApp nömrəsi verilir, bu rəsmi bir kanal deyil",
+        "Təcili pul istəyi və əlaqə vasitəsi kimi şəxsi telefon nömrəsi göstərilir"
+      ]
+    },
+    {
+      "id": "AS007-07",
+      "seed_id": "S007-az",
+      "technique": "formal_tone",
+      "text": "Xahiş edirik, hesabınızla bağlı vəziyyəti düzgün bildirmək üçün 200 AZN məbləğini 4169 7388 1234 5678 hesabına köçürməyinizə diqqət yetirin. Yardım dəstəyi.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj 200 AZN pul köçürməyi tələb edir",
+        "Heç bir rəsmi telefon nömrəsi və ya link göstərilmir",
+        "Bank və ya operatorlar müştərilərindən belə pul istəməz",
+        "Təcili köçürmə tələb edərək təzyiq yaradır"
+      ]
+    },
+    {
+      "id": "AS007-08",
+      "seed_id": "S007-az",
+      "technique": "short_sms",
+      "text": "Salam, 200 AZN lazım. Bu karta köçür: 4169 7388 1234 5678. Sabah qaytararam. Təsdiqlə.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Pul göndərmək üçün kart nömrəsi istənilir",
+        "Vəd edilən geri ödəmə heç bir sübutla dəstəklənmir",
+        "Göndərən şəxsin kimliyi və məqsədi aydın deyil"
+      ]
+    },
+    {
+      "id": "AS008-01",
+      "seed_id": "S008-az",
+      "technique": "translit",
+      "text": "Nar: Tabrler! Yeni il lotoreyasnda iPhone 15 udmusunuz. Hedyyeni almaq unar nar-prise.click saytnnda kart melematlarnz daxil edim.",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "mesajda iPhone 15 hədiyyəsi qazanıldığı iddia edilir və kart məlumatları soruşulur",
+        "nar-prise.click domeni Nar brendinin adını istifadə edən lookalike (saxta) domen kimi işarələnib",
+        "mesajda təcili olaraq linkə daxil olub məlumat vermək təzyiqi var"
+      ]
+    },
+    {
+      "id": "AS008-02",
+      "seed_id": "S008-az",
+      "technique": "az_ru",
+      "text": "Nar: Поздравляем! Вы выиграли iPhone 15 в новогодней лотерее. Чтобы получить приз, введите данные карты на сайте nar-win.top.",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Nar brendinin adını daşıyan nar-win.top domeni lookalikedır",
+        "Mesaj kart məlumatlarının daxil edilməsini tələb edir",
+        "Mükafat qazanmağı sürətləndirmək üçün təcili hərəkət çağırışı var"
+      ]
+    },
+    {
+      "id": "AS008-03",
+      "seed_id": "S008-az",
+      "technique": "synonyms",
+      "text": "Nar: Sizə təbrik! Yeni il çekilişində iPhone 15 sizin oldu. Mükafatı əldə etmək üçün nar-reward.click ünvanında ödəniş detallarını təqdim edin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Nar brendinin adını istifadə edərək qazanma vədi verir",
+        "nar-reward.click domeni lookalike və şübhəli .click uzantısına malikdir",
+        "Mükafatı almaq üçün ödəniş detallarını təqdim etməyi tələb edir"
+      ]
+    },
+    {
+      "id": "AS008-04",
+      "seed_id": "S008-az",
+      "technique": "new_pretext",
+      "text": "Sahiblər: Sizi işə götürmək üçün son şans. CV-nizi göndərmək üçün sahib-apply.xyz saytına daxil olun və bank kart nömrənizi təsdiqləyib yəni hesabınızı aktiv et.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "sahib-apply.xyz linki .xyz uzantısı ilə şübhəlidir",
+        "bank kartı nömrəsi və hesab aktivləşdirmə tələb olunur, bu məlumatları vermək təhlükəlidir",
+        "\"son şans\" ifadəsi ilə təcili hərəkət etməyə təhrik edilir"
+      ]
+    },
+    {
+      "id": "AS008-05",
+      "seed_id": "S008-az",
+      "technique": "typos",
+      "text": "Nar: Tabrlr! Yalnıż sən iPhone 15 uduşan. 400$ uçun nar-iPhone.click saytına gir və kartın nömrəsini yaz. 1 təkrar etmə.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.99,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Nar brendinin adını istifadə edərək pul qazanma vəd edir",
+        "nar-iPhone.click domeni Nar-ın rəsmi domeni deyil, lookalikedır",
+        "Kart nömrəsi və digər maliyyə məlumatları istənilir",
+        "Təcili və təkrar etməmək təhdidi ilə təzyiq yaradılır"
+      ]
+    },
+    {
+      "id": "AS008-06",
+      "seed_id": "S008-az",
+      "technique": "no_link",
+      "text": "Nar: iPhone 15 udmusunuz. Hedyyeni teslim almaq unar +994 55 000 01 02 nomrune zang edin ve kart son 4 raqamni soyleyin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Məktubda iPhone 15 qazanıldığı iddia edilir və kartın son 4 rəqəmi soruşulur",
+        "Nar kimi tanınan operatorun adı istifadə olunaraq etibarlılıq yaradılır",
+        "Telefon nömrəsinə zəng edib məlumat vermək təzyiqi yaradılır"
+      ]
+    },
+    {
+      "id": "AS008-07",
+      "seed_id": "S008-az",
+      "technique": "formal_tone",
+      "text": "Nar Müşəri xidməti. Yeni il kampaniyası çərçivəsində iPhone 15 mükafatı sizə təyin olunub. Təsdiq üçün nar-confirm.top formasını doldurun və bank detallarınızı daxil edin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Nar brendini taklit edən nar-confirm.top domeni lookalikedır",
+        "Məktub iPhone 15 mükafatı və bank detallarının verilməsini tələb edir",
+        "Heç bir rəsmi Nar mesajı link vasitəsilə məlumat toplamağa çağırmaz"
+      ]
+    },
+    {
+      "id": "AS008-08",
+      "seed_id": "S008-az",
+      "technique": "short_sms",
+      "text": "iPhone 15 uduş. Al: nar-go.click. Kart yaz. Sürətli.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "nar-go.click domeni Nar brendinin oxşarıdır və .click uzantısı şübhəlidir",
+        "mesaj kart məlumatları (kart yaz) verməyinizi tələb edir",
+        "təklif sürətli şəkildə həyata keçirmək üçün təcililik yaradır"
+      ]
+    },
+    {
+      "id": "AS009-01",
+      "seed_id": "S009-az",
+      "technique": "translit",
+      "text": "ASAN: Cezasi vergi borcunuz 87 manatdir. Sifirinmek ucun 24 saat icinde odexiniz: asan-tax-clear.xyz",
+      "label": "scam",
+      "variant": "translit",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda asan-tax-clear.xyz kimi ASAN brendini taklit eden lookalike domen var",
+        "Cezani 24 saat içinde ödəmək tələb olunur, təcili ödəmə təzyiqi var",
+        "Linkə klikləyib məlumat vermək və ya ödəniş etmək istəyi fırıldaqçılıqdır"
+      ]
+    },
+    {
+      "id": "AS009-02",
+      "seed_id": "S009-az",
+      "technique": "az_ru",
+      "text": "Urgent notice: Vasitaciq olmaq ocmadigi xetir cizim borcunuz var. Odmu 24 saat icinde yapin. Link: asan-debt-solve.site",
+      "label": "scam",
+      "variant": "az_ru",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda rəsmi ASAN.gov.az saytına bənzər lookalike domen (asan-debt-solve.site) istifadə olunur",
+        "Mətn 24 saat ərzində borcu ödəmək təzyiqi yaradır",
+        "Linkə klikləmək və ya məlumat vermək üçün istifadəçini yönləndirir"
+      ]
+    },
+    {
+      "id": "AS009-03",
+      "seed_id": "S009-az",
+      "technique": "synonyms",
+      "text": "Xusi xidmet: Hesabatda qeyd olunan maliye meblegi 87 AZN-dir. Hemkarliqdak zaxireni saxlamaq ucun 24 saat icinde transfert ediniz: asan-pay-portal.click",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.96,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Məbləği köçürmək üçün asan-pay-portal.click linkinə klikləmək tələb olunur",
+        "Domain lookalike (ASAN) və .click uzantısı şübhəlidir",
+        "24 saat içində köçürmə tələb edilərək təcili təzyiq göstərilir"
+      ]
+    },
+    {
+      "id": "AS009-04",
+      "seed_id": "S009-az",
+      "technique": "new_pretext",
+      "text": "Dendel Express: Paketiniz garacada hamin. Alci isleyin 87 AZN ete niye. Isleyin ucun bax: express-deliver-fee.top",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda paket üçün 87 AZN ödəniş tələb edilir",
+        "Göndərilən link express-deliver-fee.top .top domeni şübhəlidir",
+        "Heç bir rəsmi təsdiq və ya izləmə nömrəsi verilməyib",
+        "Təcili ödəmə tələb edərək istifadəçini təzyiq altına alır"
+      ]
+    },
+    {
+      "id": "AS009-05",
+      "seed_id": "S009-az",
+      "technique": "typos",
+      "text": "AsAn: V3r9i b0rcunuz 87 AZN. C3rim3dan ya3inmaq ucun 24 s3at ezrinde odcyin: asan-0de-1ink.com",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda asan.gov.az kimi rəsmi qurumu təqlid edən lookalike domen (asan-0de-1ink.com) var",
+        "Məbləğ (87 AZN) ödəmək və 24 saat ərzində ödəmək tələb olunur",
+        "Heç bir rəsmi ASAN bildirişində belə link və ödəniş istəyi yer almır"
+      ]
+    },
+    {
+      "id": "AS009-06",
+      "seed_id": "S009-az",
+      "technique": "no_link",
+      "text": "ASAN Xidmet: 87 AZN borcunuz var. Cezadan qurtulmaq ucun +994 55 000 00 01 nomu yazip, odeme riqmini soheresi.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.97,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesaj rəsmi ASAN Xidmətindən gəlmiş kimi göstərilir, lakin telefon nömrəsinə zəng edib ödəniş etməyi tələb edir.",
+        "Heç bir link və ya rəsmi ödəniş kanalı göstərilməyib, bu cür borc bildirişləri adətən SMS ilə göndərilmir.",
+        "Cəza riski vurğulanaraq təcili hərəkət tələb edilir, bu isə təzyiq yaratmaq üçün tipik fırıldaq üsuludur."
+      ]
+    },
+    {
+      "id": "AS009-07",
+      "seed_id": "S009-az",
+      "technique": "formal_tone",
+      "text": "Sayin Abone, Dendel Express tarafindan gonderilen paketiniz ucun 87 AZN hamin ve xidmet ustu alavesi istenir. Hesabatni qapatmaq ucun xahiisle asan-refund-portal.site adresine gecin.",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Mesajda paket üçün 87 AZN ödəniş tələb edilir",
+        "Verilən link asan-refund-portal.site ASAN brendinin görünüşünü taklit edir",
+        "Dendel Express adından gələn rəsmi ödəniş və ya link sorğusu yoxdur"
+      ]
+    },
+    {
+      "id": "AS009-08",
+      "seed_id": "S009-az",
+      "technique": "short_sms",
+      "text": "ASAN: 87 AZN borc. Cezadan kacin ucun 24s icinde odex: asan-clear-debt.xyz",
+      "label": "scam",
+      "variant": "az",
+      "attacker_model": "qwen/qwen3.8-27b",
+      "verdict": "scam",
+      "confidence": 0.98,
+      "degraded": false,
+      "analyzer_model": "openai/gpt-oss-120b",
+      "reasons": [
+        "Link asan-clear-debt.xyz göründüyü kimi ASAN brendini taklit edir",
+        "Mesajda 24 saat içində ödəniş tələb edilərək təcili hərəkətə məcbur edilir",
+        "Heç bir rəsmi ASAN kanalı bu cür linki paylaşmaz və şəxsi məlumat istəmir"
+      ]
+    }
+  ],
+  "fewshot_ids": [],
+  "heldout_before": null,
+  "heldout_after": null,
+  "false_positives_before": null,
+  "false_positives_after": null
+}
